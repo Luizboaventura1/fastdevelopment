@@ -78,3 +78,9 @@ yarn preview
 bun run preview
 ```
 # Pages
+
+# License
+
+- MIT
+
+
