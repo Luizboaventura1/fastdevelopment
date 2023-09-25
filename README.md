@@ -1,6 +1,10 @@
-# Nuxt 3 Minimal Starter
+# FastDevelopment
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## What's FastDevelopment
+
+FastDevelopment is a tool for people who want more productivity in their projects, but with an easy-to-use platform and a beautiful, clean design
+
+Deploy:
 
 ## Setup
 
@@ -68,8 +72,15 @@ pnpm run preview
 # yarn
 yarn preview
 
+# Pages
+
 # bun
 bun run preview
 ```
+# Pages
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+# License
+
+- MIT
+
+
