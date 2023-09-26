@@ -1,7 +1,7 @@
 <template>
   <button
     @click="event"
-    class="rounded-md px-9 py-3 text-white font-bold text-base flex items-center"
+    class="rounded-md px-9 py-3 bg-primaryColorF text-white font-bold text-base flex items-center"
   >
     <slot />
     <svg
@@ -22,12 +22,8 @@ let props = defineProps({
 </script>
 
 <style lang="scss" scoped>
-$primary-color: #8257e5;
-$secondary-color: #202024;
-$sub-secondary-color: #121214;
 
 button {
-  background-color: $primary-color;
   transition: .2s;
 
   &:hover {

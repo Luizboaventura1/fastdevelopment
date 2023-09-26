@@ -12,6 +12,11 @@ module.exports = {
     extend: {
       fontFamily: {
         custom: ['Inter']
+      },
+      colors: {
+        primaryColorF: '#8257e5',
+        secondaryColorF: '#202024',
+        subSecondaryColorF: '#121214'
       }
     },
   },
