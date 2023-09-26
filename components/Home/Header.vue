@@ -1,5 +1,5 @@
 <template>
-  <header class="h-screen w-full p-4">
+  <header class="h-screen w-full p-4 flex justify-center">
     <div class="container h-full">
       <slot />
     </div>
