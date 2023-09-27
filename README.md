@@ -83,4 +83,6 @@ bun run preview
 
 - MIT
 
+_In development_
+
 
