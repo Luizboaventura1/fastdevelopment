@@ -13,7 +13,7 @@
       <div class="flex-1 sm:flex items-center y-3 text-xs text-white">
         <div class="w-full sm:w-auto mb-3 sm:mb-0">
           <NuxtLink
-            to="/"
+            to="/privacy-policy"
             class="mx-2 hover:underline"
           >
             Política de privacidade
@@ -21,7 +21,7 @@
         </div>
         <div class="w-full sm:w-auto mb-3 sm:mb-0">
           <NuxtLink
-            to="/"
+            to="/terms"
             class="mx-2 hover:underline"
           >
             Termos

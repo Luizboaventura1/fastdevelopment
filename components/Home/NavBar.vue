@@ -6,10 +6,14 @@
       </div>
     </div>
     <div class="w-8/12 flex items-center justify-end">
-      <LoginButton>
+      <LoginButton
+        :event="login"
+      >
         Entrar
       </LoginButton>
-      <RegisterButton>
+      <RegisterButton
+        :event="register"
+      >
         Criar conta
       </RegisterButton>
     </div>
@@ -20,6 +24,9 @@
 import LoginButton from './LoginButton.vue';
 import RegisterButton from './RegisterButton.vue';
 
+const login = () => location.href = '/auth/login'
+
+const register = () => location.href = '/auth/register'
 
 </script>
 

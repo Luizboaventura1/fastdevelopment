@@ -1,6 +1,6 @@
 <template>
   <button
-    @click="event"
+    @click="props.event"
     class="text-white text-sm font-bold rounded-md px-4 py-2"
   >
     <slot />
