@@ -4,7 +4,7 @@
 
 FastDevelopment is a tool for people who want more productivity in their projects, but with an easy-to-use platform and a beautiful, clean design
 
-Deploy:
+Deploy: https://fastdevelopment.vercel.app
 
 ## Setup
 
