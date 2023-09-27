@@ -80,6 +80,8 @@ bun run preview
 # Pages
 
 - Home
+- ![image](https://github.com/Luizboaventura1/fastdevelopment/assets/122652168/17f36589-6a99-42e9-9d61-ab1c8589e42c)
+
 - Privacy Policy
 - Terms
 - Dashboard
