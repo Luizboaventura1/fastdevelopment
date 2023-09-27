@@ -79,6 +79,13 @@ bun run preview
 ```
 # Pages
 
+- Home
+- Privacy Policy
+- Terms
+- Dashboard
+- Profile
+- Login
+
 # License
 
 - MIT
