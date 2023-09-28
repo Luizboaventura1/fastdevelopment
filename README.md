@@ -87,6 +87,11 @@ bun run preview
 - Dashboard
 - Profile
 - Login
+![image](https://github.com/Luizboaventura1/fastdevelopment/assets/122652168/8d766a8d-e5c8-4cb6-bb85-d786f2300988)
+- Register
+![image](https://github.com/Luizboaventura1/fastdevelopment/assets/122652168/c604098a-bcd2-468e-840a-388042a914bf)
+
+
 
 # License
 
