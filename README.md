@@ -4,7 +4,7 @@
 
 FastDevelopment is a tool for people who want more productivity in their projects, but with an easy-to-use platform and a beautiful, clean design
 
-Deploy:
+Deploy: https://fastdevelopment.vercel.app
 
 ## Setup
 
@@ -79,8 +79,19 @@ bun run preview
 ```
 # Pages
 
+- Home
+![image](https://github.com/Luizboaventura1/fastdevelopment/assets/122652168/17f36589-6a99-42e9-9d61-ab1c8589e42c)
+
+- Privacy Policy
+- Terms
+- Dashboard
+- Profile
+- Login
+
 # License
 
 - MIT
+
+_In development_
 
 
