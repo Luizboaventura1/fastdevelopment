@@ -1,6 +1,6 @@
 # FastDevelopment
 
-## What's FastDevelopment
+## What's FastDevelopment?
 
 FastDevelopment is a tool for people who want more productivity in their projects, but with an easy-to-use platform and a beautiful, clean design
 
