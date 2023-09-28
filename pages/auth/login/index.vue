@@ -2,13 +2,8 @@
   <TemplateAuth>
     <form class="py-5 px-9 bg-secondaryColorF w-full max-w-xl rounded-md">
       <h1 class="text-slate-50 text-2xl font-bold py-4 mb-4">
-        Criar conta
+        Bem vindo(a)
       </h1>
-      <InputName 
-        placeholderInput="Seu nome"
-        @valueInput="(val) => name = val"
-        :error="inputNameError"
-      />
       <InputEmail 
         typeInput="email"
         placeholderInput="Seu email"
@@ -22,20 +17,20 @@
       />
       <div class="my-3" />
       <SubmitButton
-        :event="registerButton"
+        :event="loginButton"
       >
-        CADASTRAR
+        LOGIN
       </SubmitButton>
       <div class="text-center mt-4">
         <p
           class="text-white text-sm"
         >
-          Tem uma conta?
+          Não tem uma conta?
           <NuxtLink
             class="text-violet-500 hover:text-primaryColorF"
-            to="/auth/login"
+            to="/auth/register"
           >
-            Fazer login
+            Fazer cadastro
           </NuxtLink>
         </p>
       </div>
@@ -47,51 +42,25 @@
 import TemplateAuth from '../components/TemplateAuth.vue';
 import InputEmail from '../components/InputEmail.vue';
 import InputPassword from '../components/InputPassword.vue'
-import InputName from '../components/InputName.vue';
 import SubmitButton from '../components/SubmitButton.vue';
 
-let name = ref('')
 let email = ref('')
 let password = ref('')
 
-const registerButton = () => {
+const loginButton = () => {
   if (validadeForm()) {
-    console.log('Logado!')
+    console.log('logado!')
   }
-
 }
 
-let inputNameError = ref('')
 let emailInputError = ref('')
 let passwordInputError = ref('')
 
 const validadeForm = () => {
-  const nameRegex = /^[A-Za-z\s]+$/
   const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
   const passwordRegex = /^\S+$/
 
   let stateValidade = ref(true)
-
-  // Validate Name
-
-  if (name.value === '' || !nameRegex.test(name.value)) {
-    inputNameError.value = 'Nome obrigatório'
-    stateValidade.value = false
-  } 
-
-  else if (name.value.length < 3) {
-    inputNameError.value = 'Mínimo de 3 caracteres'
-    stateValidade.value = false
-  }
-
-  else if (name.value.length > 20) {
-    inputNameError.value = 'Máximo de 20 caracteres'
-    stateValidade.value = false
-  }
-
-  else {
-    stateValidade.value = true
-  }
 
   // Validate Email
 

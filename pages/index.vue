@@ -19,7 +19,9 @@
       ferramenta completa de desenvolvimento ágil.
     </p>
     <div class="flex justify-center w-full">
-      <StartButton>
+      <StartButton
+        :event="startButton"
+      >
         Começar
       </StartButton>
     </div>
@@ -37,7 +39,9 @@
         >
           Gerencie melhor seus projetos com mais rapidez
         </h1>
-        <StartButton>
+        <StartButton
+          :event="startButton"
+        >
           Comece hoje grátis
         </StartButton>
       </div>
@@ -100,7 +104,7 @@
                 <span class="text-5xl font-bold tracking-tight text-slate-50">R$ 0</span>
                 <span class="text-sm font-semibold leading-6 tracking-wide text-slate-100">BRL</span>
               </p>
-              <NuxtLink target="_blank" to="/auth/register" class="mt-10 block w-full rounded-md bg-primaryColorF px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-violet-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Garantir acesso</NuxtLink>
+              <a @click="startButton" class="mt-10 block w-full rounded-md bg-primaryColorF px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-violet-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Garantir acesso</a>
               <p class="mt-6 text-xs leading-5 text-zinc-400">Oferta disponível por tempo limitado!</p>
             </div>
           </div>
@@ -134,6 +138,8 @@ const addItem = () => {
   });
 
 }
+
+const startButton = () => location.href = '/auth/register'
 
 </script>
 
