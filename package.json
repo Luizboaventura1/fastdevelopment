@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",
+    "@vueuse/motion": "^2.0.0",
     "firebase": "^10.4.0",
     "pinia": "^2.1.6"
   }

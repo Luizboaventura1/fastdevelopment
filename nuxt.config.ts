@@ -10,6 +10,7 @@ export default defineNuxtConfig({
   },
   modules: [
     '@pinia/nuxt',
+    '@vueuse/motion/nuxt'
   ],
   pinia: {
     autoImports: [
@@ -18,4 +19,24 @@ export default defineNuxtConfig({
       ['defineStore', 'definePiniaStore'], // import { defineStore as definePiniaStore } from 'pinia'
     ],
   },
+  runtimeConfig: {
+    public: {
+      motion: {
+        directives: {
+          'pop-bottom': {
+            initial: {
+              scale: 0,
+              opacity: 0,
+              y: 100,
+            },
+            visible: {
+              scale: 1,
+              opacity: 1,
+              y: 0,
+            }
+          }
+        }
+      }
+    }
+  }
 })
