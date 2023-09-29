@@ -1,6 +1,6 @@
 # FastDevelopment
 
-## What's FastDevelopment
+## What's FastDevelopment?
 
 FastDevelopment is a tool for people who want more productivity in their projects, but with an easy-to-use platform and a beautiful, clean design
 
@@ -87,11 +87,17 @@ bun run preview
 - Dashboard
 - Profile
 - Login
+![image](https://github.com/Luizboaventura1/fastdevelopment/assets/122652168/2f571e8c-a9f1-4ddd-9c36-c1527b82ffc4)
+
+- Register
+![image](https://github.com/Luizboaventura1/fastdevelopment/assets/122652168/c604098a-bcd2-468e-840a-388042a914bf)
+
+
 
 # License
 
 - MIT
 
-_In development_
+_In development..._
 
 
