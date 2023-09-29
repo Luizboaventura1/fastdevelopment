@@ -29,7 +29,7 @@ export default defineNuxtConfig({
               opacity: 0,
               y: 100,
             },
-            visible: {
+            enter: {
               scale: 1,
               opacity: 1,
               y: 0,

@@ -31,6 +31,60 @@
   <SectionBenefits />
 
   <Section>
+    <div class="flex-1 md:flex py-14 px-4">
+
+      <div class="md:w-6/12">
+        <h1
+          class="text-slate-50 text-2xl md:text-3xl font-bold mb-5"
+        >
+          Utilizamos a metodologia Kanban para o gerenciamento de tarefas
+        </h1>
+        <p
+          class="text-slate-200 mb-5"
+        >
+          Tenha uma melhor visualização do trabalho em andamento e controle melhor suas tarefas.
+        </p>
+        <ul class="text-slate-50">
+          <li v-motion-slide-visible-bottom class="flex gap-x-3 mb-1">
+            <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+            </svg>
+            Facilidade de Uso
+          </li>
+          <li v-motion-slide-visible-bottom class="flex gap-x-3 mb-1">
+            <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+            </svg>
+            Economize tempo
+          </li>
+          <li v-motion-slide-visible-bottom class="flex gap-x-3 mb-1">
+            <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+            </svg>
+            Aplicabilidade simples
+          </li>
+          <li v-motion-slide-visible-bottom class="flex gap-x-3 mb-1">
+            <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+            </svg>
+            Flexivel
+          </li>
+        </ul>
+      </div>
+
+      <div class="md:w-6/12 p-5">
+        <img
+          v-motion-slide-visible-bottom
+          class="w-full rounded-xl shadow-lg"
+          src="../assets/Kanban board.svg"
+          alt="Kanban board"
+        >
+      </div>
+
+    </div>
+  </Section>
+
+  <Section>
     <div class="flex flex-col-reverse md:flex-row py-9">
       <div class="md:w-6/12 p-5">
         <h1
