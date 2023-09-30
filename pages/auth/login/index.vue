@@ -21,6 +21,8 @@
       >
         LOGIN
       </SubmitButton>
+      <div class="mt-3"></div>
+      <GoogleButton />
       <div class="text-center mt-4">
         <p
           class="text-white text-sm"
@@ -43,73 +45,78 @@ import TemplateAuth from '../components/TemplateAuth.vue';
 import InputEmail from '../components/InputEmail.vue';
 import InputPassword from '../components/InputPassword.vue'
 import SubmitButton from '../components/SubmitButton.vue';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import {auth} from '../../../firebase'
+import GoogleButton from '../components/GoogleButton.vue';
 
 let email = ref('')
 let password = ref('')
 
 const loginButton = () => {
-  if (validadeForm()) {
-    console.log('logado!')
+  if (validateForm()) {
+    signInWithEmailAndPassword(auth, email.value, password.value);
   }
 }
 
 let emailInputError = ref('')
 let passwordInputError = ref('')
 
-const validadeForm = () => {
+const validateForm = () => {
   const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
   const passwordRegex = /^\S+$/
 
-  let stateValidade = ref(true)
-
-  // Validate Email
+  let stateValidade = ref(false)
+  const generalState = ref({
+    email: false,
+    password: false
+  })
 
   if (email.value === '') {
     emailInputError.value = 'Email obrigatório'
-    stateValidade.value = false
   } 
 
   else if (!emailRegex.test(email.value)) {
     emailInputError.value = 'Email inválido'
-    stateValidade.value = false
   }
 
   else if (email.value.length > 30) {
     emailInputError.value = 'Máximo de 30 caracteres'
-    stateValidade.value = false
   }
 
   else {
-    stateValidade.value = true
+    generalState.value.email = true
   }
 
   // Validate Password
 
   if (password.value === '') {
     passwordInputError.value = 'Senha obrigatória'
-    stateValidade.value = false
   } 
 
   else if (password.value.length < 8) {
     passwordInputError.value = 'Mínimo de 8 caracteres'
-    stateValidade.value = false
   }
 
   else if (password.value.length > 30) {
     passwordInputError.value = 'Máximo de 30 caracteres'
-    stateValidade.value = false
   }
 
   else if (!passwordRegex.test(password.value)) {
     passwordInputError.value = 'Senha inválida'
-    stateValidade.value = false
   }
 
   else {
-    stateValidade.value = true
+    generalState.value.password = true
   }
 
-  return stateValidade.value
+  if (generalState.value.email && generalState.value.password)
+    return stateValidade.value = true
+  else
+    return stateValidade.value
 }
+
+useHead({
+  title: 'Login'
+})
 
 </script>

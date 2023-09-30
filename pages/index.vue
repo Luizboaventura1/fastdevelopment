@@ -45,25 +45,25 @@
           Tenha uma melhor visualização do trabalho em andamento e controle melhor suas tarefas.
         </p>
         <ul class="text-slate-50">
-          <li v-motion-slide-visible-bottom class="flex gap-x-3 mb-1">
+          <li v-motion-fade-visible class="flex gap-x-3 mb-1">
             <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
             </svg>
             Facilidade de Uso
           </li>
-          <li v-motion-slide-visible-bottom class="flex gap-x-3 mb-1">
+          <li v-motion-fade-visible class="flex gap-x-3 mb-1">
             <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
             </svg>
             Economize tempo
           </li>
-          <li v-motion-slide-visible-bottom class="flex gap-x-3 mb-1">
+          <li v-motion-fade-visible class="flex gap-x-3 mb-1">
             <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
             </svg>
             Aplicabilidade simples
           </li>
-          <li v-motion-slide-visible-bottom class="flex gap-x-3 mb-1">
+          <li v-motion-fade-visible class="flex gap-x-3 mb-1">
             <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
             </svg>
@@ -74,7 +74,7 @@
 
       <div class="md:w-6/12 p-5">
         <img
-          v-motion-slide-visible-bottom
+          v-motion-fade-visible-once
           class="w-full rounded-xl shadow-lg"
           src="../assets/Kanban board.svg"
           alt="Kanban board"
@@ -88,7 +88,7 @@
     <div class="flex flex-col-reverse md:flex-row py-9">
       <div class="md:w-6/12 p-5">
         <h1
-          v-motion-fade-visible
+          v-motion-fade-visible-once
           class="text-slate-50 font-bold text-4xl mb-5"
         >
           Gerencie melhor seus projetos com mais rapidez
@@ -173,8 +173,6 @@
 
 <script setup>
 import {useTokenStore} from '../stores/token.js'
-import {db} from '@/firebase'
-import {addDoc,collection} from 'firebase/firestore'
 import Header from '~/components/Home/Header.vue';
 import NavBar from '~/components/Home/NavBar.vue';
 import Main from '~/components/Home/Main.vue';
@@ -186,14 +184,18 @@ const store = useTokenStore()
 
 console.log(store.token)
 
-const addItem = () => {
-  addDoc(collection(db, "dado"), {
-    nome: 'Luiz'
-  });
-
-}
-
 const startButton = () => location.href = '/auth/register'
+
+// SEO
+
+useHead({
+  title: 'FastDevelopment',
+  meta: [
+    { name: 'description', content: 'Tenha um rápido desenvolvimento e ganho de produtividade com nossa ferramenta completa de desenvolvimento ágil.' },
+    { name: 'keywords', content: 'Kanban,desenvolvimento ágil,jira,trello'},
+    { name: 'author', content: 'Luiz'}
+  ]
+})
 
 </script>
 

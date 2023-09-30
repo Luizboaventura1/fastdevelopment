@@ -23,7 +23,7 @@ export default defineNuxtConfig({
     public: {
       motion: {
         directives: {
-          'pop-bottom': {
+          'pop-top': {
             initial: {
               scale: 0,
               opacity: 0,

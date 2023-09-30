@@ -52,4 +52,8 @@
 <script setup>
 import BackButton from "~/components/Buttons/BackButton.vue";
 import Footer from "~/components/Home/Footer.vue";
+
+useHead({
+  title: 'Termos'
+})
 </script>

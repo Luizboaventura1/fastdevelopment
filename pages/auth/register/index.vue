@@ -26,6 +26,8 @@
       >
         CADASTRAR
       </SubmitButton>
+      <div class="mt-3"></div>
+      <GoogleButton />
       <div class="text-center mt-4">
         <p
           class="text-white text-sm"
@@ -41,6 +43,9 @@
       </div>
     </form>
   </TemplateAuth>
+  <ErrorMessage
+    :popup="statePopup"
+   />
 </template>
 
 <script setup>
@@ -49,98 +54,115 @@ import InputEmail from '../components/InputEmail.vue';
 import InputPassword from '../components/InputPassword.vue'
 import InputName from '../components/InputName.vue';
 import SubmitButton from '../components/SubmitButton.vue';
+import { createUser } from '../../../utils/firebaseUtils.js';
+import ErrorMessage from '../components/Popups/ErrorMessage.vue';
+import GoogleButton from '../components/GoogleButton.vue';
 
 let name = ref('')
 let email = ref('')
 let password = ref('')
 
 const registerButton = () => {
-  if (validadeForm()) {
-    console.log('Logado!')
+  if (validateForm() === true) {
+    //createUser(name.value,email.value,password.value)
+    console.log('q9euibf')
+  } else {
+    ErrorMessagePopup()
   }
-
 }
+
 
 let inputNameError = ref('')
 let emailInputError = ref('')
 let passwordInputError = ref('')
 
-const validadeForm = () => {
+const validateForm = () => {
   const nameRegex = /^[A-Za-z\s]+$/
   const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
   const passwordRegex = /^\S+$/
 
-  let stateValidade = ref(true)
+  let stateValidade = ref(false)
+  const generalState = ref({
+    name: false,
+    email: false,
+    password: false
+  })
 
   // Validate Name
 
-  if (name.value === '' || !nameRegex.test(name.value)) {
+  if (name.value.trim() === '') {
     inputNameError.value = 'Nome obrigatório'
-    stateValidade.value = false
   } 
 
   else if (name.value.length < 3) {
     inputNameError.value = 'Mínimo de 3 caracteres'
-    stateValidade.value = false
   }
 
   else if (name.value.length > 20) {
     inputNameError.value = 'Máximo de 20 caracteres'
-    stateValidade.value = false
+  }
+
+  else if (!nameRegex.test(name.value)) {
+    inputNameError.value = 'Nome inválido'
   }
 
   else {
-    stateValidade.value = true
+    generalState.value.name = true
   }
 
   // Validate Email
 
   if (email.value === '') {
     emailInputError.value = 'Email obrigatório'
-    stateValidade.value = false
   } 
 
   else if (!emailRegex.test(email.value)) {
     emailInputError.value = 'Email inválido'
-    stateValidade.value = false
   }
 
   else if (email.value.length > 30) {
     emailInputError.value = 'Máximo de 30 caracteres'
-    stateValidade.value = false
   }
 
   else {
-    stateValidade.value = true
+    generalState.value.email = true
   }
 
   // Validate Password
 
   if (password.value === '') {
     passwordInputError.value = 'Senha obrigatória'
-    stateValidade.value = false
   } 
 
   else if (password.value.length < 8) {
     passwordInputError.value = 'Mínimo de 8 caracteres'
-    stateValidade.value = false
   }
 
   else if (password.value.length > 30) {
     passwordInputError.value = 'Máximo de 30 caracteres'
-    stateValidade.value = false
   }
 
   else if (!passwordRegex.test(password.value)) {
     passwordInputError.value = 'Senha inválida'
-    stateValidade.value = false
   }
 
   else {
-    stateValidade.value = true
+    generalState.value.password = true
   }
 
-  return stateValidade.value
+  if (generalState.value.name && generalState.value.email && generalState.value.password)
+    return stateValidade.value = true
+  else
+    return stateValidade.value
 }
 
+useHead({
+  title: 'Criar conta'
+})
+
+let statePopup = ref(false)
+const ErrorMessagePopup = () => {
+  statePopup.value = true
+  setTimeout(() => statePopup.value = false,2000)
+}
 </script>

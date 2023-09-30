@@ -1,6 +1,7 @@
 <template>
   <div class="input-group w-full">
     <div
+      @click="labelInput"
       tabindex="0"
       class="label-input cursor-text flex rounded-md items-center justify-between bg-subSecondaryColorF px-3 py-3"
     >
@@ -11,7 +12,7 @@
         v-model="inputValue"
         @input="$emit('valueInput',inputValue)"
         name="nome"
-        class="w-full border-0 outline-0 text-white bg-subSecondaryColorF"
+        class="input-email w-full border-0 outline-0 text-white bg-subSecondaryColorF"
         :type="props.typeInput"
         :placeholder="props.placeholderInput"
       >
@@ -32,6 +33,10 @@ let props = defineProps({
 })
 
 let inputValue = ref()
+
+const labelInput = () => {
+  document.querySelector('.input-email').focus()
+}
 </script>
 
 <style lang="scss" scoped>
