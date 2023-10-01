@@ -112,7 +112,7 @@ bun run preview
 
 # Libs
 
-- [vueuse/motion]https://motion.vueuse.org
+- https://motion.vueuse.org
 
 _In development..._
 
