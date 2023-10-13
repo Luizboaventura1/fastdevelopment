@@ -27,7 +27,9 @@
         CADASTRAR
       </SubmitButton>
       <div class="mt-3"></div>
-      <GoogleButton />
+      <GoogleButton
+        :event="loginWithGoogle"
+      />
       <div class="text-center mt-4">
         <p
           class="text-white text-sm"
@@ -45,7 +47,9 @@
   </TemplateAuth>
   <ErrorMessage
     :popup="statePopup"
+    :message="errorMessagePopup"
    />
+   <button @click="sair">sair</button>
 </template>
 
 <script setup>
@@ -54,21 +58,74 @@ import InputEmail from '../components/InputEmail.vue';
 import InputPassword from '../components/InputPassword.vue'
 import InputName from '../components/InputName.vue';
 import SubmitButton from '../components/SubmitButton.vue';
-import { createUser } from '../../../utils/firebaseUtils.js';
 import ErrorMessage from '../components/Popups/ErrorMessage.vue';
 import GoogleButton from '../components/GoogleButton.vue';
+import { createUserWithEmailAndPassword, onAuthStateChanged, signOut} from "firebase/auth";
+import { auth, db } from '../../../firebase'
+import { collection, addDoc} from "firebase/firestore";
+import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
+import { useRouter } from '#vue-router';
+
+const sair = () => signOut(auth).then(() => {
+})
+
+const router = useRouter()
 
 let name = ref('')
 let email = ref('')
 let password = ref('')
+let registerErrorMessage = ref("")
 
 const registerButton = () => {
-  if (validateForm() === true) {
-    //createUser(name.value,email.value,password.value)
-    console.log('q9euibf')
-  } else {
-    ErrorMessagePopup()
+  if (validateForm()) {
+    createUser(name.value,email.value,password.value)
+
+    if(registerErrorMessage.value.length > 0) {
+      ErrorMessagePopup(registerErrorMessage.value)
+    }
+
+    const logged = useCookie('token')
+    logged.value = true
   }
+}
+
+const loginWithGoogle = async () => {
+  const provider = new GoogleAuthProvider()
+
+  await signInWithRedirect(auth, provider).then(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid
+        addUserInFirestore(name,email,password,uid)
+
+        const logged = useCookie('token')
+        logged.value = true
+      }
+    })
+    router.push('/')
+  })
+}
+
+const createUser = (name,email,password) => {
+
+  createUserWithEmailAndPassword(auth, email, password)
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid
+      addUserInFirestore(name,email,password,uid)
+    }
+  })
+}
+
+function addUserInFirestore (name,email,password,uid) {
+  addDoc(collection(db, "users"), {
+    name,
+    email,
+    password,
+    uid,
+    frame: []
+  });
 }
 
 
@@ -161,7 +218,10 @@ useHead({
 })
 
 let statePopup = ref(false)
-const ErrorMessagePopup = () => {
+let errorMessagePopup = ref('')
+
+const ErrorMessagePopup = (message) => {
+  errorMessagePopup.value = message
   statePopup.value = true
   setTimeout(() => statePopup.value = false,2000)
 }

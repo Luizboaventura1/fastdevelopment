@@ -22,7 +22,9 @@
         LOGIN
       </SubmitButton>
       <div class="mt-3"></div>
-      <GoogleButton />
+      <GoogleButton 
+        :event="loginWithGoogle"
+      />
       <div class="text-center mt-4">
         <p
           class="text-white text-sm"
@@ -48,6 +50,10 @@ import SubmitButton from '../components/SubmitButton.vue';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import {auth} from '../../../firebase'
 import GoogleButton from '../components/GoogleButton.vue';
+import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
+import { useRouter } from '#vue-router';
+
+const router = useRouter()
 
 let email = ref('')
 let password = ref('')
@@ -56,6 +62,17 @@ const loginButton = () => {
   if (validateForm()) {
     signInWithEmailAndPassword(auth, email.value, password.value);
   }
+}
+
+const loginWithGoogle = async () => {
+  const provider = new GoogleAuthProvider()
+
+  await signInWithRedirect(auth, provider).then(() => {
+    const logged = useCookie('token')
+    logged.value = true
+    
+    router.push('/')
+  })
 }
 
 let emailInputError = ref('')

@@ -172,7 +172,6 @@
 </template>
 
 <script setup>
-import {useTokenStore} from '../stores/token.js'
 import Header from '~/components/Home/Header.vue';
 import NavBar from '~/components/Home/NavBar.vue';
 import Main from '~/components/Home/Main.vue';
@@ -180,9 +179,6 @@ import StartButton from '~/components/Home/StartButton.vue';
 import SectionBenefits from '~/components/Home/SectionBenefits.vue';
 import Section from '~/components/Home/Section.vue';
 import Footer from '~/components/Home/Footer.vue';
-const store = useTokenStore()
-
-console.log(store.token)
 
 const startButton = () => location.href = '/auth/register'
 
@@ -195,6 +191,10 @@ useHead({
     { name: 'keywords', content: 'Kanban,desenvolvimento ágil,jira,trello'},
     { name: 'author', content: 'Luiz'}
   ]
+})
+
+definePageMeta({
+  middleware: 'auth'
 })
 
 </script>
