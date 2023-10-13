@@ -63,6 +63,22 @@ npm run preview
 
 - MIT
 
+# Technologies used
+
+- Vue.js 3
+- Nuxt.js 3
+- Tailwind css
+- Pinia
+- Scss
+
+# Database
+
+- Firebase
+
+# Libs
+
+- https://motion.vueuse.org
+
 _In development..._
 
 
