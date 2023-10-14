@@ -78,7 +78,7 @@ let registerErrorMessage = ref("")
 
 const registerButton = () => {
   if (validateForm()) {
-    createUser(name.value,email.value,password.value)
+    //createUser(name.value,email.value,password.value)
 
     if(registerErrorMessage.value.length > 0) {
       ErrorMessagePopup(registerErrorMessage.value)
