@@ -182,6 +182,7 @@ import Footer from '~/components/Home/Footer.vue';
 
 const startButton = () => location.href = '/auth/register'
 
+
 // SEO
 
 useHead({
