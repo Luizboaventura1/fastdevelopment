@@ -14,7 +14,7 @@
       class="h-full"
     >
       <nav
-        class="h-[60px]"
+        class="h-[60px] flex items-center"
       >
 
       </nav>

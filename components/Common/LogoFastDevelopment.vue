@@ -9,7 +9,7 @@
 <script setup>
 
 defineProps({
-  size: String
+  size: String,
 })
 
 </script>
