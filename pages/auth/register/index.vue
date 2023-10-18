@@ -78,7 +78,7 @@ let registerErrorMessage = ref("")
 
 const registerButton = () => {
   if (validateForm()) {
-    //createUser(name.value,email.value,password.value)
+    createUser(name.value,email.value,password.value)
 
     if(registerErrorMessage.value.length > 0) {
       ErrorMessagePopup(registerErrorMessage.value)
@@ -89,10 +89,10 @@ const registerButton = () => {
   }
 }
 
-const loginWithGoogle = async () => {
+const loginWithGoogle = () => {
   const provider = new GoogleAuthProvider()
 
-  await signInWithRedirect(auth, provider).then(() => {
+  signInWithRedirect(auth, provider).then(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const uid = user.uid
