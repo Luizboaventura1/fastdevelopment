@@ -4,7 +4,9 @@
 
       <div class="logo">
         <div class="logo-fastdavelopment text-violet-500 text-lg font-medium">
-          &lt;<span class="text-white">FastDev</span>/&gt;
+          <LogoFastDevelopment
+            size="40"
+          />
         </div>
       </div>
 
@@ -51,9 +53,5 @@
 </template>
 
 <script setup>
-
+import LogoFastDevelopment from '../Common/LogoFastDevelopment.vue';
 </script>
-
-<style lang="scss" scoped>
-
-</style>

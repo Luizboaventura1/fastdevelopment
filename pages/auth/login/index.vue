@@ -40,17 +40,22 @@
       </div>
     </form>
   </TemplateAuth>
+  <ErrorMessage
+    :popup="statePopup"
+    :message="errorMessagePopup"
+   />
 </template>
 
 <script setup>
 import TemplateAuth from '../components/TemplateAuth.vue';
 import InputEmail from '../components/InputEmail.vue';
 import InputPassword from '../components/InputPassword.vue'
+import ErrorMessage from '../components/Popups/ErrorMessage.vue';
 import SubmitButton from '../components/SubmitButton.vue';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import {auth} from '../../../firebase'
 import GoogleButton from '../components/GoogleButton.vue';
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider } from "firebase/auth";
 import { useRouter } from '#vue-router';
 
 const router = useRouter()
@@ -60,7 +65,10 @@ let password = ref('')
 
 const loginButton = () => {
   if (validateForm()) {
-    signInWithEmailAndPassword(auth, email.value, password.value);
+    signInWithEmailAndPassword(auth, email.value, password.value)
+    .catch(() => {
+      ErrorMessagePopup('Conta não encontrada')
+    })
   }
 }
 
@@ -71,7 +79,8 @@ const loginWithGoogle = async () => {
     const logged = useCookie('token')
     logged.value = true
     
-    router.push('/')
+    // go dashboard
+    router.push('/dashboard')
   })
 }
 
@@ -82,7 +91,9 @@ const validateForm = () => {
   const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
   const passwordRegex = /^\S+$/
 
+  // returns at the end whether everything is correct or not with a true or false
   let stateValidade = ref(false)
+
   const generalState = ref({
     email: false,
     password: false
@@ -135,5 +146,14 @@ const validateForm = () => {
 useHead({
   title: 'Login'
 })
+
+let statePopup = ref(false)
+let errorMessagePopup = ref('')
+
+const ErrorMessagePopup = (message) => {
+  errorMessagePopup.value = message
+  statePopup.value = true
+  setTimeout(() => statePopup.value = false,2000)
+}
 
 </script>

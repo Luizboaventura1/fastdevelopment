@@ -7,7 +7,9 @@
       <ProfileAside />
       <FrameAside />
       <div class="divider w-full h-[1px] bg-zinc-700 my-3"></div>
-      <LogoutAside />
+      <LogoutAside
+        :event="logout"
+      />
     </aside>
 
     <header
@@ -31,11 +33,28 @@ import FrameAside from './dashboard/components/DashBoardComponents/FrameAside.vu
 import LogoAside from './dashboard/components/DashBoardComponents/LogoAside.vue'
 import ProfileAside from './dashboard/components/DashBoardComponents/ProfileAside.vue'
 import LogoutAside from './dashboard/components/DashBoardComponents/LogoutAside.vue'
+import { signOut } from "firebase/auth";
+import { auth } from '../../../firebase'
+import { useRouter } from '#vue-router';
+
+const router = useRouter()
 
 definePageMeta({
   middleware: "auth"
 })
- 
+
+const logout = () => {
+  // end the session
+  signOut(auth)
+  
+  // blocks the routes
+  const logged = useCookie('token')
+  logged.value = false
+
+  // back home
+  router.push('/')
+}
+
 </script>
 
 <style lang="scss" scoped>

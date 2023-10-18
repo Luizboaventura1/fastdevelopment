@@ -49,7 +49,6 @@
     :popup="statePopup"
     :message="errorMessagePopup"
    />
-   <button @click="sair">sair</button>
 </template>
 
 <script setup>
@@ -60,29 +59,21 @@ import InputName from '../components/InputName.vue';
 import SubmitButton from '../components/SubmitButton.vue';
 import ErrorMessage from '../components/Popups/ErrorMessage.vue';
 import GoogleButton from '../components/GoogleButton.vue';
-import { createUserWithEmailAndPassword, onAuthStateChanged, signOut} from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithPopup } from "firebase/auth";
 import { auth, db } from '../../../firebase'
 import { collection, addDoc} from "firebase/firestore";
-import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
+import { GoogleAuthProvider } from "firebase/auth";
 import { useRouter } from '#vue-router';
-
-const sair = () => signOut(auth).then(() => {
-})
 
 const router = useRouter()
 
 let name = ref('')
 let email = ref('')
 let password = ref('')
-let registerErrorMessage = ref("")
 
 const registerButton = () => {
   if (validateForm()) {
     createUser(name.value,email.value,password.value)
-
-    if(registerErrorMessage.value.length > 0) {
-      ErrorMessagePopup(registerErrorMessage.value)
-    }
 
     const logged = useCookie('token')
     logged.value = true
@@ -92,23 +83,30 @@ const registerButton = () => {
 const loginWithGoogle = () => {
   const provider = new GoogleAuthProvider()
 
-  signInWithRedirect(auth, provider).then(() => {
+  signInWithPopup(auth, provider).then(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        // adds login data to firestore and an array where the kanban board data is located
         const uid = user.uid
         addUserInFirestore(name,email,password,uid)
 
+        // the user receives the token and unlocks the routes
         const logged = useCookie('token')
         logged.value = true
       }
     })
-    router.push('/')
+
+    // go dashboard
+    router.push('/dashboard')
   })
 }
 
 const createUser = (name,email,password) => {
 
   createUserWithEmailAndPassword(auth, email, password)
+  .catch(() => {
+    ErrorMessagePopup('Usuário existente')
+  })
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -138,7 +136,9 @@ const validateForm = () => {
   const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
   const passwordRegex = /^\S+$/
 
+  // returns at the end whether everything is correct or not with a true or false
   let stateValidade = ref(false)
+
   const generalState = ref({
     name: false,
     email: false,
