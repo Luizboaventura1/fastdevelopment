@@ -24,13 +24,3 @@ The main components folder is used throughout the project, each feature has its 
   - *Other project files here...*
 
 - *Other project folders and files here...*
-
-In the components folder there is a folder called Common which contains generic components that will be used throughout the project
-
-- Components
-
-  - Buttons
-    All buttons will have a prop called event where you can add a function to it
-  
-  - Common
-    The common folder is where the components that will be used throughout the system will be stored

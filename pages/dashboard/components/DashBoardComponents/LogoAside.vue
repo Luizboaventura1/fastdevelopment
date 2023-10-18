@@ -8,4 +8,5 @@
 
 <script setup>
 import LogoFastDevelopment from '@/components/Common/LogoFastDevelopment.vue'
+
 </script>

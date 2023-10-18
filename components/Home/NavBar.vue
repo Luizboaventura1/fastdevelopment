@@ -25,7 +25,7 @@
 <script setup>
 import LoginButton from './LoginButton.vue';
 import RegisterButton from './RegisterButton.vue';
-import LogoFastDevelopment from '../Common/LogoFastDevelopment.vue';
+import LogoFastDevelopment from '../Common/LogoFastDevelopment.vue'
 
 const login = () => location.href = '/auth/login'
 

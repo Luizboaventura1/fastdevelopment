@@ -150,7 +150,7 @@
             </li>
           </ul>
         </div>
-        <div class="mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
+        <div class="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
           <div class="rounded-2xl bg-subSecondaryColorF py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
             <div class="mx-auto max-w-xs px-8">
               <p class="text-base font-semibold text-slate-50">Paque apenas uma vez!</p>
@@ -172,6 +172,7 @@
 </template>
 
 <script setup>
+import {useTokenStore} from '../stores/token.js'
 import Header from '~/components/Home/Header.vue';
 import NavBar from '~/components/Home/NavBar.vue';
 import Main from '~/components/Home/Main.vue';
@@ -179,9 +180,11 @@ import StartButton from '~/components/Home/StartButton.vue';
 import SectionBenefits from '~/components/Home/SectionBenefits.vue';
 import Section from '~/components/Home/Section.vue';
 import Footer from '~/components/Home/Footer.vue';
+const store = useTokenStore()
+
+console.log(store.token)
 
 const startButton = () => location.href = '/auth/register'
-
 
 // SEO
 
@@ -192,10 +195,6 @@ useHead({
     { name: 'keywords', content: 'Kanban,desenvolvimento ágil,jira,trello'},
     { name: 'author', content: 'Luiz'}
   ]
-})
-
-definePageMeta({
-  middleware: 'auth'
 })
 
 </script>

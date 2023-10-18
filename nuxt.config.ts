@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   css: ['~/assets/css/main.css'],
   postcss: {
     plugins: {
@@ -14,8 +14,9 @@ export default defineNuxtConfig({
   ],
   pinia: {
     autoImports: [
-      'defineStore',
-      ['defineStore', 'definePiniaStore'],
+      // automatically imports `defineStore`
+      'defineStore', // import { defineStore } from 'pinia'
+      ['defineStore', 'definePiniaStore'], // import { defineStore as definePiniaStore } from 'pinia'
     ],
   },
   runtimeConfig: {
@@ -37,8 +38,5 @@ export default defineNuxtConfig({
         }
       }
     }
-  },
-  alias: {
-    "@": "../../../../",
   }
 })
