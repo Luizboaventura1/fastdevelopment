@@ -50,7 +50,7 @@ import SubmitButton from '../components/SubmitButton.vue';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import {auth} from '../../../firebase'
 import GoogleButton from '../components/GoogleButton.vue';
-import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useRouter } from '#vue-router';
 
 const router = useRouter()
@@ -67,7 +67,7 @@ const loginButton = () => {
 const loginWithGoogle = async () => {
   const provider = new GoogleAuthProvider()
 
-  await signInWithRedirect(auth, provider).then(() => {
+  await signInWithPopup(auth, provider).then(() => {
     const logged = useCookie('token')
     logged.value = true
     
