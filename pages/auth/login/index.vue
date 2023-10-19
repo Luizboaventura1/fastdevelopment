@@ -66,6 +66,13 @@ let password = ref('')
 const loginButton = () => {
   if (validateForm()) {
     signInWithEmailAndPassword(auth, email.value, password.value)
+    .then(() => {
+      const logged = useCookie('token')
+      logged.value = true
+      
+      // go dashboard
+      router.push('/dashboard')
+    })
     .catch(() => {
       ErrorMessagePopup('Conta não encontrada')
     })

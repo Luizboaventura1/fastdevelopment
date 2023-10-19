@@ -1,29 +1,37 @@
 <template>
   <div class="dashboard w-full h-screen flex">
     <aside
-      class="h-screen bg-subSecondaryColorF w-[280px] p-3"
+      class="h-screen bg-subSecondaryColorF overflow-hidden"
+      :style="`width:${dashboardWidth}px;`"
     >
-      <LogoAside />
-      <ProfileAside />
-      <FrameAside />
-      <div class="divider w-full h-[1px] bg-zinc-700 my-3"></div>
-      <LogoutAside
-        :event="logout"
-      />
+      <div class="p-3">
+        <LogoAside />
+        <ProfileAside />
+        <FrameAside />
+        <div class="divider w-full h-[1px] bg-zinc-700 my-3"></div>
+        <LogoutAside
+          :event="logout"
+        />
+      </div>
     </aside>
 
-    <header
-      class="h-full"
-    >
-      <nav
-        class="h-[60px] flex items-center"
+    <div class="flex-1">
+      <header
+        class="h-full"
+        :class="headerClass"
       >
-
-      </nav>
-      <main class="bg-secondaryColorF w-full overflow-y-auto p-3">
-        <NuxtPage />
-      </main>
-    </header>
+        <nav
+          class="h-[60px] flex items-center px-4"
+        >
+          <BurguerButton
+            :event="dashboardToggle"
+          />
+        </nav>
+        <main class="bg-secondaryColorF w-full overflow-y-auto p-3">
+          <NuxtPage />
+        </main>
+      </header>
+    </div>
 
   </div>
 </template>
@@ -36,6 +44,7 @@ import LogoutAside from './dashboard/components/DashBoardComponents/LogoutAside.
 import { signOut } from "firebase/auth";
 import { auth } from '../../../firebase'
 import { useRouter } from '#vue-router';
+import BurguerButton from './dashboard/components/BurguerButton.vue';
 
 const router = useRouter()
 
@@ -55,12 +64,31 @@ const logout = () => {
   router.push('/')
 }
 
+// control the dashboard
+
+let dashboardWidth = ref('280')
+
+const dashboardToggle = () => {
+  if (dashboardWidth.value === '280')
+    return dashboardWidth.value = '0'
+  
+  return dashboardWidth.value = '280'
+}
+
+const headerClass = computed(() => {
+  return dashboardWidth.value === 0 ? 'w-screen' : 'w-full'
+})
+
 </script>
 
 <style lang="scss" scoped>
 
+  aside {
+    transition: .5s;
+  } 
+
   header {
-    width: calc(100% - 280px);
+    //width: calc(100% - 280px);
   }
 
   nav {

@@ -1,10 +1,11 @@
 <template>
   <div class="my-4 hover:bg-secondaryColorF p-2 flex items-center gap-3 rounded-md transition-colors cursor-pointer">
     <div class="avatar-container">
-      <div class="avatar rounded-full w-[45px] h-[45px] overflow-hidden">
+      <div class="rounded-full w-[45px] h-[45px] overflow-hidden">
+
         <img
-          class="w-[45px] h-[45px] hidden"
-          src=""
+          class="w-[45px] h-[45px]"
+          src="../../../../assets/avatar-fast-development.png"
           alt="User"
         >
       </div>
