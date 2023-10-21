@@ -22,8 +22,11 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",
+    "@vueuse/components": "^10.5.0",
+    "@vueuse/core": "^10.5.0",
     "@vueuse/motion": "^2.0.0",
     "firebase": "^10.4.0",
-    "pinia": "^2.1.6"
+    "pinia": "^2.1.6",
+    "vue-draggable-next": "^2.2.1"
   }
 }

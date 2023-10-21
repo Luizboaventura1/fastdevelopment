@@ -7,7 +7,9 @@
       <div class="p-3">
         <LogoAside />
         <ProfileAside />
-        <FrameAside />
+        <FrameAside
+          :event="() => router.push('/dashboard/frame')"
+        />
         <div class="divider w-full h-[1px] bg-zinc-700 my-3"></div>
         <LogoutAside
           :event="logout"
@@ -15,7 +17,7 @@
       </div>
     </aside>
 
-    <div class="flex-1">
+    <div class="flex-1 w-[calc(100% - 280px)] overflow-x-auto">
       <header
         class="h-full"
         :class="headerClass"
@@ -27,7 +29,7 @@
             :event="dashboardToggle"
           />
         </nav>
-        <main class="bg-secondaryColorF w-full overflow-y-auto p-3">
+        <main class="bg-secondaryColorF overflow-x-auto p-3">
           <NuxtPage />
         </main>
       </header>
@@ -75,9 +77,9 @@ const dashboardToggle = () => {
   return dashboardWidth.value = '280'
 }
 
-const headerClass = computed(() => {
+/*const headerClass = computed(() => {
   return dashboardWidth.value === 0 ? 'w-screen' : 'w-full'
-})
+})*/
 
 </script>
 
@@ -86,10 +88,6 @@ const headerClass = computed(() => {
   aside {
     transition: .5s;
   } 
-
-  header {
-    //width: calc(100% - 280px);
-  }
 
   nav {
     background-color: #1b1b1d;

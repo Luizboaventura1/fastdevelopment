@@ -11,6 +11,7 @@ export default defineNuxtConfig({
   modules: [
     '@pinia/nuxt',
     '@vueuse/motion/nuxt'
+    
   ],
   pinia: {
     autoImports: [

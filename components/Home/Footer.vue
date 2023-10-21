@@ -37,7 +37,7 @@
           </span>
         </div>
         <div class="ms-auto w-full sm:w-auto mb-3 sm:mb-0">
-          <p class="text-base sm:text-sm mx-2 mt-4 sm:mt-0">Desenvolvido por
+          <p class="text-sm mx-2 mt-4 sm:mt-0">Desenvolvido por
             <a
               class="font-bold hover:underline"
               href="https://github.com/Luizboaventura1"
