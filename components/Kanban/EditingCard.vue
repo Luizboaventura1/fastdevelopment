@@ -3,7 +3,7 @@
     v-if="props.stateModal"
     class="background flex items-center justify-center px-4 py-3 absolute left-0 top-0 z-40 w-full h-full"
   >
-    <div class="modal w-full h-full max-w-2xl rounded-md bg-secondaryColorF overflow-y-auto">
+    <div class="modal relative w-full h-full max-w-2xl rounded-md bg-secondaryColorF overflow-y-auto">
       <div class="w-full px-1">
         <nav class="flex w-full h-[70px] px-3">
           <div class="title w-10/12 flex items-center">
@@ -29,10 +29,10 @@
             cols="12"
             rows="12"
             placeholder="Sua descrição..."
-            class="w-full outline-none bg-subSecondaryColorF p-2 rounded-lg text-white"  
+            class="w-full outline-none resize-none bg-subSecondaryColorF p-2 rounded-lg text-white"  
           />
         </main>
-        <div class="buttons flex gap-3 px-3 my-3">
+        <div class="buttons h-[40px] bg-secondaryColorF flex gap-3 px-3 my-3">
           <button
             class="px-4 py-2 w-8/12 bg-primaryColorF hover:bg-violet-700 transition-colors rounded-md font-medium text-white"
           >
@@ -70,7 +70,11 @@ const props = defineProps({
   
     .modal {
       box-shadow: 0 0 25px rgba(0, 0, 0, 0.445);
+
+      textarea {
+        height: calc(100dvh - 230px);
+      }
     }
   }
   
-  </style>
+</style>
