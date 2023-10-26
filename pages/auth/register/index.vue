@@ -49,6 +49,9 @@
     :popup="statePopup"
     :message="errorMessagePopup"
    />
+  <Loading
+    :visibility="loading"
+  />
 </template>
 
 <script setup>
@@ -64,8 +67,10 @@ import { auth, db } from '../../../firebase'
 import { collection, addDoc} from "firebase/firestore";
 import { GoogleAuthProvider } from "firebase/auth";
 import { useRouter } from '#vue-router';
+import Loading from '~/components/Common/Loading.vue';
 
 const router = useRouter()
+let loading = ref(false)
 
 let name = ref('')
 let email = ref('')
@@ -73,6 +78,7 @@ let password = ref('')
 
 const registerButton = () => {
   if (validateForm()) {
+    loading.value = true
     createUser(name.value,email.value,password.value)
 
     const logged = useCookie('token')
@@ -97,13 +103,16 @@ const loginWithGoogle = () => {
     })
 
     // go dashboard
-    router.push('/dashboard')
+    router.push('/dashboard/frame')
   })
 }
 
 const createUser = (name,email,password) => {
 
-  createUserWithEmailAndPassword(auth, email, password)
+  createUserWithEmailAndPassword(auth, email, password).then(() => {
+    loading.value = false
+    router.push('/dashboard/frame')
+  })
   .catch(() => {
     ErrorMessagePopup('Usuário existente')
   })

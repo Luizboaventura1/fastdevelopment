@@ -44,6 +44,9 @@
     :popup="statePopup"
     :message="errorMessagePopup"
    />
+   <Loading
+    :visibility="loading"
+  />
 </template>
 
 <script setup>
@@ -57,21 +60,26 @@ import {auth} from '../../../firebase'
 import GoogleButton from '../components/GoogleButton.vue';
 import { GoogleAuthProvider } from "firebase/auth";
 import { useRouter } from '#vue-router';
+import Loading from '~/components/Common/Loading.vue';
 
 const router = useRouter()
+let loading = ref(false)
 
 let email = ref('')
 let password = ref('')
 
 const loginButton = () => {
   if (validateForm()) {
+    loading.value = true
+
     signInWithEmailAndPassword(auth, email.value, password.value)
     .then(() => {
       const logged = useCookie('token')
       logged.value = true
+      loading.value = false // Disable Loading
       
       // go dashboard
-      router.push('/dashboard')
+      router.push('/dashboard/frame')
     })
     .catch(() => {
       ErrorMessagePopup('Conta não encontrada')
@@ -81,13 +89,15 @@ const loginButton = () => {
 
 const loginWithGoogle = async () => {
   const provider = new GoogleAuthProvider()
+  loading.value = true
 
   await signInWithPopup(auth, provider).then(() => {
     const logged = useCookie('token')
     logged.value = true
+    loading.value = false // Disable Loading
     
     // go dashboard
-    router.push('/dashboard')
+    router.push('/dashboard/frame')
   })
 }
 

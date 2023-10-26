@@ -36,6 +36,10 @@
     </div>
 
   </div>
+
+  <Loading
+    :visibility="loading"
+  />
 </template>
 
 <script setup>
@@ -47,23 +51,30 @@ import { signOut } from "firebase/auth";
 import { auth } from '../../../firebase'
 import { useRouter } from '#vue-router';
 import BurguerButton from './dashboard/components/BurguerButton.vue';
+import Loading from '~/components/Common/Loading.vue';
 
 const router = useRouter()
+let loading = ref(false)
 
 definePageMeta({
   middleware: "auth"
 })
 
-const logout = () => {
-  // end the session
-  signOut(auth)
-  
-  // blocks the routes
-  const logged = useCookie('token')
-  logged.value = false
+const logout = async () => {
+  loading.value = true
 
-  // back home
-  router.push('/')
+  // end the session
+  await signOut(auth).then(() => {
+    loading.value = false // Disable Loading
+
+    // blocks the routes
+    const logged = useCookie('token')
+    logged.value = false
+
+    // back home
+    router.push('/')
+
+  })
 }
 
 // control the dashboard
@@ -76,10 +87,6 @@ const dashboardToggle = () => {
   
   return dashboardWidth.value = '280'
 }
-
-/*const headerClass = computed(() => {
-  return dashboardWidth.value === 0 ? 'w-screen' : 'w-full'
-})*/
 
 </script>
 
