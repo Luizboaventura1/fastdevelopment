@@ -45,25 +45,25 @@
           Tenha uma melhor visualização do trabalho em andamento e controle melhor suas tarefas.
         </p>
         <ul class="text-slate-50">
-          <li v-motion-fade-visible class="flex gap-x-3 mb-1">
+          <li class="flex gap-x-3 mb-1">
             <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
             </svg>
             Facilidade de Uso
           </li>
-          <li v-motion-fade-visible class="flex gap-x-3 mb-1">
+          <li class="flex gap-x-3 mb-1">
             <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
             </svg>
             Economize tempo
           </li>
-          <li v-motion-fade-visible class="flex gap-x-3 mb-1">
+          <li class="flex gap-x-3 mb-1">
             <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
             </svg>
             Aplicabilidade simples
           </li>
-          <li v-motion-fade-visible class="flex gap-x-3 mb-1">
+          <li class="flex gap-x-3 mb-1">
             <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
             </svg>
@@ -74,7 +74,6 @@
 
       <div class="md:w-6/12 p-5">
         <img
-          v-motion-fade-visible-once
           class="w-full rounded-xl shadow-lg"
           src="../assets/Kanban board.svg"
           alt="Kanban board"
@@ -88,7 +87,6 @@
     <div class="flex flex-col-reverse md:flex-row py-9">
       <div class="md:w-6/12 p-5">
         <h1
-          v-motion-fade-visible-once
           class="text-slate-50 font-bold text-4xl mb-5"
         >
           Gerencie melhor seus projetos com mais rapidez
@@ -99,7 +97,7 @@
           Comece hoje grátis
         </StartButton>
       </div>
-      <div v-motion-fade-visible class="md:w-6/12 p-6">
+      <div class="md:w-6/12 p-6">
         <img
           class="w-full"
           src="../assets/site_stats.svg"
@@ -112,10 +110,10 @@
   <div class="bg-secondaryColorF py-24 sm:py-32">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto max-w-2xl sm:text-center">
-        <h2 v-motion-fade-visible class="text-3xl font-bold tracking-tight text-slate-50 sm:text-4xl">Comece a usar hoje!</h2>
+        <h2 class="text-3xl font-bold tracking-tight text-slate-50 sm:text-4xl">Comece a usar hoje!</h2>
         <p class="mt-6 text-lg leading-8 text-neutral-300">Obtenha um sistema completo para o gerenciamento de tarefas de pequeno e grande porte para uso pessoal ou empresarial.</p>
       </div>
-      <div v-motion-fade-visible class="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-subSecondaryColorF sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
+      <div class="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-subSecondaryColorF sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
         <div class="p-8 sm:p-10 lg:flex-auto">
           <h3 class="text-2xl font-bold tracking-tight text-slate-50">Preço exclusivo</h3>
           <p class="mt-6 text-base leading-7 text-zinc-300">Tenha acesso completo a todas as funcionalidades do nosso sistema se você fazer seu cadastro hoje!</p>
