@@ -46,23 +46,6 @@ Locally preview production build:
 # npm
 npm run preview
 ```
-# Pages
-
-- Home
-![image](https://github.com/Luizboaventura1/fastdevelopment/assets/122652168/17f36589-6a99-42e9-9d61-ab1c8589e42c)
-
-- Privacy Policy
-- Terms
-- Dashboard
-- Profile
-- Login
-![image](https://github.com/Luizboaventura1/fastdevelopment/assets/122652168/2f571e8c-a9f1-4ddd-9c36-c1527b82ffc4)
-
-- Register
-![image](https://github.com/Luizboaventura1/fastdevelopment/assets/122652168/c604098a-bcd2-468e-840a-388042a914bf)
-
-
-
 # License
 
 - MIT
