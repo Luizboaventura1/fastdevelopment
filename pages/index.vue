@@ -177,6 +177,8 @@ import StartButton from '~/components/Home/StartButton.vue';
 import SectionBenefits from '~/components/Home/SectionBenefits.vue';
 import Section from '~/components/Home/Section.vue';
 import Footer from '~/components/Home/Footer.vue';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../../../firebase'
 
 const startButton = () => location.href = '/auth/register'
 
@@ -189,6 +191,17 @@ useHead({
     { name: 'keywords', content: 'Kanban,desenvolvimento ágil,jira,trello'},
     { name: 'author', content: 'Luiz'}
   ]
+})
+
+onMounted(() => {
+  const logged = useCookie('token')
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) 
+      logged.value = true
+     else 
+      logged.value = false
+  })
 })
 
 </script>

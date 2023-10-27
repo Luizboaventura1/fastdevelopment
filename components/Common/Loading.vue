@@ -19,7 +19,7 @@ defineProps({
 
 <style lang="scss" scoped>
 .background {
-  background-color: rgba(0, 0, 0, 0.816);
+  background-color: rgb(0, 0, 0);
 
   img {
     animation: logo 2s ease-in-out infinite;

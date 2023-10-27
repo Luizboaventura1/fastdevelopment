@@ -7,7 +7,7 @@ export default defineNuxtRouteMiddleware(() => {
   let isLoggedIn = ref(logged.value)
   
   if (!isLoggedIn.value && route.name === 'dashboard') {
-    return navigateTo('/auth/login')
+    return navigateTo('/auth/register')
   }
 
 })

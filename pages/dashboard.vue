@@ -52,9 +52,11 @@ import { auth } from '../../../firebase'
 import { useRouter } from '#vue-router';
 import BurguerButton from './dashboard/components/BurguerButton.vue';
 import Loading from '~/components/Common/Loading.vue';
+import { onAuthStateChanged } from 'firebase/auth';
 
 const router = useRouter()
-let loading = ref(false)
+// starts true to check if the user is logged in
+let loading = ref(true)
 
 definePageMeta({
   middleware: "auth"
@@ -87,6 +89,23 @@ const dashboardToggle = () => {
   
   return dashboardWidth.value = '280'
 }
+
+// Checks whether the user is logged in or not
+
+onMounted(() => {
+  const logged = useCookie('token')
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      logged.value = true
+      loading.value = false
+    }
+     else {
+      logged.value = false
+      router.push('/')
+    }
+  })
+})
 
 </script>
 
