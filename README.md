@@ -6,6 +6,13 @@ FastDevelopment is a tool for people who want more productivity in their project
 
 Deploy: https://fastdevelopment.vercel.app
 
+### Developer guide
+[click here](https://github.com/Luizboaventura1/fastdevelopment/tree/main/docs/developer-guide)
+
+### User guide
+
+[click here](https://github.com/Luizboaventura1/fastdevelopment/tree/main/docs/user-guide)
+
 ## Setup
 
 Make sure to install the dependencies:
