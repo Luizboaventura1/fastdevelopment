@@ -193,6 +193,9 @@ useHead({
   ]
 })
 
+const runtimeConfig = useRuntimeConfig()
+
+console.log(runtimeConfig.public.cod)
 </script>
 
 <style lang="scss">

@@ -3,7 +3,7 @@ import { getFirestore } from 'firebase/firestore'
 import { getAuth } from "firebase/auth";
 
 export const firebaseConfig = initializeApp({
-  apiKey: "AIzaSyCGXLEqMwDuH_KADPhPFq1Upfdny044e5c",
+  apiKey: process.env.API_KEY,
   authDomain: "fastdevelopment-712e1.firebaseapp.com",
   projectId: "fastdevelopment-712e1",
   storageBucket: "fastdevelopment-712e1.appspot.com",

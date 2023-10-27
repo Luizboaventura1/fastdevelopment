@@ -21,7 +21,9 @@ export default defineNuxtConfig({
     ],
   },
   runtimeConfig: {
+    apiSecret: "AIzaSyCGXLEqMwDuH_KADPhPFq1Upfdny044e5c",
     public: {
+      cod: process.env.TESTE,
       motion: {
         directives: {
           'pop-top': {
@@ -39,5 +41,5 @@ export default defineNuxtConfig({
         }
       }
     }
-  }
+  },
 })
