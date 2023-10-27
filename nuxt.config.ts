@@ -11,7 +11,6 @@ export default defineNuxtConfig({
   modules: [
     '@pinia/nuxt',
     '@vueuse/motion/nuxt'
-    
   ],
   pinia: {
     autoImports: [
@@ -21,9 +20,7 @@ export default defineNuxtConfig({
     ],
   },
   runtimeConfig: {
-    apiSecret: "AIzaSyCGXLEqMwDuH_KADPhPFq1Upfdny044e5c",
     public: {
-      cod: process.env.TESTE,
       motion: {
         directives: {
           'pop-top': {
