@@ -40,7 +40,7 @@ export default defineNuxtConfig({
       }
     },
     gtag: {
-      id: 'G-XXXXXXXXXX'
+      id: 'G-1P1CHBPTH6'
     }
   }
 })
