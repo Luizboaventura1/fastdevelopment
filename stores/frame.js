@@ -7,16 +7,16 @@ export const useFrame = defineStore('frame', {
           title: 'A fazer',
           cards: [
             {
-              title: 'Equipamento',
-              description: 'Descrição...'
+              title: 'Desenvolver funcionalidade de login',
+              description: 'Implementar o sistema de autenticação para o aplicativo.'
             },
             {
-              title: 'Site',
-              description: 'Descrição...'
+              title: 'Criar página inicial',
+              description: 'Construir a página inicial com informações sobre o aplicativo.'
             },
             {
-              title: 'Lp',
-              description: 'Descrição...'
+              title: 'Configurar banco de dados',
+              description: 'Configurar o Firebase Firestore como banco de dados para armazenar dados do aplicativo.'
             }
           ] 
         },
@@ -24,16 +24,16 @@ export const useFrame = defineStore('frame', {
           title: 'Em progresso',
           cards: [
             {
-              title: 'Equipamento',
-              description: 'Descrição...'
+              title: 'Design da interface de usuário',
+              description: 'Criar o design da interface de usuário para o aplicativo.'
             },
             {
-              title: 'Site',
-              description: 'Descrição...'
+              title: 'Implementar recursos avançados',
+              description: 'Adicionar recursos avançados, como notificações em tempo real.'
             },
             {
-              title: 'Lp',
-              description: 'Descrição...'
+              title: 'Testes e depuração',
+              description: 'Realizar testes extensivos e depuração do aplicativo.'
             }
           ] 
         }
