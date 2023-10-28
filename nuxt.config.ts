@@ -10,7 +10,8 @@ export default defineNuxtConfig({
   },
   modules: [
     '@pinia/nuxt',
-    '@vueuse/motion/nuxt'
+    '@vueuse/motion/nuxt',
+    'nuxt-gtag'
   ],
   pinia: {
     autoImports: [
@@ -37,6 +38,9 @@ export default defineNuxtConfig({
           }
         }
       }
+    },
+    gtag: {
+      id: 'G-XXXXXXXXXX'
     }
-  },
+  }
 })
