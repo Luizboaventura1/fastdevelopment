@@ -193,7 +193,6 @@ const editCard = () => {
 .cards {
   .card {
     position: relative;
-    transition: .3s;
 
     &:hover {
       background-color: #252529;
