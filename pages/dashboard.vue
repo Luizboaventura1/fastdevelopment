@@ -47,7 +47,7 @@ import LogoAside from './dashboard/components/DashBoardComponents/LogoAside.vue'
 import ProfileAside from './dashboard/components/DashBoardComponents/ProfileAside.vue'
 import LogoutAside from './dashboard/components/DashBoardComponents/LogoutAside.vue'
 import { signOut } from "firebase/auth";
-import { auth } from '../../../firebase'
+import { auth } from '../../../firebase';
 import { useRouter } from '#vue-router';
 import BurguerButton from './dashboard/components/BurguerButton.vue';
 import Loading from '~/components/Common/Loading.vue';
@@ -104,6 +104,7 @@ onMounted(() => {
       router.push('/')
     }
   })
+
 })
 
 </script>
