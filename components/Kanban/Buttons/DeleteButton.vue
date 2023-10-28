@@ -1,6 +1,6 @@
 <template>
   <button
-    @click="event"
+    @click.stop="event"
     class="flex items-center justify-between hover:bg-red-700 transition-colors font-medium text-white rounded-md bg-subSecondaryColorF w-full py-2 px-3"
   >
     Excluir

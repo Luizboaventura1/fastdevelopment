@@ -22,6 +22,7 @@
                 <ModalEditList
                   v-on-click-outside="closeModalList"
                   :stateModal="frame.stateModal"
+                  :event="closeModalList"
                 />
               </div>
             </div>
@@ -35,7 +36,7 @@
             >
               <transition-group>
                 <div
-                  @click="editCard"
+                  @click.stop="editCard"
                   v-for="(card,indexCard) in frame.cards"
                   :key="card"
                   class="card flex items-center cursor-pointer w-full bg-secondaryColorF p-1 rounded-lg h-[50px] my-2"
@@ -53,6 +54,7 @@
                       :stateModal="card.stateModal"
                       :deleteBtn="handleWarningMessage"
                       :edit="editCard"
+                      :event="closeCard"
                     />
                   </div>
                 </div>
@@ -105,6 +107,16 @@ const dbFrame = useFrame()
 
 let frames = ref(dbFrame.frame)
 
+// add the modal state to cards
+
+frames.value.forEach(frame => {
+  frame.stateModal = false
+  frame.cards.forEach(card => {
+    card.stateModal = false
+  })
+})
+
+
 // Modal edit card
 
 let currentIndexCard = ref({indexFrame: undefined, indexCard: undefined})
@@ -123,14 +135,14 @@ const closeModalList = () => frames.value.at(currentIndexCard.value.indexFrame).
 
 const openModalEditCard = (indexFrame, indexCard) => {
 
-  frames.value.at(indexFrame).cards.at(indexCard).stateModal = !frames.value.at(indexFrame).cards.at(indexCard).stateModal
+  frames.value.at(indexFrame).cards.at(indexCard).stateModal = true
   currentIndexCard.value.indexFrame = indexFrame
   currentIndexCard.value.indexCard = indexCard
 
 }
 
 const openModalEditList = (indexFrame) => {
-  frames.value.at(indexFrame).stateModal = !frames.value.at(indexFrame).stateModal
+  frames.value.at(indexFrame).stateModal = true
   currentIndexCard.value.indexFrame = indexFrame
 }
 
@@ -169,21 +181,11 @@ let idFrame = ref()
 let idCard = ref()
 
 const editCard = () => {
-  stateModalEditCard.value = true
-
   idFrame.value = currentIndexCard.value.indexFrame
   idCard.value = currentIndexCard.value.indexCard
+
+  stateModalEditCard.value = true
 }
-
-// add the modal state to cards
-
-frames.value.forEach(frame => {
-  frame.stateModal = false
-  frame.cards.forEach(card => {
-    card.stateModal = false
-  })
-})
-
 
 </script>
 

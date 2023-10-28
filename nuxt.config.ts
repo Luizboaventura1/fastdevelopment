@@ -20,6 +20,7 @@ export default defineNuxtConfig({
     ],
   },
   runtimeConfig: {
+    API_KEY: process.env.NUXT_API_KEY,
     public: {
       motion: {
         directives: {
