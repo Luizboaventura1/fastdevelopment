@@ -5,23 +5,55 @@
 
         <img
           class="w-[45px] h-[45px]"
-          src="../../../../assets/avatar-fast-development.png"
+          :src="userPhoto"
           alt="User"
         >
       </div>
     </div>
-    <div class="user-name">
-      <div class="name truncate text-white font-medium w-32">
-        Luiz
+    <div class="user-name w-[170px]">
+      <div class="name truncate text-white font-medium w-full">
+        {{ userName }}
       </div>
-      <div class="category truncate text-zinc-400 italic w-32">
-        Developer
+      <div class="category truncate text-zinc-400 italic w-full">
+        ...
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth, db } from '../../../firebase';
+import { collection, query, where, getDocs } from "firebase/firestore";
+
+
+let userName = ref("")
+let userPhoto = ref("../../../../assets/avatar-fast-development.png")
+let userEmail = ref("")
+
+
+onMounted(() => {
+
+  // get user photo
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      userEmail.value = user.email
+      userPhoto.value = user.photoURL
+
+      // get name
+
+      const q = query(collection(db, "users"), where("email", "==", userEmail.value))
+
+      const querySnapshot = await getDocs(q)
+
+      querySnapshot.forEach((doc) => {
+        userName.value = doc.data().name
+      })
+
+    }
+  })
+})
 
 </script>
 
