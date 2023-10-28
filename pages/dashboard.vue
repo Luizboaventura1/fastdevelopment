@@ -20,7 +20,6 @@
     <div class="flex-1 w-[calc(100% - 280px)] overflow-x-auto">
       <header
         class="h-full"
-        :class="headerClass"
       >
         <nav
           class="h-[60px] flex items-center px-4"

@@ -51,12 +51,12 @@
   </template>
   
 <script setup>
-import CloseButton from './Buttons/CloseButton.vue';
+import CloseButton from '../Buttons/CloseButton.vue';
 
 const props = defineProps({
   stateModal: Boolean,
-  index: Number,
-  list: String,
+  indexCard: Number,
+  indexFrame: Number,
   closeModalBtn: Function
 })
 

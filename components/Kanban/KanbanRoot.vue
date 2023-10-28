@@ -1,33 +1,49 @@
 <template>
   <div class="bg-secondaryColorF">
     <div class="kanban flex flex-row rounded-md gap-3 p-4">
-      <!--List A-->
-      <div class="me-2 w-[350px]">
-        <div class="list-a h-auto w-full me-3 bg-subSecondaryColorF p-3 rounded-lg">
-          <div class="title-container py-2">
+
+      <div
+        v-for="(frame,indexFrame) in frames"
+        :key="frame"
+        class="me-2 w-[350px]"
+      >
+        <div class="h-auto w-full me-3 bg-subSecondaryColorF p-3 rounded-lg">
+          <div class="title-container py-2 flex items-center gap-4">
             <input
               class="bg-subSecondaryColorF w-full text-white px-3 py-1 outline-none ring-2 ring-transparent focus:ring-primaryColorF rounded-md"
               type="text"
-              v-model="toDoListTitle"
+              v-model="frame.title"
             >
+            <div class="relative">
+              <SettingsButton
+                :event="() => openModalEditList(indexFrame)"
+              />
+              <div class="absolute bottom-24 right-0">
+                <ModalEditList
+                  v-on-click-outside="closeModalList"
+                  :stateModal="frame.stateModal"
+                />
+              </div>
+            </div>
           </div>
           <div
             class="cards"
           >
             <VueDraggableNext
-              v-model="listA"
+              v-model="frame.cards"
               group="people"
             >
               <transition-group>
                 <div
-                  v-for="(card,index) in listA"
+                  @click="editCard"
+                  v-for="(card,indexCard) in frame.cards"
                   :key="card"
-                  class="card flex items-center cursor-pointer w-full bg-secondaryColorF hover:bg-zinc-800 p-1 rounded-lg h-[50px] my-2"
+                  class="card flex items-center cursor-pointer w-full bg-secondaryColorF p-1 rounded-lg h-[50px] my-2"
                 >
                   <div class="text-white px-3 truncate w-full max-w-xs">{{ card.title }}</div>
                   <div class="edit-card h-full flex items-center">
                     <div
-                      @click="openModalEditCard('listA',index)"
+                      @click.stop="openModalEditCard(indexFrame,indexCard)"
                       class="edit-card-button w-[35px] h-[35px] flex items-center justify-center rounded-lg"
                     >
                       <svg class="w-[19px] h-[19px]" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0" viewBox="0 0 24 24" style="enable-background:new 0 0 512 512" xml:space="preserve"><g><path d="M1.172 19.119A4 4 0 0 0 0 21.947V24h2.053a4 4 0 0 0 2.828-1.172L18.224 9.485l-3.709-3.709ZM23.145.855a2.622 2.622 0 0 0-3.71 0l-3.506 3.507 3.709 3.709 3.507-3.506a2.622 2.622 0 0 0 0-3.71Z" opacity="1" data-original="#000000" class=""></path></g></svg>
@@ -43,109 +59,15 @@
               </transition-group>
             </VueDraggableNext>
             <AddNewCardContainer
-              typeList="listA"
+              :indexCard="currentIndexCard.indexCard"
+              :indexFrame="currentIndexCard.indexFrame"
             />
           </div>
         </div>
       </div>
-
-      <!--List B-->
-      <div class="me-2 w-[350px]">
-        <div class="list-a h-auto w-full me-3 bg-subSecondaryColorF p-3 rounded-lg">
-          <div class="title-container py-2">
-            <input
-              class="bg-subSecondaryColorF w-full text-white px-3 py-1 outline-none ring-2 ring-transparent focus:ring-primaryColorF rounded-md"
-              type="text"
-              v-model="listTitleInProgress"
-            >
-          </div>
-          <div
-            class="cards"
-          >
-            <VueDraggableNext
-              v-model="listB"
-              group="people"
-            >
-              <transition-group>
-                <div
-                  v-for="(card,index) in listB"
-                  :key="card"
-                  class="card flex items-center cursor-pointer w-full bg-secondaryColorF hover:bg-zinc-800 p-1 rounded-lg h-[50px] my-2"
-                >
-                  <div class="text-white px-3 truncate w-full max-w-xs">{{ card.title }}</div>
-                  <div class="edit-card h-full flex items-center">
-                    <div
-                      @click="openModalEditCard('listB',index)"
-                      class="edit-card-button w-[35px] h-[35px] flex items-center justify-center rounded-lg"
-                    >
-                      <svg class="w-[19px] h-[19px]" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0" viewBox="0 0 24 24" style="enable-background:new 0 0 512 512" xml:space="preserve"><g><path d="M1.172 19.119A4 4 0 0 0 0 21.947V24h2.053a4 4 0 0 0 2.828-1.172L18.224 9.485l-3.709-3.709ZM23.145.855a2.622 2.622 0 0 0-3.71 0l-3.506 3.507 3.709 3.709 3.507-3.506a2.622 2.622 0 0 0 0-3.71Z" opacity="1" data-original="#000000" class=""></path></g></svg>
-                    </div>
-                    <ModalEditCard
-                      v-on-click-outside="closeCard"
-                      :stateModal="card.stateModal"
-                      :deleteBtn="handleWarningMessage"
-                      :edit="editCard"
-                    />
-                  </div>
-                </div>
-              </transition-group>
-            </VueDraggableNext>
-            <AddNewCardContainer
-              typeList="listB"
-            />
-          </div>
-        </div>
+      <div class="add-new-frame w-[300px]">
+        <AddNewList />
       </div>
-
-      
-      <!--List C-->
-      <div class="w-[350px]">
-        <div class="list-a h-auto w-full bg-subSecondaryColorF p-3 rounded-lg">
-          <div class="title-container py-2">
-            <input
-              class="bg-subSecondaryColorF w-full text-white px-3 py-1 outline-none ring-2 ring-transparent focus:ring-primaryColorF rounded-md"
-              type="text"
-              v-model="lisTitleDone"
-            >
-          </div>
-          <div
-            class="cards"
-          >
-            <VueDraggableNext
-              v-model="listC"
-              group="people"
-            >
-              <transition-group>
-                <div
-                  v-for="(card,index) in listC"
-                  :key="card"
-                  class="card flex items-center cursor-pointer w-full bg-secondaryColorF hover:bg-zinc-800 p-1 rounded-lg h-[50px] my-2"
-                >
-                  <div class="text-white px-3 truncate w-full max-w-xs">{{ card.title }}</div>
-                  <div class="edit-card h-full flex items-center">
-                    <div
-                      @click="openModalEditCard('listC',index)"
-                      class="edit-card-button w-[35px] h-[35px] flex items-center justify-center rounded-lg"
-                    >
-                      <svg class="w-[19px] h-[19px]" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0" viewBox="0 0 24 24" style="enable-background:new 0 0 512 512" xml:space="preserve"><g><path d="M1.172 19.119A4 4 0 0 0 0 21.947V24h2.053a4 4 0 0 0 2.828-1.172L18.224 9.485l-3.709-3.709ZM23.145.855a2.622 2.622 0 0 0-3.71 0l-3.506 3.507 3.709 3.709 3.507-3.506a2.622 2.622 0 0 0 0-3.71Z" opacity="1" data-original="#000000" class=""></path></g></svg>
-                    </div>
-                    <ModalEditCard
-                      v-on-click-outside="closeCard"
-                      :stateModal="card.stateModal"
-                      :deleteBtn="handleWarningMessage"
-                      :edit="() => editCard('listC',index)"
-                    />
-                  </div>
-                </div>
-              </transition-group>
-            </VueDraggableNext>
-            <AddNewCardContainer
-              typeList="listC"
-            />
-          </div>
-        </div>
-      </div>
- 
 
     </div>
   </div>
@@ -158,8 +80,8 @@
   />
   <EditingCard 
     :stateModal="stateModalEditCard"
-    :index="indexCard"
-    :list="listTypeCard"
+    :indexCard="idCard"
+    :indexFrame="idFrame"
     :closeModalBtn="() => stateModalEditCard = false"
     @closeModal="stateModalEditCard = false"
   />
@@ -167,44 +89,31 @@
 
 <script setup>
 import { VueDraggableNext } from 'vue-draggable-next';
-import ModalEditCard from './ModalEditCard.vue';
+import ModalEditCard from './Modals/ModalEditCard.vue';
 import { vOnClickOutside } from '@vueuse/components'
 import WarningMessage from './Modals/WarningMessage.vue';
-import EditingCard from './EditingCard.vue'
-import AddNewCardContainer from './AddNewCardContainer.vue'
+import EditingCard from './Modals/EditingCard.vue'
+import AddNewCardContainer from './Modals/AddNewCardContainer.vue'
+import AddNewList from './Modals/AddNewList.vue'
+import { useFrame } from '~/stores/frame';
+import SettingsButton from './Buttons/SettingsButton.vue';
+import ModalEditList from './Modals/ModalEditList.vue'
+
+const dbFrame = useFrame()
 
 // Title Todos
 
-let toDoListTitle = ref('Para fazer ')
-let listTitleInProgress = ref('Em progresso')
-let lisTitleDone = ref('Feito')
-
-let listA = ref([
-  {title: 'Card 1',stateModal: false},
-  {title: 'Card 2',stateModal: false},
-
-])
-
-let listB = ref([])
-let listC = ref([
-  {title: 'Pagar agiota',stateModal: false},
-])
+let frames = ref(dbFrame.frame)
 
 // Modal edit card
 
-let currentIndexCard = ref({index: undefined, list: undefined})
+let currentIndexCard = ref({indexFrame: undefined, indexCard: undefined})
 
 //When you click outside the modal it will close
-const closeCard = () => {
-  if (currentIndexCard.value.list === 'A') 
-    listA.value.at(currentIndexCard.value.index).stateModal = false
+const closeCard = () => frames.value.at(currentIndexCard.value.indexFrame).cards.at(currentIndexCard.value.indexCard).stateModal = false
 
-  else if (currentIndexCard.value.list === 'B') 
-    listB.value.at(currentIndexCard.value.index).stateModal = false
+const closeModalList = () => frames.value.at(currentIndexCard.value.indexFrame).stateModal = false
 
-  else if (currentIndexCard.value.list === 'C') 
-    listC.value.at(currentIndexCard.value.index).stateModal = false
-}
 
 /*
   The function below openModalEditCard  receives the name of the list and the card index, 
@@ -212,25 +121,17 @@ const closeCard = () => {
   and the currentIndexCard will receive the index to close the card modal if you click outside it.
 */
 
-const openModalEditCard = (listName, index) => {
+const openModalEditCard = (indexFrame, indexCard) => {
 
-  if (listName === 'listA') {
-    listA.value.at(index).stateModal = !listA.value.at(index).stateModal
-    currentIndexCard.value.index = index
-    currentIndexCard.value.list = 'A'
+  frames.value.at(indexFrame).cards.at(indexCard).stateModal = !frames.value.at(indexFrame).cards.at(indexCard).stateModal
+  currentIndexCard.value.indexFrame = indexFrame
+  currentIndexCard.value.indexCard = indexCard
 
-  } else if (listName === 'listB') {
-    listB.value.at(index).stateModal = !listB.value.at(index).stateModal
-    currentIndexCard.value.index = index
-    currentIndexCard.value.list = 'B'
+}
 
-  } else if (listName === 'listC') {
-    listC.value.at(index).stateModal = !listC.value.at(index).stateModal
-    currentIndexCard.value.index = index
-    currentIndexCard.value.list = 'C'
-
-  }
-
+const openModalEditList = (indexFrame) => {
+  frames.value.at(indexFrame).stateModal = !frames.value.at(indexFrame).stateModal
+  currentIndexCard.value.indexFrame = indexFrame
 }
 
 // Warning message
@@ -251,7 +152,9 @@ const openWarningMessage = (message) => {
 const cancelWarningMessage = () => stateWarningMessage.value = false
 
 const confirmWarningMessage = () => {
-  alert('Foi!')
+  frames.value.at(currentIndexCard.value.indexFrame).cards.splice(currentIndexCard.value.indexCard, 1)
+  
+  stateWarningMessage.value = false
 }
 
 // Edit Card
@@ -262,15 +165,25 @@ the EditingCard component will receive this data to edit the selected card
 */
 
 let stateModalEditCard = ref(false)
-let listTypeCard = ref("")
-let indexCard = ref()
+let idFrame = ref()
+let idCard = ref()
 
-const editCard = (listType,index) => {
+const editCard = () => {
   stateModalEditCard.value = true
 
-  listTypeCard.value = listType
-  indexCard.value = index
+  idFrame.value = currentIndexCard.value.indexFrame
+  idCard.value = currentIndexCard.value.indexCard
 }
+
+// add the modal state to cards
+
+frames.value.forEach(frame => {
+  frame.stateModal = false
+  frame.cards.forEach(card => {
+    card.stateModal = false
+  })
+})
+
 
 </script>
 
@@ -278,8 +191,10 @@ const editCard = (listType,index) => {
 .cards {
   .card {
     position: relative;
+    transition: .3s;
 
     &:hover {
+      background-color: #252529;
       .edit-card-button {
         display: flex !important;
       }
