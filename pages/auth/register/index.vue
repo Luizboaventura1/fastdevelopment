@@ -86,25 +86,25 @@ const registerButton = () => {
   }
 }
 
-const loginWithGoogle = () => {
-  const provider = new GoogleAuthProvider()
+const loginWithGoogle = async () => {
+  try {
+    const provider = new GoogleAuthProvider()
+    const result = await signInWithPopup(auth, provider)
 
-  signInWithPopup(auth, provider).then(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // adds login data to firestore and an array where the kanban board data is located
-        const uid = user.uid
-        addUserInFirestore(name,email,password,uid)
+    if (result.user) {
+      const { uid, email, displayName } = result.user
+      addUserInFirestore(displayName, email, '', uid)
 
-        // the user receives the token and unlocks the routes
-        const logged = useCookie('token')
-        logged.value = true
-      }
-    })
+      // create token
+      const logged = useCookie('token')
+      logged.value = true
 
-    // go dashboard
-    router.push('/dashboard/frame')
-  })
+      // go to dashboard
+      router.push('/dashboard/frame')
+    }
+  } catch (error) {
+    ErrorMessagePopup('Erro em criar a conta')
+  }
 }
 
 const createUser = (name,email,password) => {
