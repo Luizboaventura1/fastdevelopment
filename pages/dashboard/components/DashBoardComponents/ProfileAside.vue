@@ -2,9 +2,15 @@
   <nuxt-link to="/dashboard/profile">
     <div class="my-4 hover:bg-secondaryColorF p-2 flex items-center gap-3 rounded-md transition-colors cursor-pointer">
       <div class="avatar-container">
-        <div class="rounded-full w-[45px] h-[45px] overflow-hidden">
+        <div class="rounded-full relative w-[45px] h-[45px] overflow-hidden">
           <img
-            class="w-[45px] h-[45px]"
+            src="../../../../assets/avatar-fast-development.png"
+            alt="Default photo"
+            class="absolute z-0"
+          >
+          <img
+            v-if="(userPhoto == undefined) ? false : true"
+            class="w-[45px] h-[45px] absolute z-10"
             :src="userPhoto"
             alt="User"
           >
@@ -29,9 +35,8 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 
 
 let userName = ref("")
-let userPhoto = ref("../../../../assets/avatar-fast-development.png")
+let userPhoto = ref(undefined)
 let userEmail = ref("")
-
 
 onMounted(() => {
 

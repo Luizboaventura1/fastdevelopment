@@ -13,7 +13,7 @@
       class="modal-add-new-card w-full"
     >
       <textarea
-        v-model="newCardInput"
+        v-model="titleInput"
         placeholder="Descrição..."
         class="resize-none bg-secondaryColorF w-full text-white px-3 py-2 outline-none ring-2 ring-transparent focus:ring-primaryColorF rounded-md"
       />
@@ -33,13 +33,14 @@
 </template>
 
 <script setup>
+import { useFrame } from '~/stores/frame';
 import CloseButton from '../Buttons/CloseButton.vue';
 
-let props = defineProps({
-  indexCard: Number,
-  indexFrame: Number,
-})
+const dbFrame = useFrame().frame
 
+let props = defineProps({
+  indexFrame: Number
+})
 
 // Add new card
 
@@ -59,39 +60,31 @@ const openCardModal = () => {
 
 // Add new card
 
-let newCardInput = ref('')
+let titleInput = ref('')
 
-const addNewCard = (typeList) => {
-  if (validateCard(newCardInput.value)) {
-    if (typeList === 'listA') {
-      console.log('List A')
-      clearInput()
-    }
+const addNewCard = () => {
+  if (validateCard(titleInput.value)) {
+    dbFrame.at(props.indexFrame).cards.push({
+      title: titleInput.value,
+      description: ""
+    })
 
-    else if (typeList === 'listB') {
-      console.log('List B')
-      clearInput()
-    }
-
-    else if (typeList === 'listC') {
-      console.log('List C')
-      clearInput()
-    }
-  }
+    clearInput()
+  } 
 }
 
 // Validate Card
 
 const validateCard = (description) => {
-  description.trim()
-  if (description.length === 0)
+  let desc = description.replace(/\s+/g, '').trim()
+  if (desc.length === 0)
     return false
 
   return true
 }
 
 const clearInput = () => {
-  newCardInput.value = ''
+  titleInput.value = ''
 }
 </script>
 

@@ -12,7 +12,7 @@
         />
         <div class="divider w-full h-[1px] bg-zinc-700 my-3"></div>
         <LogoutAside
-          :event="logout"
+          :event="() => openWarningMessage('Sair da conta?')"
         />
       </div>
     </aside>
@@ -39,6 +39,12 @@
   <Loading
     :visibility="loading"
   />
+  <WarningMessage
+    :state="stateWarningMessage"
+    :message="warningMessage"
+    :cancel="cancelWarningMessage"
+    :confirm="confirmWarningMessage"
+  />
 </template>
 
 <script setup>
@@ -52,6 +58,7 @@ import { useRouter } from '#vue-router';
 import BurguerButton from './dashboard/components/BurguerButton.vue';
 import Loading from '~/components/Common/Loading.vue';
 import { onAuthStateChanged } from 'firebase/auth';
+import WarningMessage from '~/components/Kanban/Modals/WarningMessage.vue';
 
 const router = useRouter()
 // starts true to check if the user is logged in
@@ -106,6 +113,23 @@ onMounted(() => {
   })
 
 })
+
+// confirm exit account
+
+let stateWarningMessage = ref(false)
+let warningMessage = ref("")
+
+const openWarningMessage = (message) => {
+  stateWarningMessage.value = true
+  warningMessage.value = message
+}
+
+const cancelWarningMessage = () => stateWarningMessage.value = false
+
+const confirmWarningMessage = () => {
+  logout()
+  stateWarningMessage.value = false
+}
 
 </script>
 

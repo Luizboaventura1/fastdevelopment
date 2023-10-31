@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="props.stateModal"
-    class="background flex items-center justify-center px-4 py-3 absolute left-0 top-0 z-40 w-full h-full"
+    class="background flex items-center justify-center px-4 py-3 fixed left-0 top-0 z-40 w-full h-full"
   >
     <div class="modal relative w-full h-full max-w-2xl rounded-md bg-secondaryColorF overflow-y-auto">
       <div class="w-full px-1">
@@ -11,7 +11,7 @@
             <input
               class="bg-secondaryColorF ms-3 text-lg font-bold w-full text-slate-50 px-3 py-2 outline-none ring-2 ring-transparent focus:ring-primaryColorF rounded-md"
               type="text"
-              v-model="currentCard.title"
+              v-model="title"
             >
           </div>
           <div class="button w-2/12 flex items-center justify-end">
@@ -26,7 +26,7 @@
             <h1 class="font-bold text-slate-50 ps-3">Descrição</h1>
           </div>
           <textarea
-            v-model="currentCard.description"
+            v-model="description"
             cols="12"
             rows="12"
             placeholder="Sua descrição..."
@@ -56,14 +56,6 @@
 import CloseButton from '../Buttons/CloseButton.vue';
 import { useFrame } from '~/stores/frame';
 
-const dbFrame = useFrame()
-const emit = defineEmits(['closeModal'])
-
-const currentCard = ref({
-  title: dbFrame.frame.at(props.indexFrame).cards.at(props.indexCard).title,
-  description: dbFrame.frame.at(props.indexFrame).cards.at(props.indexCard).description
-})
-
 const props = defineProps({
   stateModal: Boolean,
   indexCard: Number,
@@ -71,13 +63,34 @@ const props = defineProps({
   closeModalBtn: Function
 })
 
+const dbFrame = ref(useFrame().frame.at(props.indexFrame).cards.at(props.indexCard))
+
+// function to close the card edit modal
+const emit = defineEmits(['closeModal'])
+
+// Card title and description
+let title = ref(dbFrame.value.title)
+let description = ref(dbFrame.value.description)
+
+// saves card changes
 const saveChanges = () => {
-  console.log(props.indexCard,props.indexFrame)
-  dbFrame.frame.at(props.indexFrame).cards.at(props.indexCard).title = currentCard.value.title
-  dbFrame.frame.at(props.indexFrame).cards.at(props.indexCard).description = currentCard.value.description
+  saveValuesToFirebase(title.value,description.value)
+
   emit('closeModal')
 }
 
+// save the values ​​in firebase
+const saveValuesToFirebase = (title,description) => {
+  dbFrame.value.title = title
+  dbFrame.value.description = description
+}
+
+// Update values ​​if they change
+watchEffect(() => {
+  dbFrame.value = useFrame().frame.at(props.indexFrame).cards.at(props.indexCard) || []
+  title.value = dbFrame.value.title || ""
+  description.value = dbFrame.value.description || ""
+})
 
 </script>
   

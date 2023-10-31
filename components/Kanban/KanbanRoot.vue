@@ -23,6 +23,7 @@
                   v-on-click-outside="closeModalList"
                   :stateModal="frame.stateModal"
                   :event="closeModalList"
+                  :listId="indexFrame"
                 />
               </div>
             </div>
@@ -36,9 +37,9 @@
             >
               <transition-group>
                 <div
-                  @click.stop="editCard"
                   v-for="(card,indexCard) in frame.cards"
                   :key="card"
+                  @click.stop="() => editCard(indexFrame, indexCard)"
                   class="card flex items-center cursor-pointer w-full bg-secondaryColorF p-1 rounded-lg h-[50px] my-2"
                 >
                   <div class="text-white px-3 truncate w-full max-w-xs">{{ card.title }}</div>
@@ -52,17 +53,17 @@
                     <ModalEditCard
                       v-on-click-outside="closeCard"
                       :stateModal="card.stateModal"
-                      :deleteBtn="handleWarningMessage"
-                      :edit="editCard"
+                      :deleteBtn="() => openWarningMessage('Apagar o cartão?')"
+                      :edit="() => editCard(indexFrame,indexCard)"
                       :event="closeCard"
                     />
+                    
                   </div>
                 </div>
               </transition-group>
             </VueDraggableNext>
             <AddNewCardContainer
-              :indexCard="currentIndexCard.indexCard"
-              :indexFrame="currentIndexCard.indexFrame"
+              :indexFrame="indexFrame"
             />
           </div>
         </div>
@@ -146,15 +147,10 @@ const openModalEditList = (indexFrame) => {
   currentIndexCard.value.indexFrame = indexFrame
 }
 
-// Warning message
+// Warning message Card
 
 let stateWarningMessage = ref(false)
 let warningMessage = ref("")
-
-// open modal to cancel or confirm the action on the card 
-const handleWarningMessage = () => {
-  openWarningMessage('Apagar o cartão?')
-}
 
 const openWarningMessage = (message) => {
   stateWarningMessage.value = true
@@ -171,19 +167,17 @@ const confirmWarningMessage = () => {
 
 // Edit Card
 
-/*
-The edit card function will receive the type of the list and its index,
-the EditingCard component will receive this data to edit the selected card
-*/
+/* The edit card function will receive the type of the list and its index,
+the EditingCard component will receive this data to edit the selected card */
 
 let stateModalEditCard = ref(false)
 let idFrame = ref()
 let idCard = ref()
 
-const editCard = () => {
-  idFrame.value = currentIndexCard.value.indexFrame
-  idCard.value = currentIndexCard.value.indexCard
-
+const editCard = (indexFrame, indexCard) => {
+  idFrame.value = indexFrame
+  idCard.value = indexCard
+  
   stateModalEditCard.value = true
 }
 

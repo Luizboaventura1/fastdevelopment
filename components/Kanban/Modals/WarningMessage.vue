@@ -1,7 +1,7 @@
 <template>
 <div
   v-if="props.state"
-  class="background flex items-center justify-center px-4 absolute left-0 top-0 z-40 w-full h-full"
+  class="background flex items-center justify-center px-4 fixed left-0 top-0 z-40 w-full h-full"
 >
   <div class="modal w-full max-w-lg rounded-lg bg-subSecondaryColorF p-4">
     <div class="icon-container flex justify-center pb-7">
