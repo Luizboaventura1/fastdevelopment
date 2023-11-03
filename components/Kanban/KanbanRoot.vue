@@ -106,40 +106,47 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '../../../firebase';
 import { collection, query, where, getDocs,doc, updateDoc } from "firebase/firestore";
 
+
 const frames = useFrame().frame
 let userEmail = ref("")
 let idUser = ref("")
 
 
-// get user photo
+onMounted(() => {
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      userEmail.value = user.email
 
-onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    userEmail.value = user.email
+      // get frame
 
-    // get frame
+      const q = query(collection(db, "users"), where("email", "==", userEmail.value))
 
-    const q = query(collection(db, "users"), where("email", "==", userEmail.value))
+      const querySnapshot = await getDocs(q)
 
-    const querySnapshot = await getDocs(q)
+      querySnapshot.forEach((doc) => {
+        // add data to local frame
+        doc.data().frame.forEach(list => frames.push(list))
 
-    querySnapshot.forEach((doc) => {
-      doc.data().frame.forEach(list => frames.push(list))
-      addModalStateToCards()
-      idUser.value = doc.id
-    })
-  }
+        addModalStateToCards()
+
+        // get user id from firestore
+        idUser.value = doc.id
+      })
+    }
+  })
 })
-
 
 // add the modal state to cards
 
 const addModalStateToCards = () => {
   frames.forEach(frame => {
-    frame.stateModal = false
+    
+    frame.stateModal = false // add status to list
+
     frame.cards.forEach(card => {
-      card.stateModal = false
+      card.stateModal = false // add status to card
     })
+
   })
 }
 
@@ -188,11 +195,7 @@ const confirmWarningMessage = () => {
   frames.at(currentIndexCard.value.indexFrame).cards.splice(currentIndexCard.value.indexCard, 1)
 
   // Update list in Firebase
-  const frameDocRef = doc(db, 'users', idUser.value);
-
-  updateDoc(frameDocRef, {
-    frame: frames
-  })
+  updateFrameInFirebase()
   
   stateWarningMessage.value = false
 }
@@ -224,14 +227,19 @@ const updateTitleFrame = (title, indexFrame) => {
 }
 
 // Update the list in firebase when changing card position
-watch(frames,() => {
-  
+
+const updateFrameInFirebase = async () => {
   const frameDocRef = doc(db, 'users', idUser.value);
 
-  updateDoc(frameDocRef, {
+  await updateDoc(frameDocRef, {
     frame: frames
   })
+}
 
+watch(frames,() => {
+  for (let i = 0;i < frames.length;i++) {
+    updateFrameInFirebase()
+  }
 })
 
 </script>

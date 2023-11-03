@@ -1,8 +1,9 @@
 <template>
-  <div class="flex justify-center mb-4">
+  <div class="flex items-center justify-center gap-4 mb-4 bg-secondaryColorF p-2 rounded-lg">
     <LogoFastDevelopment 
-      size="40"
+      size="30"
     />
+    <span class="text-white">Fast<strong class="text-primaryColorF">Development</strong></span>
   </div>
 </template>
 

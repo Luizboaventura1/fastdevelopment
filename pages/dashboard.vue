@@ -87,7 +87,7 @@ const logout = async () => {
 
 // control the dashboard
 
-let dashboardWidth = ref('280')
+let dashboardWidth = ref("280")
 
 const dashboardToggle = () => {
   if (dashboardWidth.value === '280')

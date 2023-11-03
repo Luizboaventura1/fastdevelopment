@@ -66,21 +66,22 @@ let idUser = ref("")
 
 // Get id in firestore
 
-onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    userEmail.value = user.email
+onMounted(() => {
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      userEmail.value = user.email
 
-    const q = query(collection(db, "users"), where("email", "==", userEmail.value))
+      const q = query(collection(db, "users"), where("email", "==", userEmail.value))
 
-    const querySnapshot = await getDocs(q)
+      const querySnapshot = await getDocs(q)
 
-    querySnapshot.forEach((doc) => {
-      idUser.value = doc.id
-    })
+      querySnapshot.forEach((doc) => {
+        idUser.value = doc.id
+      })
 
-  }
+    }
+  })
 })
-
 
 const props = defineProps({
   stateModal: Boolean,

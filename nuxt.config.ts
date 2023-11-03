@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   modules: [
     '@pinia/nuxt',
     '@vueuse/motion/nuxt',
-    'nuxt-gtag'
+    'nuxt-gtag',
   ],
   pinia: {
     autoImports: [
@@ -20,8 +20,8 @@ export default defineNuxtConfig({
     ],
   },
   runtimeConfig: {
-    API_KEY: process.env.NUXT_API_KEY,
     public: {
+      API_KEY: process.env.NUXT_API_KEY,
       motion: {
         directives: {
           'pop-top': {
