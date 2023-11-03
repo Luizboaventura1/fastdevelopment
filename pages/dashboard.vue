@@ -22,7 +22,7 @@
         class="h-full"
       >
         <nav
-          class="h-[60px] flex items-center px-4"
+          class="h-[60px] bg-subSecondaryColorF flex items-center px-4"
         >
           <BurguerButton
             :event="dashboardToggle"
@@ -131,6 +131,17 @@ const confirmWarningMessage = () => {
   stateWarningMessage.value = false
 }
 
+// SEO
+
+useHead({
+  title: 'Dashboard',
+  meta: [
+    { name: 'description', content: 'Tenha um rápido desenvolvimento e ganho de produtividade com nossa ferramenta completa de desenvolvimento ágil.' },
+    { name: 'keywords', content: 'Kanban,desenvolvimento ágil,jira,trello'},
+    { name: 'author', content: 'Luiz'}
+  ]
+})
+
 </script>
 
 <style lang="scss" scoped>
@@ -138,10 +149,6 @@ const confirmWarningMessage = () => {
   aside {
     transition: .5s;
   } 
-
-  nav {
-    background-color: #1b1b1d;
-  }
 
   main {
     height: calc(100% - 60px);
