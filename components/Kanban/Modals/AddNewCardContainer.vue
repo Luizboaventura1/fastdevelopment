@@ -35,8 +35,33 @@
 <script setup>
 import { useFrame } from '~/stores/frame';
 import CloseButton from '../Buttons/CloseButton.vue';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth, db } from '../../../firebase';
+import { collection, query, where, getDocs, doc, updateDoc } from "firebase/firestore";
 
 const dbFrame = useFrame().frame
+
+let userEmail = ref("")
+let idUser = ref("")
+
+// Get id in firestore
+onMounted(() => {
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      userEmail.value = user.email
+
+      const q = query(collection(db, "users"), where("email", "==", userEmail.value))
+
+      const querySnapshot = await getDocs(q)
+
+      querySnapshot.forEach((doc) => {
+        idUser.value = doc.id
+      })
+
+    }
+  })
+})
 
 let props = defineProps({
   indexFrame: Number
@@ -67,6 +92,12 @@ const addNewCard = () => {
     dbFrame.at(props.indexFrame).cards.push({
       title: titleInput.value,
       description: ""
+    })
+
+    const frameDocRef = doc(db, 'users', idUser.value);
+
+    updateDoc(frameDocRef, {
+      frame: dbFrame
     })
 
     clearInput()

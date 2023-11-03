@@ -13,6 +13,7 @@
               class="bg-subSecondaryColorF w-full text-white px-3 py-1 outline-none ring-2 ring-transparent focus:ring-primaryColorF rounded-md"
               type="text"
               v-model="frame.title"
+              @input="updateTitleFrame(frame.title,indexFrame)"
             >
             <div class="relative">
               <SettingsButton
@@ -101,31 +102,55 @@ import AddNewList from './Modals/AddNewList.vue'
 import { useFrame } from '~/stores/frame';
 import SettingsButton from './Buttons/SettingsButton.vue';
 import ModalEditList from './Modals/ModalEditList.vue'
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth, db } from '../../../firebase';
+import { collection, query, where, getDocs,doc, updateDoc } from "firebase/firestore";
 
-const dbFrame = useFrame()
+const frames = useFrame().frame
+let userEmail = ref("")
+let idUser = ref("")
 
-// Title Todos
 
-let frames = ref(dbFrame.frame)
+// get user photo
+
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    userEmail.value = user.email
+
+    // get frame
+
+    const q = query(collection(db, "users"), where("email", "==", userEmail.value))
+
+    const querySnapshot = await getDocs(q)
+
+    querySnapshot.forEach((doc) => {
+      doc.data().frame.forEach(list => frames.push(list))
+      addModalStateToCards()
+      idUser.value = doc.id
+    })
+  }
+})
+
 
 // add the modal state to cards
 
-frames.value.forEach(frame => {
-  frame.stateModal = false
-  frame.cards.forEach(card => {
-    card.stateModal = false
+const addModalStateToCards = () => {
+  frames.forEach(frame => {
+    frame.stateModal = false
+    frame.cards.forEach(card => {
+      card.stateModal = false
+    })
   })
-})
-
+}
 
 // Modal edit card
 
 let currentIndexCard = ref({indexFrame: undefined, indexCard: undefined})
 
 //When you click outside the modal it will close
-const closeCard = () => frames.value.at(currentIndexCard.value.indexFrame).cards.at(currentIndexCard.value.indexCard).stateModal = false
+const closeCard = () => frames.at(currentIndexCard.value.indexFrame).cards.at(currentIndexCard.value.indexCard).stateModal = false
 
-const closeModalList = () => frames.value.at(currentIndexCard.value.indexFrame).stateModal = false
+const closeModalList = () => frames.at(currentIndexCard.value.indexFrame).stateModal = false
 
 
 /*
@@ -136,14 +161,14 @@ const closeModalList = () => frames.value.at(currentIndexCard.value.indexFrame).
 
 const openModalEditCard = (indexFrame, indexCard) => {
 
-  frames.value.at(indexFrame).cards.at(indexCard).stateModal = true
+  frames.at(indexFrame).cards.at(indexCard).stateModal = true
   currentIndexCard.value.indexFrame = indexFrame
   currentIndexCard.value.indexCard = indexCard
 
 }
 
 const openModalEditList = (indexFrame) => {
-  frames.value.at(indexFrame).stateModal = true
+  frames.at(indexFrame).stateModal = true
   currentIndexCard.value.indexFrame = indexFrame
 }
 
@@ -160,7 +185,14 @@ const openWarningMessage = (message) => {
 const cancelWarningMessage = () => stateWarningMessage.value = false
 
 const confirmWarningMessage = () => {
-  frames.value.at(currentIndexCard.value.indexFrame).cards.splice(currentIndexCard.value.indexCard, 1)
+  frames.at(currentIndexCard.value.indexFrame).cards.splice(currentIndexCard.value.indexCard, 1)
+
+  // Update list in Firebase
+  const frameDocRef = doc(db, 'users', idUser.value);
+
+  updateDoc(frameDocRef, {
+    frame: frames
+  })
   
   stateWarningMessage.value = false
 }
@@ -180,6 +212,27 @@ const editCard = (indexFrame, indexCard) => {
   
   stateModalEditCard.value = true
 }
+
+const updateTitleFrame = (title, indexFrame) => {
+  frames.at(indexFrame).title = title
+
+  const frameDocRef = doc(db, 'users', idUser.value);
+
+  updateDoc(frameDocRef, {
+    frame: frames
+  })
+}
+
+// Update the list in firebase when changing card position
+watch(frames,() => {
+  
+  const frameDocRef = doc(db, 'users', idUser.value);
+
+  updateDoc(frameDocRef, {
+    frame: frames
+  })
+
+})
 
 </script>
 

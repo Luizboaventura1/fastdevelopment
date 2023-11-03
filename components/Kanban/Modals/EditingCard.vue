@@ -55,6 +55,32 @@
 <script setup>
 import CloseButton from '../Buttons/CloseButton.vue';
 import { useFrame } from '~/stores/frame';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth, db } from '../../../firebase';
+import { collection, query, where, getDocs, doc, updateDoc } from "firebase/firestore";
+
+const dbFrame = ref(useFrame().frame)
+
+let userEmail = ref("")
+let idUser = ref("")
+
+// Get id in firestore
+
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    userEmail.value = user.email
+
+    const q = query(collection(db, "users"), where("email", "==", userEmail.value))
+
+    const querySnapshot = await getDocs(q)
+
+    querySnapshot.forEach((doc) => {
+      idUser.value = doc.id
+    })
+
+  }
+})
+
 
 const props = defineProps({
   stateModal: Boolean,
@@ -63,14 +89,13 @@ const props = defineProps({
   closeModalBtn: Function
 })
 
-const dbFrame = ref(useFrame().frame.at(props.indexFrame).cards.at(props.indexCard))
 
 // function to close the card edit modal
 const emit = defineEmits(['closeModal'])
 
 // Card title and description
-let title = ref(dbFrame.value.title)
-let description = ref(dbFrame.value.description)
+let title = ref("")
+let description = ref("")
 
 // saves card changes
 const saveChanges = () => {
@@ -80,16 +105,32 @@ const saveChanges = () => {
 }
 
 // save the values ​​in firebase
-const saveValuesToFirebase = (title,description) => {
-  dbFrame.value.title = title
-  dbFrame.value.description = description
+const saveValuesToFirebase = (newTitle,newDescription) => {
+  dbFrame.value.at(props.indexFrame).cards.at(props.indexCard).title = newTitle
+  dbFrame.value.at(props.indexFrame).cards.at(props.indexCard).description = newDescription
+
+  const frameDocRef = doc(db, 'users', idUser.value)
+
+  updateDoc(frameDocRef, {
+    frame: dbFrame.value
+  })
 }
 
 // Update values ​​if they change
 watchEffect(() => {
-  dbFrame.value = useFrame().frame.at(props.indexFrame).cards.at(props.indexCard) || []
-  title.value = dbFrame.value.title || ""
-  description.value = dbFrame.value.description || ""
+  // checks if the objects exist
+
+  if (
+      dbFrame.value &&
+      dbFrame.value.at(props.indexFrame) &&
+      dbFrame.value.at(props.indexFrame).cards &&
+      dbFrame.value.at(props.indexFrame).cards.at(props.indexCard)
+    ) 
+  {
+    title.value       = dbFrame.value.at(props.indexFrame).cards.at(props.indexCard).title || ""
+    description.value = dbFrame.value.at(props.indexFrame).cards.at(props.indexCard).description || ""
+  }
+
 })
 
 </script>
