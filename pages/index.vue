@@ -22,7 +22,7 @@
       <StartButton
         :event="startButton"
       >
-        Começar
+        {{ logged ? "Ir para o dashboard" : "Começar" }}
       </StartButton>
     </div>
    </Main>
@@ -180,8 +180,13 @@ import Footer from '~/components/Home/Footer.vue';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../../firebase'
 
-const startButton = () => location.href = '/auth/register'
-
+const startButton = () => {
+  if (logged.value) {
+    location.href = '/dashboard/frame'
+  } else {
+    location.href = '/auth/register'
+  }
+}
 // SEO
 
 useHead({
@@ -193,16 +198,16 @@ useHead({
   ]
 })
 
-onMounted(() => {
-  const logged = useCookie('token')
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) 
-      logged.value = true
-     else 
-      logged.value = false
-  })
+const logged = ref(useCookie('token').value)
+
+onAuthStateChanged(auth, (user) => {
+  if (user) 
+    logged.value = true
+    else 
+    logged.value = false
 })
+
 
 </script>
 
