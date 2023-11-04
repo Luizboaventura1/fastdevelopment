@@ -2,7 +2,7 @@
 
 ## What's FastDevelopment?
 
-FastDevelopment is a tool for people who want more productivity in their projects, but with an easy-to-use platform and a beautiful, clean design
+FastDevelopment is a tool for those who want more productivity in their projects, but with an easy-to-use platform and a clean, modern design.
 
 Deploy: https://fastdevelopment.vercel.app
 
