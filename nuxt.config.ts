@@ -21,7 +21,6 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      API_KEY: process.env.NUXT_API_KEY,
       motion: {
         directives: {
           'pop-top': {
