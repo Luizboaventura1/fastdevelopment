@@ -125,7 +125,10 @@ onMounted(() => {
 
       querySnapshot.forEach((doc) => {
         // add data to local frame
-        frames = doc.data().frame
+        if (frames.length === 0) {
+          frames.push(...doc.data().frame)
+        }
+        
 
         addModalStateToCards()
 
@@ -236,10 +239,8 @@ const updateFrameInFirebase = async () => {
   })
 }
 
-watch(frames,() => {
-  for (let i = 0;i < frames.length;i++) {
-    updateFrameInFirebase()
-  }
+watch(frames,() => { // any changes already updated in firebase
+  updateFrameInFirebase()
 })
 
 </script>
