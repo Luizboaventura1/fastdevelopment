@@ -107,7 +107,7 @@ import { auth, db } from '../../../firebase';
 import { collection, query, where, getDocs,doc, updateDoc } from "firebase/firestore";
 
 
-const frames = useFrame().frame
+let frames = useFrame().frame
 let userEmail = ref("")
 let idUser = ref("")
 
@@ -125,7 +125,7 @@ onMounted(() => {
 
       querySnapshot.forEach((doc) => {
         // add data to local frame
-        doc.data().frame.forEach(list => frames.push(list))
+        frames = doc.data().frame
 
         addModalStateToCards()
 
