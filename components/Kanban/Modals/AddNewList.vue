@@ -46,13 +46,11 @@ let idUser = ref("")
 
 onMounted(() => {
 
-  // get user photo
-
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       userEmail.value = user.email
 
-      // get frame
+      // get id
 
       const q = query(collection(db, "users"), where("email", "==", userEmail.value))
 
