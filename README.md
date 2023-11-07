@@ -13,39 +13,21 @@ Deploy: https://fastdevelopment.vercel.app
 
 [click here](https://github.com/Luizboaventura1/fastdevelopment/tree/main/docs/user-guide)
 
-## Setup
+## Get started with a few commands
 
-Make sure to install the dependencies:
-
+install dependencies
 ```bash
-# npm
 npm install
 ```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
+Run project
 ```bash
-# npm
 npm run dev
 ```
-
-## Production
-
-Build the application for production:
-
+Make the build
 ```bash
-# npm
 npm run build
 ```
 
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-```
 # License
 
 - MIT
@@ -65,6 +47,16 @@ npm run preview
 # Libs
 
 - https://motion.vueuse.org
+
+# Interface
+
+### Home
+
+![](./assets/documentation-images/home-fastdevelopment.png)
+
+### Kanban board
+
+![](./assets/documentation-images/kanban-board.png)
 
 _In development..._
 
