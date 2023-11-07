@@ -8,7 +8,7 @@ The kanban board is in version 1.0, all the main features are working, such as: 
 
 Understand how each modal works, such as: adding, editing and paying the card, etc.
 
-[Click here](#modal-documentation)
+[Click here](./modal-documentation.md)
 
 ## Folder structure
 
