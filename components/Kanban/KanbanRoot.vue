@@ -5,7 +5,7 @@
       <div
         v-for="(frame,indexFrame) in frames"
         :key="frame"
-        class="me-2 w-[350px]"
+        class="me-2 w-[280px]"
       >
         <div class="h-auto w-full me-3 bg-subSecondaryColorF p-3 rounded-lg">
           <div class="title-container py-2 flex items-center gap-4">
@@ -41,15 +41,15 @@
                   v-for="(card,indexCard) in frame.cards"
                   :key="card"
                   @click.stop="() => editCard(indexFrame, indexCard)"
-                  class="card flex items-center cursor-pointer w-full bg-secondaryColorF p-1 rounded-lg h-[50px] my-2"
+                  class="card flex items-center cursor-pointer w-full bg-secondaryColorF p-1 rounded-lg h-[40px] my-2"
                 >
-                  <div class="text-white px-3 truncate w-full max-w-xs">{{ card.title }}</div>
+                  <div class="text-white text-sm px-3 truncate w-full max-w-xs">{{ card.title }}</div>
                   <div class="edit-card h-full flex items-center">
                     <div
                       @click.stop="openModalEditCard(indexFrame,indexCard)"
-                      class="edit-card-button w-[35px] h-[35px] flex items-center justify-center rounded-lg"
+                      class="edit-card-button w-[28px] h-[28px] flex items-center justify-center rounded-lg"
                     >
-                      <svg class="w-[19px] h-[19px]" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0" viewBox="0 0 24 24" style="enable-background:new 0 0 512 512" xml:space="preserve"><g><path d="M1.172 19.119A4 4 0 0 0 0 21.947V24h2.053a4 4 0 0 0 2.828-1.172L18.224 9.485l-3.709-3.709ZM23.145.855a2.622 2.622 0 0 0-3.71 0l-3.506 3.507 3.709 3.709 3.507-3.506a2.622 2.622 0 0 0 0-3.71Z" opacity="1" data-original="#000000" class=""></path></g></svg>
+                      <svg class="w-[15px] h-[15px]" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0" viewBox="0 0 24 24" style="enable-background:new 0 0 512 512" xml:space="preserve"><g><path d="M1.172 19.119A4 4 0 0 0 0 21.947V24h2.053a4 4 0 0 0 2.828-1.172L18.224 9.485l-3.709-3.709ZM23.145.855a2.622 2.622 0 0 0-3.71 0l-3.506 3.507 3.709 3.709 3.507-3.506a2.622 2.622 0 0 0 0-3.71Z" opacity="1" data-original="#000000" class=""></path></g></svg>
                     </div>
                     <ModalEditCard
                       v-on-click-outside="closeCard"
