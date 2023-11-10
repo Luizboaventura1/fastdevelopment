@@ -4,8 +4,8 @@ import { getFirestore } from 'firebase/firestore'
 
 export default defineNuxtPlugin(nuxtApp => {
 
-  const config = useRuntimeConfig()
-
+  const config = useRuntimeConfig().public
+  
   const firebaseConfig = {
     apiKey: config.API_KEY,
     authDomain: config.AUTH_DOMAIN,
