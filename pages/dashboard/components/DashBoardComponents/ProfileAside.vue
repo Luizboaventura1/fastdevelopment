@@ -29,10 +29,11 @@
 </template>
 
 <script setup>
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth, db } from '../../../firebase';
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
+import { collection, query, where, getDocs, getFirestore } from "firebase/firestore";
 
+const auth = getAuth()
+const db = getFirestore()
 
 let userName = ref("")
 let userPhoto = ref(undefined)

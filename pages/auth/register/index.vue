@@ -62,12 +62,14 @@ import InputName from '../components/InputName.vue';
 import SubmitButton from '../components/SubmitButton.vue';
 import ErrorMessage from '../components/Popups/ErrorMessage.vue';
 import GoogleButton from '../components/GoogleButton.vue';
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithPopup } from "firebase/auth";
-import { auth, db } from '../../../firebase'
-import { collection, addDoc} from "firebase/firestore";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithPopup, getAuth } from "firebase/auth";
+import { collection, addDoc , getFirestore } from "firebase/firestore";
 import { GoogleAuthProvider } from "firebase/auth";
 import { useRouter } from '#vue-router';
 import Loading from '~/components/Common/Loading.vue';
+
+const auth = getAuth()
+const db = getFirestore()
 
 const router = useRouter()
 let loading = ref(false)

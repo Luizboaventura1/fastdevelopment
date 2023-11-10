@@ -55,12 +55,12 @@ import InputEmail from '../components/InputEmail.vue';
 import InputPassword from '../components/InputPassword.vue'
 import ErrorMessage from '../components/Popups/ErrorMessage.vue';
 import SubmitButton from '../components/SubmitButton.vue';
-import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import {auth} from '../../../firebase'
+import { signInWithEmailAndPassword, signInWithPopup, getAuth, GoogleAuthProvider } from 'firebase/auth';
 import GoogleButton from '../components/GoogleButton.vue';
-import { GoogleAuthProvider } from "firebase/auth";
 import { useRouter } from '#vue-router';
 import Loading from '~/components/Common/Loading.vue';
+
+const auth = getAuth()
 
 const router = useRouter()
 let loading = ref(false)

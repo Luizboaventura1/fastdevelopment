@@ -35,9 +35,11 @@
 <script setup>
 import { useFrame } from '~/stores/frame';
 import CloseButton from '../Buttons/CloseButton.vue';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth, db } from '../../../firebase';
-import { collection, query, where, getDocs, doc, updateDoc } from "firebase/firestore";
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
+import { collection, query, where, getDocs, doc, updateDoc, getFirestore } from "firebase/firestore";
+
+const auth = getAuth()
+const db = getFirestore()
 
 const dbFrame = useFrame().frame
 

@@ -178,7 +178,9 @@ import SectionBenefits from '~/components/Home/SectionBenefits.vue';
 import Section from '~/components/Home/Section.vue';
 import Footer from '~/components/Home/Footer.vue';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../../../firebase'
+import { getAuth } from 'firebase/auth';
+
+const auth = getAuth()
 
 const startButton = () => {
   if (logged.value) {
@@ -187,6 +189,7 @@ const startButton = () => {
     location.href = '/auth/register'
   }
 }
+
 // SEO
 
 useHead({
@@ -198,7 +201,6 @@ useHead({
   ]
 })
 
-
 const logged = ref(useCookie('token').value)
 
 onAuthStateChanged(auth, (user) => {
@@ -207,7 +209,6 @@ onAuthStateChanged(auth, (user) => {
     else 
     logged.value = false
 })
-
 
 </script>
 

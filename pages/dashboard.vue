@@ -52,13 +52,13 @@ import FrameAside from './dashboard/components/DashBoardComponents/FrameAside.vu
 import LogoAside from './dashboard/components/DashBoardComponents/LogoAside.vue'
 import ProfileAside from './dashboard/components/DashBoardComponents/ProfileAside.vue'
 import LogoutAside from './dashboard/components/DashBoardComponents/LogoutAside.vue'
-import { signOut } from "firebase/auth";
-import { auth } from '../../../firebase';
+import { signOut, getAuth, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from '#vue-router';
 import BurguerButton from './dashboard/components/BurguerButton.vue';
 import Loading from '~/components/Common/Loading.vue';
-import { onAuthStateChanged } from 'firebase/auth';
 import WarningMessage from '~/components/Kanban/Modals/WarningMessage.vue';
+
+const auth = getAuth()
 
 const router = useRouter()
 // starts true to check if the user is logged in
