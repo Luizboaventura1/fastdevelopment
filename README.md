@@ -50,10 +50,6 @@ npm run build
 
 # Interface
 
-### Home
-
-![](./assets/documentation-images/home-fastdevelopment.png)
-
 ### Kanban board
 
 ![](./assets/documentation-images/kanban-board.png)
