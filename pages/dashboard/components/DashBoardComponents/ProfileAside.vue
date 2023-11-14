@@ -21,7 +21,7 @@
           {{ userName }}
         </div>
         <div class="category truncate text-zinc-400 italic w-full">
-          ...
+         
         </div>
       </div>
     </div>

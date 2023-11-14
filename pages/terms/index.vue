@@ -46,12 +46,11 @@
       </main>
     </div>
   </header>
-  <Footer />
+  <NuxtLayout name="footer" />
 </template>
 
 <script setup>
 import BackButton from "~/components/Buttons/BackButton.vue";
-import Footer from "~/components/Home/Footer.vue";
 
 useHead({
   title: 'Termos'

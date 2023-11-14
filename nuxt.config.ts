@@ -8,6 +8,9 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  imports: {
+    autoImport: true
+  },
   modules: [
     '@pinia/nuxt',
     '@vueuse/motion/nuxt',
@@ -52,5 +55,5 @@ export default defineNuxtConfig({
     gtag: {
       id: 'G-1P1CHBPTH6'
     }
-  }
+  },
 })

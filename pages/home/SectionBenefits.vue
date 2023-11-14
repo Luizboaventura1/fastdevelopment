@@ -98,7 +98,8 @@ section {
     border: 1px solid #38383d;
     background-color: $secondary-color;
     position: relative;
-    width: 360px;
+    width: 100%;
+    max-width: 360px;
 
     .animation-bar {
       position: absolute;
@@ -113,7 +114,7 @@ section {
       position: absolute;
       z-index: 40;
       background-color: $secondary-color;
-      width: 356px;
+      width: 99.5%;
       left: 1px;
       transition: .3s;
     }

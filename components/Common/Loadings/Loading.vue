@@ -1,11 +1,11 @@
 <template>
   <div
     v-if="visibility"
-    class="background fixed left-0 top-0 select-none w-screen h-screen flex items-center justify-center"
+    class="background fixed z-50 left-0 top-0 select-none w-screen h-screen flex items-center justify-center"
   >
     <img
       class="w-[50px] h-[50px]"
-      src="../../assets/logo-fastdevelopment.png"
+      src="../../../assets/logo-fastdevelopment.png"
       alt="Logo FastDevelopment"
     >
   </div>

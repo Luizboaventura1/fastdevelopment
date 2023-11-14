@@ -4,16 +4,18 @@
       class="h-screen bg-subSecondaryColorF overflow-hidden"
       :style="`width:${dashboardWidth}px;`"
     >
-      <div class="p-3">
+      <div class="p-4">
+
         <LogoAside />
         <ProfileAside />
         <FrameAside
           :event="() => router.push('/dashboard/frame')"
         />
-        <div class="divider w-full h-[1px] bg-zinc-700 my-3"></div>
+        <DividerDefault spaceY="2" />
         <LogoutAside
           :event="() => openWarningMessage('Sair da conta?')"
         />
+
       </div>
     </aside>
 
@@ -22,11 +24,17 @@
         class="h-full"
       >
         <nav
-          class="h-[60px] bg-subSecondaryColorF flex items-center px-4"
+          class="h-[60px] bg-subSecondaryColorF flex items-center justify-between px-4"
         >
           <BurguerButton
             :event="dashboardToggle"
           />
+          <div class="flex items-center gap-3">
+            <NotificationModalRoot/>
+            <AccountRoot
+              size="30"
+            />
+          </div>
         </nav>
         <main class="bg-secondaryColorF overflow-x-auto p-3">
           <NuxtPage />
@@ -55,12 +63,16 @@ import LogoutAside from './dashboard/components/DashBoardComponents/LogoutAside.
 import { signOut, getAuth, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from '#vue-router';
 import BurguerButton from './dashboard/components/BurguerButton.vue';
-import Loading from '~/components/Common/Loading.vue';
+import Loading from '~/components/Common/Loadings/Loading.vue';
 import WarningMessage from '~/components/Kanban/Modals/WarningMessage.vue';
+import DividerDefault from '~/components/Common/Dividers/DividerDefault.vue';
+import AccountRoot from '~/components/Common/Popups/Account/AccountRoot.vue';
+import NotificationModalRoot from '~/components/Notifications/NotificationModal/NotificationModalRoot.vue';
 
 const auth = getAuth()
 
 const router = useRouter()
+
 // starts true to check if the user is logged in
 let loading = ref(true)
 
@@ -141,6 +153,10 @@ useHead({
     { name: 'author', content: 'Luiz'}
   ]
 })
+
+// Notifications
+
+let stateNotificationModal = ref(false)
 
 </script>
 

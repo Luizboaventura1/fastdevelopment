@@ -19,16 +19,12 @@
           </div>
           <div class="user-data w-full mt-4">
             <h1 class="w-full text-center my-2">{{ userName }}</h1>
-            <h2 class="w-full text-center">...</h2>
+            <h2 class="w-full text-center"></h2>
           </div>
         </div>
         <div class="email rounded-lg flex p-4 my-3">
           <span class="me-3 font-medium">Email</span>
           <span>{{ userEmail }}</span>
-        </div>
-        <div class="email rounded-lg flex p-4 my-3">
-          <span class="me-3 font-medium">Empresa</span>
-          <span>...</span>
         </div>
       </div>
     </div>

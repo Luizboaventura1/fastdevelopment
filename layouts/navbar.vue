@@ -23,16 +23,12 @@
 </template>
 
 <script setup>
-import LoginButton from './LoginButton.vue';
-import RegisterButton from './RegisterButton.vue';
-import LogoFastDevelopment from '../Common/LogoFastDevelopment.vue'
+import LoginButton from '@/pages/home/LoginButton.vue';
+import RegisterButton from '@/pages/home/RegisterButton.vue';
+import LogoFastDevelopment from '../components/Common/Icons/LogoFastDevelopment.vue'
 
 const login = () => location.href = '/auth/login'
 
 const register = () => location.href = '/auth/register'
 
 </script>
-
-<style lang="scss" scoped>
-
-</style>

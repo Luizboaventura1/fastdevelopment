@@ -58,7 +58,7 @@ import SubmitButton from '../components/SubmitButton.vue';
 import { signInWithEmailAndPassword, signInWithPopup, getAuth, GoogleAuthProvider } from 'firebase/auth';
 import GoogleButton from '../components/GoogleButton.vue';
 import { useRouter } from '#vue-router';
-import Loading from '~/components/Common/Loading.vue';
+import Loading from '~/components/Common/Loadings/Loading.vue';
 
 const auth = getAuth()
 

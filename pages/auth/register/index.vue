@@ -66,7 +66,7 @@ import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithPopup, ge
 import { collection, addDoc , getFirestore } from "firebase/firestore";
 import { GoogleAuthProvider } from "firebase/auth";
 import { useRouter } from '#vue-router';
-import Loading from '~/components/Common/Loading.vue';
+import Loading from '~/components/Common/Loadings/Loading.vue';
 
 const auth = getAuth()
 const db = getFirestore()

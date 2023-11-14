@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-secondaryColorF">
+  <div>
     <div class="kanban flex flex-row rounded-md gap-3 p-4">
 
       <div
@@ -51,13 +51,34 @@
                     >
                       <svg class="w-[15px] h-[15px]" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0" viewBox="0 0 24 24" style="enable-background:new 0 0 512 512" xml:space="preserve"><g><path d="M1.172 19.119A4 4 0 0 0 0 21.947V24h2.053a4 4 0 0 0 2.828-1.172L18.224 9.485l-3.709-3.709ZM23.145.855a2.622 2.622 0 0 0-3.71 0l-3.506 3.507 3.709 3.709 3.507-3.506a2.622 2.622 0 0 0 0-3.71Z" opacity="1" data-original="#000000" class=""></path></g></svg>
                     </div>
-                    <ModalEditCard
+                    <OptionsModalRoot
                       v-on-click-outside="closeCard"
                       :stateModal="card.stateModal"
-                      :deleteBtn="() => openWarningMessage('Apagar o cartão?')"
-                      :edit="() => editCard(indexFrame,indexCard)"
-                      :event="closeCard"
-                    />
+                    >
+                      <template #nav>
+                        <TitleOptionsModal>
+                          Ações card
+                        </TitleOptionsModal>
+                        <CloseButton
+                          :event="closeCard"
+                          size="16"
+                        />
+                      </template>
+
+                      <template #buttons>
+                        <ActionOptionsModal
+                          :event="() => editCard(indexFrame,indexCard)"
+                        >
+                          Editar
+                        </ActionOptionsModal>
+                        <ActionOptionsModal
+                          :event="() => openWarningMessage('Apagar o cartão?')"
+                        >
+                          Excluir
+                        </ActionOptionsModal>
+                      </template>
+
+                    </OptionsModalRoot>
                     
                   </div>
                 </div>
@@ -69,7 +90,7 @@
           </div>
         </div>
       </div>
-      <div class="add-new-frame w-[300px]">
+      <div class="add-new-frame w-[280px]">
         <AddNewList />
       </div>
 
@@ -82,7 +103,7 @@
     :cancel="cancelWarningMessage"
     :confirm="confirmWarningMessage"
   />
-  <EditingCard 
+  <EditCardRoot 
     :stateModal="stateModalEditCard"
     :indexCard="idCard"
     :indexFrame="idFrame"
@@ -93,10 +114,9 @@
 
 <script setup>
 import { VueDraggableNext } from 'vue-draggable-next';
-import ModalEditCard from './Modals/ModalEditCard.vue';
 import { vOnClickOutside } from '@vueuse/components'
 import WarningMessage from './Modals/WarningMessage.vue';
-import EditingCard from './Modals/EditingCard.vue'
+import EditCardRoot from './EditCard/EditCardRoot.vue'
 import AddNewCardContainer from './Modals/AddNewCardContainer.vue'
 import AddNewList from './Modals/AddNewList.vue'
 import { useFrame } from '~/stores/frame';
@@ -104,6 +124,10 @@ import SettingsButton from './Buttons/SettingsButton.vue';
 import ModalEditList from './Modals/ModalEditList.vue'
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import { collection, query, where, getDocs,doc, updateDoc, getFirestore } from "firebase/firestore";
+import OptionsModalRoot from '../Common/Popups/OptionsModal/OptionsModalRoot.vue';
+import ActionOptionsModal from '../Common/Popups/OptionsModal/ActionOptionsModal.vue';
+import TitleOptionsModal from '../Common/Popups/OptionsModal/TitleOptionsModal.vue';
+import CloseButton from '../Common/FeedBack/CloseButton.vue';
 
 const auth = getAuth()
 const db = getFirestore()
