@@ -35,40 +35,12 @@
 <script setup>
 import { useFrame } from '~/stores/frame';
 import WarningMessage from './WarningMessage.vue';
-import { onAuthStateChanged, getAuth } from 'firebase/auth';
-import { collection, query, where, getDocs, doc, updateDoc, getFirestore } from "firebase/firestore";
 import OptionsModalRoot from '@/components/Common/Popups/OptionsModal/OptionsModalRoot.vue';
 import ActionOptionsModal from '@/components/Common/Popups/OptionsModal/ActionOptionsModal.vue';
 import TitleOptionsModal from '@/components/Common/Popups/OptionsModal/TitleOptionsModal.vue';
 import CloseButton from '@/components/Common/FeedBack/CloseButton.vue';
 
-const auth = getAuth()
-const db = getFirestore()
-
 const dbFrame = useFrame().frame
-
-// Get Id
-
-let userEmail = ref("")
-let idUser = ref("")
-
-onMounted(() => {
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      userEmail.value = user.email
-
-      const q = query(collection(db, "users"), where("email", "==", userEmail.value))
-
-      const querySnapshot = await getDocs(q)
-
-      querySnapshot.forEach((doc) => {
-        //get user id in firestore
-        idUser.value = doc.id
-      })
-
-    }
-  })
-})
 
 const props = defineProps({
   stateModal: Boolean,
@@ -78,7 +50,6 @@ const props = defineProps({
 
 const deleteList = () => {
   dbFrame.splice(props.listId, 1)
-  removeListToFirebase(dbFrame)
 }
 
 // warning message when deleting the list
@@ -97,14 +68,6 @@ const cancelWarningMessage = () => stateWarningMessage.value = false
 const confirmWarningMessage = () => {
   deleteList()  
   stateWarningMessage.value = false
-}
-
-const removeListToFirebase = async (list) => {
-  const frameDocRef = doc(db, 'users', idUser.value);
-
-  await updateDoc(frameDocRef, {
-    frame: list
-  })
 }
 
 </script>

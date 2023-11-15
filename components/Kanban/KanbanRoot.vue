@@ -13,7 +13,7 @@
               class="bg-subSecondaryColorF w-full text-white px-3 py-1 outline-none ring-2 ring-transparent focus:ring-primaryColorF rounded-md"
               type="text"
               v-model="frame.title"
-              @input="updateTitleFrame(frame.title,indexFrame)"
+              @input="updateFrameInFirebase"
             >
             <div class="relative">
               <SettingsButton
@@ -61,7 +61,7 @@
                         </TitleOptionsModal>
                         <CloseButton
                           :event="closeCard"
-                          size="16"
+                          size="15"
                         />
                       </template>
 
@@ -242,16 +242,6 @@ const editCard = (indexFrame, indexCard) => {
   idCard.value = indexCard
   
   stateModalEditCard.value = true
-}
-
-const updateTitleFrame = (title, indexFrame) => {
-  frames.at(indexFrame).title = title
-
-  const frameDocRef = doc(db, 'users', idUser.value);
-
-  updateDoc(frameDocRef, {
-    frame: frames
-  })
 }
 
 // Update the list in firebase when changing card position

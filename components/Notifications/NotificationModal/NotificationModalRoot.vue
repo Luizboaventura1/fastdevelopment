@@ -28,9 +28,20 @@
           <DividerDefault
             spaceY="2"
           />
-          <main>
+          <main
+            class="overflow-y-auto"
+          >
+            <section
+              v-for="notification in notifications"
+              :key="notification"
+            >
+              <NotificationItem
+                :title="notification.title"
+                :message="notification.message"
+              />
+            </section>
             <NoNotifications 
-              :state="true"
+              :state="stateNoNotifications"
             >
               Sem notificações
             </NoNotifications>
@@ -50,12 +61,38 @@ import DividerDefault from '~/components/Common/Dividers/DividerDefault.vue';
 import NoNotifications from './NoNotifications.vue'
 import ButtonNav from '~/pages/dashboard/components/DashBoardComponents/ButtonNav.vue';
 import NotificationIcon from '~/pages/dashboard/components/DashBoardComponents/NotificationIcon.vue';
+import NotificationItem from './NotificationItem/NotificationItem.vue';
 
+// User Notifications
+let notifications = ref([
+
+])
+
+// Control modal state
 let stateModal = ref()
 
 const toggleModal = () => stateModal.value = !stateModal.value
-
 const closeModal = () => stateModal.value = false
+
+// If you have any notifications, remove the "No notifications" component
+
+let stateNoNotifications = ref(false)
+
+const checkAndHandleNoNotifications = () => {
+  if (notifications.value.length === 0) {
+    handleNoNotifications.show()
+  } else {
+    handleNoNotifications.close()
+  }
+}
+
+const handleNoNotifications = {
+  close: () => stateNoNotifications.value = false,
+  show: () => stateNoNotifications.value = true
+}
+
+watch(notifications,checkAndHandleNoNotifications)
+onMounted(checkAndHandleNoNotifications)
 
 </script>
 
@@ -64,13 +101,26 @@ const closeModal = () => stateModal.value = false
   box-shadow: 0 0 24px rgba(0, 0, 0, 0.413);
   border: 1px solid rgba(55, 55, 55, 0.998);
   width: 100%;
-  max-width: 300px;
+  max-width: 350px;
 }
 
 @media screen and (max-width: 400px) {
   .notification {
     max-width: 250px;
   }
+}
+
+main {
+  height: 100%;
+  max-height: 400px;
+}
+
+::-webkit-scrollbar-thumb {
+  display: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 .v-enter-active,

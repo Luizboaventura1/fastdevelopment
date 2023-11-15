@@ -9,38 +9,9 @@
 
 <script setup>
 import AddCardFormRoot from '~/components/Common/Forms/AddCardForm/AddCardFormRoot.vue';
-import { onAuthStateChanged, getAuth } from 'firebase/auth';
-import { collection, query, where, getDocs, doc, updateDoc, getFirestore } from "firebase/firestore";
 import { useFrame } from '~/stores/frame';
 
-const auth = getAuth()
-const db = getFirestore()
-
 const frames = useFrame().frame
-
-let userEmail = ref("")
-let idUser = ref("")
-
-onMounted(() => {
-
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      userEmail.value = user.email
-
-      // get id
-
-      const q = query(collection(db, "users"), where("email", "==", userEmail.value))
-
-      const querySnapshot = await getDocs(q)
-
-      querySnapshot.forEach((doc) => {
-        idUser.value = doc.id
-      })
-
-    }
-  })
-})
-
 
 let props = defineProps({
   indexCard: Number,
@@ -57,10 +28,6 @@ const addNewList = () => {
       title: newListInput.value,
       cards: [] 
     })
-
-    addListToFirebase(frames)
-
-    clearInput()
   }
 }
 
@@ -72,18 +39,6 @@ const validateCard = (description) => {
     return false
 
   return true
-}
-
-const clearInput = () => {
-  newListInput.value = ''
-}
-
-const addListToFirebase = (list) => {
-  const frameDocRef = doc(db, 'users', idUser.value);
-
-  updateDoc(frameDocRef, {
-    frame: list
-  })
 }
 
 </script>
