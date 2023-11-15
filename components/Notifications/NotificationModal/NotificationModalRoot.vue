@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div class="relative w-full">
     <ButtonNav
       @event="toggleModal"
     >
@@ -7,19 +7,21 @@
         size="20"
       />
     </ButtonNav>
-    <div class="absolute top-11 right-2 z-50">
+    <div
+      class="absolute w-screen flex justify-end top-11 right-0"
+    >
       <Transition>
         <div
           v-on-click-outside.bubble="closeModal"
           v-if="stateModal"
-          class="notification bg-secondaryColorF w-[350px] rounded-lg p-5"
+          class="notification bg-secondaryColorF rounded-lg p-5 z-40"
         >
           <nav class="flex items-center justify-between">
             <TitleNotification>
               Notificações
             </TitleNotification>
             <CloseButton
-              size="18"
+              size="15"
               :event="closeModal"
             />
           </nav>
@@ -61,6 +63,14 @@ const closeModal = () => stateModal.value = false
 .notification {
   box-shadow: 0 0 24px rgba(0, 0, 0, 0.413);
   border: 1px solid rgba(55, 55, 55, 0.998);
+  width: 100%;
+  max-width: 300px;
+}
+
+@media screen and (max-width: 400px) {
+  .notification {
+    max-width: 250px;
+  }
 }
 
 .v-enter-active,
