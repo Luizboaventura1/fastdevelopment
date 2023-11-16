@@ -5,35 +5,23 @@
       :style="`width:${dashboardWidth}px;`"
     >
       <div class="p-4">
-
         <LogoAside />
         <ProfileAside />
-        <FrameAside
-          :event="() => router.push('/dashboard/frame')"
-        />
+        <FrameAside :event="() => router.push('/dashboard/frame')" />
         <DividerDefault spaceY="2" />
-        <LogoutAside
-          :event="() => openWarningMessage('Sair da conta?')"
-        />
-
+        <LogoutAside :event="() => openWarningMessage('Sair da conta?')" />
       </div>
     </aside>
 
     <div class="flex-1 w-[calc(100% - 280px)] overflow-x-auto">
-      <header
-        class="h-full"
-      >
+      <header class="h-full">
         <nav
           class="h-[60px] bg-subSecondaryColorF flex items-center justify-between px-4"
         >
-          <BurguerButton
-            :event="dashboardToggle"
-          />
+          <BurguerButton :event="dashboardToggle" />
           <div class="flex items-center gap-3">
-            <NotificationModalRoot/>
-            <AccountRoot
-              size="30"
-            />
+            <NotificationModalRoot />
+            <AccountRoot size="30" />
           </div>
         </nav>
         <main class="bg-secondaryColorF overflow-x-auto p-3">
@@ -41,12 +29,9 @@
         </main>
       </header>
     </div>
-
   </div>
 
-  <Loading
-    :visibility="loading"
-  />
+  <Loading :visibility="loading" />
   <WarningMessage
     :state="stateWarningMessage"
     :message="warningMessage"
@@ -56,117 +41,115 @@
 </template>
 
 <script setup>
-import FrameAside from './dashboard/components/DashBoardComponents/FrameAside.vue'
-import LogoAside from './dashboard/components/DashBoardComponents/LogoAside.vue'
-import ProfileAside from './dashboard/components/DashBoardComponents/ProfileAside.vue'
-import LogoutAside from './dashboard/components/DashBoardComponents/LogoutAside.vue'
+import FrameAside from "./dashboard/components/DashBoardComponents/FrameAside.vue";
+import LogoAside from "./dashboard/components/DashBoardComponents/LogoAside.vue";
+import ProfileAside from "./dashboard/components/DashBoardComponents/ProfileAside.vue";
+import LogoutAside from "./dashboard/components/DashBoardComponents/LogoutAside.vue";
 import { signOut, getAuth, onAuthStateChanged } from "firebase/auth";
-import { useRouter } from '#vue-router';
-import BurguerButton from './dashboard/components/BurguerButton.vue';
-import Loading from '~/components/Common/Loadings/Loading.vue';
-import WarningMessage from '~/components/Kanban/Modals/WarningMessage.vue';
-import DividerDefault from '~/components/Common/Dividers/DividerDefault.vue';
-import AccountRoot from '~/components/Common/Popups/Account/AccountRoot.vue';
-import NotificationModalRoot from '~/components/Notifications/NotificationModal/NotificationModalRoot.vue';
+import { useRouter } from "#vue-router";
+import BurguerButton from "./dashboard/components/BurguerButton.vue";
+import Loading from "~/components/Common/Loadings/Loading.vue";
+import WarningMessage from "~/components/Kanban/Modals/WarningMessage.vue";
+import DividerDefault from "~/components/Common/Dividers/DividerDefault.vue";
+import AccountRoot from "~/components/Common/Popups/Account/AccountRoot.vue";
+import NotificationModalRoot from "~/components/Notifications/NotificationModal/NotificationModalRoot.vue";
 
-const auth = getAuth()
+const auth = getAuth();
 
-const router = useRouter()
+const router = useRouter();
 
 // starts true to check if the user is logged in
-let loading = ref(true)
+let loading = ref(true);
 
 definePageMeta({
-  middleware: "auth"
-})
+  middleware: "auth",
+});
 
 const logout = async () => {
-  loading.value = true
+  loading.value = true;
 
   // end the session
   await signOut(auth).then(() => {
-    loading.value = false // Disable Loading
+    loading.value = false; // Disable Loading
 
     // blocks the routes
-    const logged = useCookie('token')
-    logged.value = false
+    const logged = useCookie("token");
+    logged.value = false;
 
     // back home
-    router.push('/')
-
-  })
-}
+    router.push("/");
+  });
+};
 
 // control the dashboard
 
-let dashboardWidth = ref("280")
+let dashboardWidth = ref("280");
 
 const dashboardToggle = () => {
-  if (dashboardWidth.value === '280')
-    return dashboardWidth.value = '0'
-  
-  return dashboardWidth.value = '280'
-}
+  if (dashboardWidth.value === "280") return (dashboardWidth.value = "0");
+
+  return (dashboardWidth.value = "280");
+};
 
 // Checks whether the user is logged in or not
 
 onMounted(() => {
-  const logged = useCookie('token')
+  const logged = useCookie("token");
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      logged.value = true
-      loading.value = false
+      logged.value = true;
+      loading.value = false;
+    } else {
+      logged.value = false;
+      router.push("/");
     }
-     else {
-      logged.value = false
-      router.push('/')
-    }
-  })
-
-})
+  });
+});
 
 // confirm exit account
 
-let stateWarningMessage = ref(false)
-let warningMessage = ref("")
+let stateWarningMessage = ref(false);
+let warningMessage = ref("");
 
 const openWarningMessage = (message) => {
-  stateWarningMessage.value = true
-  warningMessage.value = message
-}
+  stateWarningMessage.value = true;
+  warningMessage.value = message;
+};
 
-const cancelWarningMessage = () => stateWarningMessage.value = false
+const cancelWarningMessage = () => (stateWarningMessage.value = false);
 
 const confirmWarningMessage = () => {
-  logout()
-  stateWarningMessage.value = false
-}
+  logout();
+  stateWarningMessage.value = false;
+};
 
 // SEO
 
 useHead({
-  title: 'Dashboard',
+  title: "Dashboard",
   meta: [
-    { name: 'description', content: 'Tenha um rápido desenvolvimento e ganho de produtividade com nossa ferramenta completa de desenvolvimento ágil.' },
-    { name: 'keywords', content: 'Kanban,desenvolvimento ágil,jira,trello'},
-    { name: 'author', content: 'Luiz'}
-  ]
-})
+    {
+      name: "description",
+      content:
+        "Tenha um rápido desenvolvimento e ganho de produtividade com nossa ferramenta completa de desenvolvimento ágil.",
+    },
+    { name: "keywords", content: "Kanban,desenvolvimento ágil,jira,trello" },
+    { name: "author", content: "Luiz" },
+  ],
+});
 
 // Notifications
 
-let stateNotificationModal = ref(false)
-
+let stateNotificationModal = ref(false);
 </script>
 
 <style lang="scss" scoped>
+aside {
+  transition: 0.5s;
+}
 
-  aside {
-    transition: .5s;
-  } 
-
-  main {
-    height: calc(100% - 60px);
-  }
+main {
+  height: calc(100% - 60px);
+}
 </style>
