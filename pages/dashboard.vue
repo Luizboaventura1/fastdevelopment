@@ -1,33 +1,44 @@
 <template>
-  <div class="dashboard w-full h-screen flex">
-    <aside
-      class="h-screen bg-subSecondaryColorF overflow-hidden"
-      :style="`width:${dashboardWidth}px;`"
+  <div class="dashboard">
+    <nav
+      class="h-[60px] bg-secondaryColorF flex items-center justify-between px-4"
     >
-      <div class="p-4">
-        <LogoAside />
-        <ProfileAside />
-        <FrameAside :event="() => router.push('/dashboard/frame')" />
-        <DividerDefault spaceY="2" />
-        <LogoutAside :event="() => openWarningMessage('Sair da conta?')" />
+      <BurguerButton :event="dashboardToggle" />
+      <div class="flex items-center gap-3">
+        <NotificationModalRoot />
+        <AccountRoot size="30" />
       </div>
-    </aside>
+    </nav>
+    <div class="w-full h-full flex">
+      <aside
+        class="bg-secondaryColorF overflow-hidden"
+        :style="`width:${dashboardWidth}px;`"
+      >
+        <div class="p-4">
+          <ItemAside text="Página inicial">
+            <template #icon>
+              <HomeIcon size="25" />
+            </template>
+          </ItemAside>
 
-    <div class="flex-1 w-[calc(100% - 280px)] overflow-x-auto">
-      <header class="h-full">
-        <nav
-          class="h-[60px] bg-subSecondaryColorF flex items-center justify-between px-4"
-        >
-          <BurguerButton :event="dashboardToggle" />
-          <div class="flex items-center gap-3">
-            <NotificationModalRoot />
-            <AccountRoot size="30" />
-          </div>
-        </nav>
-        <main class="bg-secondaryColorF overflow-x-auto p-3">
-          <NuxtPage />
-        </main>
-      </header>
+          <DividerDefault spaceY="2" />
+          <ItemAside
+            @click="() => openWarningMessage('Sair da conta?')"
+            text="Sair"
+          >
+            <template #icon>
+              <LogoutIcon size="25" />
+            </template>
+          </ItemAside>
+        </div>
+      </aside>
+      <div class="flex-1 w-[calc(100% - 280px)] overflow-x-auto h-full">
+        <header class="h-full">
+          <main class="bg-subSecondaryColorF overflow-x-auto p-3 h-full">
+            <NuxtPage />
+          </main>
+        </header>
+      </div>
     </div>
   </div>
 
@@ -41,18 +52,17 @@
 </template>
 
 <script setup>
-import FrameAside from "./dashboard/components/DashBoardComponents/FrameAside.vue";
-import LogoAside from "./dashboard/components/DashBoardComponents/LogoAside.vue";
-import ProfileAside from "./dashboard/components/DashBoardComponents/ProfileAside.vue";
-import LogoutAside from "./dashboard/components/DashBoardComponents/LogoutAside.vue";
+import LogoutIcon from "@/components/Common/Icons/LogoutIcon.vue";
 import { signOut, getAuth, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "#vue-router";
-import BurguerButton from "./dashboard/components/BurguerButton.vue";
+import BurguerButton from "./dashboard/components/DashBoardComponents/Navbar/BurguerButton.vue";
 import Loading from "~/components/Common/Loadings/Loading.vue";
 import WarningMessage from "~/components/Kanban/Modals/WarningMessage.vue";
 import DividerDefault from "~/components/Common/Dividers/DividerDefault.vue";
 import AccountRoot from "~/components/Common/Popups/Account/AccountRoot.vue";
 import NotificationModalRoot from "~/components/Notifications/NotificationModal/NotificationModalRoot.vue";
+import ItemAside from "./dashboard/components/DashBoardComponents/ItemAside.vue";
+import HomeIcon from "~/components/Common/Icons/HomeIcon.vue";
 
 const auth = getAuth();
 
@@ -138,18 +148,19 @@ useHead({
     { name: "author", content: "Luiz" },
   ],
 });
-
-// Notifications
-
-let stateNotificationModal = ref(false);
 </script>
 
 <style lang="scss" scoped>
-aside {
-  transition: 0.5s;
+nav {
+  border-bottom: 1px solid #393939;
 }
 
-main {
-  height: calc(100% - 60px);
+aside {
+  transition: 0.5s;
+  border-right: 1px solid #393939;
+}
+
+.dashboard {
+  height: calc(100vh - 60px);
 }
 </style>

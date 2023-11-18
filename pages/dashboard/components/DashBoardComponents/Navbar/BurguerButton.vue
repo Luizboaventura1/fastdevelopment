@@ -4,7 +4,7 @@
     class="cursor-pointer"
   >
     <svg
-      class="fill-white transition-colors hover:fill-primaryColorF w-[30px] h-[30px]"
+      class="fill-white transition-colors hover:bg-zinc-700 rounded-full w-[45px] h-[45px] p-2"
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
       xmlns:xlink="http://www.w3.org/1999/xlink"

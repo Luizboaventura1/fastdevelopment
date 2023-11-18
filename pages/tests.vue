@@ -12,6 +12,7 @@
 </template>
 
 <script setup>
+import { vOnClickOutside } from '@vueuse/components';
 import NotificationModalRoot from '~/components/Notifications/NotificationModal/NotificationModalRoot.vue';
 
 let show = ref(false)

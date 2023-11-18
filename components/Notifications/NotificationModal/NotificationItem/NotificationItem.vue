@@ -1,12 +1,11 @@
 <template>
-  <div class="notification-item flex items-center mb-2 gap-4 w-full h-[80px] rounded-md p-3">
+  <div
+    class="notification-item flex items-center bg-subSecondaryColorF my-1 gap-3 w-full h-[80px] rounded-md p-3"
+  >
     <div class="image-content">
-      <img
-        class="w-[30px] h-[30px]"
-        src="@/assets/logo-fastdevelopment.png"
-      >
+      <LogoFastDevelopment size="30" />
     </div>
-    <div class="content">
+    <div class="content overflow-hidden">
       <div class="notification-title truncate text-white">
         {{ props.title }}
       </div>
@@ -21,16 +20,27 @@
 </template>
 
 <script setup>
-import CloseButton from '~/components/Common/FeedBack/CloseButton.vue';
+import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
+import LogoFastDevelopment from "~/components/Common/Icons/LogoFastDevelopment.vue";
 
 let props = defineProps({
   title: String,
-  message: String
-})
+  message: String,
+});
 </script>
 
-<style lang="scss" scoped>
-.notification-item {
-  background-color: #3a3a3f;
+<style scoped lang="scss">
+.notification-title,
+.notification-message {
+  width: 100%;
+  max-width: 190px;
+}
+
+@media screen and (max-width: 400px) {
+  .notification-title,
+  .notification-message {
+    width: 100%;
+    max-width: 140px;
+  }
 }
 </style>

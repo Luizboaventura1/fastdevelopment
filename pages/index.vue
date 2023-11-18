@@ -171,6 +171,14 @@ onAuthStateChanged(auth, (user) => {
   if (user) logged.value = true;
   else logged.value = false;
 });
+
+//if the token is true it takes the user to the desktop
+
+let router = useRouter();
+
+onBeforeMount(() => {
+  if (logged.value) router.push("/dashboard/frame");
+});
 </script>
 
 <style lang="scss">

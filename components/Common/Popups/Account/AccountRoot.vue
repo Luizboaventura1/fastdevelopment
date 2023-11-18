@@ -22,7 +22,7 @@
     </div>
     <div class="absolute bottom-9 right-5">
       <OptionsModalRoot
-        v-on-click-outside="closeCard"
+        v-on-click-outside.bubble="closeCard"
         :stateModal="stateModal"
       >
         <template #nav>

@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full">
+  <div class="relative">
     <ButtonNav
       @event="toggleModal"
     >
@@ -8,13 +8,13 @@
       />
     </ButtonNav>
     <div
-      class="absolute w-screen flex justify-end top-11 right-0"
+      class="absolute w-screen flex justify-end top-11 -right-10 sm:right-0"
     >
       <Transition>
         <div
           v-on-click-outside.bubble="closeModal"
           v-if="stateModal"
-          class="notification bg-secondaryColorF rounded-lg p-5 z-40"
+          class="notification bg-secondaryColorF rounded-lg p-4 z-40"
         >
           <nav class="flex items-center justify-between">
             <TitleNotification>
@@ -64,9 +64,7 @@ import NotificationIcon from '~/pages/dashboard/components/DashBoardComponents/N
 import NotificationItem from './NotificationItem/NotificationItem.vue';
 
 // User Notifications
-let notifications = ref([
-
-])
+let notifications = ref([])
 
 // Control modal state
 let stateModal = ref()
@@ -106,7 +104,7 @@ onMounted(checkAndHandleNoNotifications)
 
 @media screen and (max-width: 400px) {
   .notification {
-    max-width: 250px;
+    max-width: 280px;
   }
 }
 

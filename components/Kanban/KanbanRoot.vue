@@ -1,104 +1,102 @@
 <template>
-  <div>
-    <div class="kanban flex flex-row rounded-md gap-3 p-4">
-      <div
-        v-for="(frame, indexFrame) in frames"
-        :key="frame"
-        class="me-2 w-[280px]"
-      >
-        <div class="h-auto w-full me-3 bg-subSecondaryColorF p-3 rounded-lg">
-          <div class="title-container py-2 flex items-center gap-4">
-            <input
-              class="bg-subSecondaryColorF w-full text-white px-3 py-1 outline-none ring-2 ring-transparent focus:ring-primaryColorF rounded-md"
-              type="text"
-              v-model="frame.title"
-              @input="updateFrameInFirebase"
-            />
-            <div class="relative">
-              <SettingsButton :event="() => openModalEditList(indexFrame)" />
-              <div class="absolute bottom-24 right-0">
-                <ModalEditList
-                  v-on-click-outside="closeModalList"
-                  :stateModal="frame.stateModal"
-                  :event="closeModalList"
-                  :listId="indexFrame"
-                />
-              </div>
+  <div class="kanban flex flex-row rounded-md gap-3 p-4 h-full">
+    <div
+      v-for="(frame, indexFrame) in frames"
+      :key="frame"
+      class="me-2 w-[280px]"
+    >
+      <div class="lista h-auto w-full max-h-full relative me-3 bg-subSecondaryColorF p-3 rounded-lg">
+        <div class="title-container py-2 flex items-center gap-4">
+          <input
+            class="bg-subSecondaryColorF w-full text-white px-3 py-1 outline-none ring-2 ring-transparent focus:ring-primaryColorF rounded-md"
+            type="text"
+            v-model="frame.title"
+            @input="updateFrameInFirebase"
+          />
+          <div class="relative">
+            <SettingsButton :event="() => openModalEditList(indexFrame)" />
+            <div class="absolute bottom-24 right-0">
+              <ModalEditList
+                v-on-click-outside="closeModalList"
+                :stateModal="frame.stateModal"
+                :event="closeModalList"
+                :listId="indexFrame"
+              />
             </div>
           </div>
-          <div class="cards">
-            <VueDraggableNext v-model="frame.cards" group="people">
-              <transition-group>
-                <div
-                  v-for="(card, indexCard) in frame.cards"
-                  :key="card"
-                  @click.stop="() => editCard(indexFrame, indexCard)"
-                  class="card flex items-center cursor-pointer w-full bg-secondaryColorF p-1 rounded-lg h-[40px] my-2"
-                >
-                  <div class="text-white text-sm px-3 truncate w-full max-w-xs">
-                    {{ card.title }}
-                  </div>
-                  <div class="edit-card h-full flex items-center">
-                    <div
-                      @click.stop="openModalEditCard(indexFrame, indexCard)"
-                      class="edit-card-button w-[28px] h-[28px] flex items-center justify-center rounded-lg"
-                    >
-                      <svg
-                        class="w-[15px] h-[15px]"
-                        xmlns="http://www.w3.org/2000/svg"
-                        version="1.1"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        width="512"
-                        height="512"
-                        x="0"
-                        y="0"
-                        viewBox="0 0 24 24"
-                        style="enable-background: new 0 0 512 512"
-                        xml:space="preserve"
-                      >
-                        <g>
-                          <path
-                            d="M1.172 19.119A4 4 0 0 0 0 21.947V24h2.053a4 4 0 0 0 2.828-1.172L18.224 9.485l-3.709-3.709ZM23.145.855a2.622 2.622 0 0 0-3.71 0l-3.506 3.507 3.709 3.709 3.507-3.506a2.622 2.622 0 0 0 0-3.71Z"
-                            opacity="1"
-                            data-original="#000000"
-                            class=""
-                          ></path>
-                        </g>
-                      </svg>
-                    </div>
-                    <OptionsModalRoot
-                      v-on-click-outside="closeCard"
-                      :stateModal="card.stateModal"
-                    >
-                      <template #nav>
-                        <TitleOptionsModal> Ações card </TitleOptionsModal>
-                        <CloseButton :event="closeCard" size="15" />
-                      </template>
-
-                      <template #buttons>
-                        <ActionOptionsModal
-                          :event="() => editCard(indexFrame, indexCard)"
-                        >
-                          Editar
-                        </ActionOptionsModal>
-                        <ActionOptionsModal
-                          :event="() => openWarningMessage('Apagar o cartão?')"
-                        >
-                          Excluir
-                        </ActionOptionsModal>
-                      </template>
-                    </OptionsModalRoot>
-                  </div>
+        </div>
+        <div class="cards h-full">
+          <VueDraggableNext v-model="frame.cards" class="overflow-y-auto max-h-full" group="people">
+            <transition-group>
+              <div
+                v-for="(card, indexCard) in frame.cards"
+                :key="card"
+                @click.stop="() => editCard(indexFrame, indexCard)"
+                class="card flex items-center cursor-pointer w-full bg-secondaryColorF p-1 rounded-lg h-[40px] my-2"
+              >
+                <div class="text-white text-sm px-3 truncate w-full max-w-xs">
+                  {{ card.title }}
                 </div>
-              </transition-group>
-            </VueDraggableNext>
-            <AddNewCardContainer :indexFrame="indexFrame" />
-          </div>
+                <div class="edit-card h-full flex items-center">
+                  <div
+                    @click.stop="openModalEditCard(indexFrame, indexCard)"
+                    class="edit-card-button w-[28px] h-[28px] flex items-center justify-center rounded-lg"
+                  >
+                    <svg
+                      class="w-[15px] h-[15px]"
+                      xmlns="http://www.w3.org/2000/svg"
+                      version="1.1"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      width="512"
+                      height="512"
+                      x="0"
+                      y="0"
+                      viewBox="0 0 24 24"
+                      style="enable-background: new 0 0 512 512"
+                      xml:space="preserve"
+                    >
+                      <g>
+                        <path
+                          d="M1.172 19.119A4 4 0 0 0 0 21.947V24h2.053a4 4 0 0 0 2.828-1.172L18.224 9.485l-3.709-3.709ZM23.145.855a2.622 2.622 0 0 0-3.71 0l-3.506 3.507 3.709 3.709 3.507-3.506a2.622 2.622 0 0 0 0-3.71Z"
+                          opacity="1"
+                          data-original="#000000"
+                          class=""
+                        ></path>
+                      </g>
+                    </svg>
+                  </div>
+                  <OptionsModalRoot
+                    v-on-click-outside.bubble="closeCard"
+                    :stateModal="card.stateModal"
+                  >
+                    <template #nav>
+                      <TitleOptionsModal> Ações card </TitleOptionsModal>
+                      <CloseButton :event="closeCard" size="15" />
+                    </template>
+
+                    <template #buttons>
+                      <ActionOptionsModal
+                        :event="() => editCard(indexFrame, indexCard)"
+                      >
+                        Editar
+                      </ActionOptionsModal>
+                      <ActionOptionsModal
+                        :event="() => openWarningMessage('Apagar o cartão?')"
+                      >
+                        Excluir
+                      </ActionOptionsModal>
+                    </template>
+                  </OptionsModalRoot>
+                </div>
+              </div>
+            </transition-group>
+          </VueDraggableNext>
+          <AddNewCardContainer :indexFrame="indexFrame" />
         </div>
       </div>
-      <div class="add-new-frame w-[280px]">
-        <AddNewList />
-      </div>
+    </div>
+    <div class="add-new-frame w-[280px]">
+      <AddNewList />
     </div>
   </div>
 
@@ -210,7 +208,11 @@ const closeModalList = () =>
 */
 
 const openModalEditCard = (indexFrame, indexCard) => {
-  frames.at(indexFrame).cards.at(indexCard).stateModal = true;
+  // Open the card modal
+  frames.at(indexFrame).cards.at(indexCard).stateModal = !frames
+    .at(indexFrame)
+    .cards.at(indexCard).stateModal;
+
   currentIndexCard.value.indexFrame = indexFrame;
   currentIndexCard.value.indexCard = indexCard;
 };
@@ -273,11 +275,11 @@ watch(frames, () => {
   // any changes already updated in firebase
   updateFrameInFirebase();
 });
-
 </script>
 
 <style lang="scss" scoped>
 .cards {
+
   .card {
     position: relative;
 
@@ -321,6 +323,21 @@ watch(frames, () => {
     }
   }
 }
+
+.kanban {
+  .lista {
+    border: 1px solid #393939;
+    transition: .3s;
+    &:hover {
+      border: 1px solid #575757;
+    }
+  }
+
+  .add-new-frame div {
+    border: 1px solid #393939;
+  }
+} 
+
 
 ::-webkit-scrollbar {
   width: 8px;
