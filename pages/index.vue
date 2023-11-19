@@ -177,7 +177,7 @@ onAuthStateChanged(auth, (user) => {
 let router = useRouter();
 
 onBeforeMount(() => {
-  if (logged.value) router.push("/dashboard/frame");
+  if (logged.value) router.push("/dashboard/workspace");
 });
 </script>
 
