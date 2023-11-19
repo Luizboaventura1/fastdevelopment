@@ -11,7 +11,9 @@
 import AddCardFormRoot from "~/components/Common/Forms/AddCardForm/AddCardFormRoot.vue";
 import { useFrame } from "~/stores/frame";
 
-const frames = useFrame().frame;
+const currentPageId = useCookie("currentPageId")
+
+const frames = useFrame().frame[currentPageId.value].frame;
 
 let props = defineProps({
   indexCard: Number,

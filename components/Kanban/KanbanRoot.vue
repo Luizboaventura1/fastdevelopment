@@ -1,33 +1,39 @@
 <template>
-  <div class="kanban flex flex-row rounded-md gap-3 p-4 h-full">
-    <div
-      v-for="(frame, indexFrame) in frames"
-      :key="frame"
-      class="me-2 w-[280px]"
+  <div class="flex h-full">
+    <VueDraggableNext
+      :list="frames[idRoute].frame"
+      group="lists"
+      class="kanban flex flex-row rounded-md gap-3 p-4 h-full"
     >
-      <div class="lista h-auto w-full max-h-full relative me-3 bg-subSecondaryColorF p-3 rounded-lg">
-        <div class="title-container py-2 flex items-center gap-4">
-          <input
-            class="bg-subSecondaryColorF w-full text-white px-3 py-1 outline-none ring-2 ring-transparent focus:ring-primaryColorF rounded-md"
-            type="text"
-            v-model="frame.title"
-            @input="updateFrameInFirebase"
-          />
-          <div class="relative">
-            <SettingsButton :event="() => openModalEditList(indexFrame)" />
-            <div class="absolute bottom-24 right-0">
-              <ModalEditList
-                v-on-click-outside="closeModalList"
-                :stateModal="frame.stateModal"
-                :event="closeModalList"
-                :listId="indexFrame"
-              />
+      <div
+        v-for="(frame, indexFrame) in frames[idRoute].frame"
+        :key="indexFrame"
+        class="me-2 w-[280px] h-full"
+      >
+        <div
+          class="lista grid grid-rows-[auto,1fr,auto] max-h-full w-full relative me-3 bg-subSecondaryColorF p-3 rounded-lg"
+        >
+          <div class="title-container py-2 flex items-center gap-4">
+            <input
+              class="bg-subSecondaryColorF w-full text-white px-3 py-1 outline-none ring-2 ring-transparent focus:ring-primaryColorF rounded-md"
+              type="text"
+              v-model="frame.title"
+              @input="updateFrameInFirebase"
+            />
+            <div class="relative">
+              <SettingsButton :event="() => openModalEditList(indexFrame)" />
+              <div class="absolute bottom-24 right-0">
+                <ModalEditList
+                  v-on-click-outside="closeModalList"
+                  :stateModal="frame.stateModal"
+                  :event="closeModalList"
+                  :listId="indexFrame"
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div class="cards h-full">
-          <VueDraggableNext v-model="frame.cards" class="overflow-y-auto max-h-full" group="people">
-            <transition-group>
+          <div class="cards overflow-y-auto">
+            <VueDraggableNext v-model="frame.cards" group="people">
               <div
                 v-for="(card, indexCard) in frame.cards"
                 :key="card"
@@ -66,14 +72,14 @@
                     </svg>
                   </div>
                   <OptionsModalRoot
-                    v-on-click-outside.bubble="closeCard"
+                    class="-mt-11"
+                    v-on-click-outside="closeCard"
                     :stateModal="card.stateModal"
                   >
                     <template #nav>
                       <TitleOptionsModal> Ações card </TitleOptionsModal>
                       <CloseButton :event="closeCard" size="15" />
                     </template>
-
                     <template #buttons>
                       <ActionOptionsModal
                         :event="() => editCard(indexFrame, indexCard)"
@@ -89,13 +95,13 @@
                   </OptionsModalRoot>
                 </div>
               </div>
-            </transition-group>
-          </VueDraggableNext>
+            </VueDraggableNext>
+          </div>
           <AddNewCardContainer :indexFrame="indexFrame" />
         </div>
       </div>
-    </div>
-    <div class="add-new-frame w-[280px]">
+    </VueDraggableNext>
+    <div class="add-new-frame w-[280px] h-auto pt-4">
       <AddNewList />
     </div>
   </div>
@@ -139,6 +145,13 @@ import OptionsModalRoot from "../Common/Popups/OptionsModal/OptionsModalRoot.vue
 import ActionOptionsModal from "../Common/Popups/OptionsModal/ActionOptionsModal.vue";
 import TitleOptionsModal from "../Common/Popups/OptionsModal/TitleOptionsModal.vue";
 import CloseButton from "../Common/FeedBack/CloseButton.vue";
+import { useRoute } from "#vue-router";
+
+const currentPageId = useCookie("currentPageId")
+
+const route = useRoute()
+const idRoute = route.params.id
+currentPageId.value = idRoute
 
 const auth = getAuth();
 const db = getFirestore();
@@ -164,10 +177,8 @@ onMounted(() => {
       querySnapshot.forEach((doc) => {
         // add data to local frame
         if (frames.length === 0) {
-          frames.push(...doc.data().frame);
+          frames.push(...doc.data().workspace);
         }
-
-        addModalStateToCards();
 
         // get user id from firestore
         idUser.value = doc.id;
@@ -176,30 +187,18 @@ onMounted(() => {
   });
 });
 
-// add the modal state to cards
-
-const addModalStateToCards = () => {
-  frames.forEach((frame) => {
-    frame.stateModal = false; // add status to list
-
-    frame.cards.forEach((card) => {
-      card.stateModal = false; // add status to card
-    });
-  });
-};
-
 // Modal edit card
 
 let currentIndexCard = ref({ indexFrame: undefined, indexCard: undefined });
 
 //When you click outside the modal it will close
 const closeCard = () =>
-  (frames
+  (frames[idRoute].frame
     .at(currentIndexCard.value.indexFrame)
     .cards.at(currentIndexCard.value.indexCard).stateModal = false);
 
 const closeModalList = () =>
-  (frames.at(currentIndexCard.value.indexFrame).stateModal = false);
+  (frames[idRoute].frame.at(currentIndexCard.value.indexFrame).stateModal = false);
 
 /*
   The function below openModalEditCard  receives the name of the list and the card index, 
@@ -209,7 +208,7 @@ const closeModalList = () =>
 
 const openModalEditCard = (indexFrame, indexCard) => {
   // Open the card modal
-  frames.at(indexFrame).cards.at(indexCard).stateModal = !frames
+  frames[idRoute].frame.at(indexFrame).cards.at(indexCard).stateModal = !frames[idRoute].frame
     .at(indexFrame)
     .cards.at(indexCard).stateModal;
 
@@ -218,7 +217,7 @@ const openModalEditCard = (indexFrame, indexCard) => {
 };
 
 const openModalEditList = (indexFrame) => {
-  frames.at(indexFrame).stateModal = true;
+  frames[idRoute].frame.at(indexFrame).stateModal = true;
   currentIndexCard.value.indexFrame = indexFrame;
 };
 
@@ -235,7 +234,7 @@ const openWarningMessage = (message) => {
 const cancelWarningMessage = () => (stateWarningMessage.value = false);
 
 const confirmWarningMessage = () => {
-  frames
+  frames[idRoute].frame
     .at(currentIndexCard.value.indexFrame)
     .cards.splice(currentIndexCard.value.indexCard, 1);
 
@@ -267,7 +266,7 @@ const updateFrameInFirebase = async () => {
   const frameDocRef = doc(db, "users", idUser.value);
 
   await updateDoc(frameDocRef, {
-    frame: frames,
+    workspace: frames,
   });
 };
 
@@ -279,7 +278,6 @@ watch(frames, () => {
 
 <style lang="scss" scoped>
 .cards {
-
   .card {
     position: relative;
 
@@ -327,17 +325,16 @@ watch(frames, () => {
 .kanban {
   .lista {
     border: 1px solid #393939;
-    transition: .3s;
+    transition: 0.3s;
     &:hover {
       border: 1px solid #575757;
     }
   }
+}
 
-  .add-new-frame div {
-    border: 1px solid #393939;
-  }
-} 
-
+.add-new-frame div {
+  border: 1px solid #393939;
+}
 
 ::-webkit-scrollbar {
   width: 8px;

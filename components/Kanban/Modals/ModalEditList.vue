@@ -30,7 +30,9 @@ import ActionOptionsModal from "@/components/Common/Popups/OptionsModal/ActionOp
 import TitleOptionsModal from "@/components/Common/Popups/OptionsModal/TitleOptionsModal.vue";
 import CloseButton from "@/components/Common/FeedBack/CloseButton.vue";
 
-const dbFrame = useFrame().frame;
+const currentPageId = useCookie("currentPageId")
+
+const dbFrame = useFrame().frame[currentPageId.value].frame;
 
 const props = defineProps({
   stateModal: Boolean,

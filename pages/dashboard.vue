@@ -15,7 +15,7 @@
         :style="`width:${dashboardWidth}px;`"
       >
         <div class="p-4">
-          <ItemAside text="Página inicial">
+          <ItemAside link="/dashboard/workspace" text="Página inicial">
             <template #icon>
               <HomeIcon size="25" />
             </template>
