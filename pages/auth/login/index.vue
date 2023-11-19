@@ -79,7 +79,7 @@ const loginButton = () => {
       loading.value = false // Disable Loading
       
       // go dashboard
-      router.push('/dashboard/frame')
+      router.push('/dashboard/workspace')
     })
     .catch(() => {
       ErrorMessagePopup('Conta não encontrada')
@@ -97,7 +97,7 @@ const loginWithGoogle = async () => {
     loading.value = false // Disable Loading
     
     // go dashboard
-    router.push('/dashboard/frame')
+    router.push('/dashboard/workspace')
   })
 }
 

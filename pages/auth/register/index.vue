@@ -102,7 +102,7 @@ const loginWithGoogle = async () => {
       logged.value = true
 
       // go to dashboard
-      router.push('/dashboard/frame')
+      router.push('/dashboard/workspace')
     }
   } catch (error) {
     ErrorMessagePopup('Erro em criar a conta')
@@ -113,7 +113,7 @@ const createUser = (name,email,password) => {
 
   createUserWithEmailAndPassword(auth, email, password).then(() => {
     loading.value = false
-    router.push('/dashboard/frame')
+    router.push('/dashboard/workspace')
   })
   .catch(() => {
     ErrorMessagePopup('Usuário existente')
