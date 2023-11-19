@@ -47,7 +47,7 @@ const db = getFirestore();
 let userInfo = useCookie("userInfo");
 
 let frames = useFrame().frame;
-let userName = ref(userInfo.value.name);
+let userName = ref(userInfo.value.name || "");
 let userEmail = ref("");
 let idUser = ref("");
 
