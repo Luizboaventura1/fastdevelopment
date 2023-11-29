@@ -106,10 +106,13 @@ import {
   getFirestore,
 } from "firebase/firestore";
 
+const currentPageId = useCookie("currentPageId");
+
 const auth = getAuth();
 const db = getFirestore();
 
-const dbFrame = ref(useFrame().frame);
+let dbFrame = useFrame().frame;
+let frameList = ref(dbFrame[currentPageId.value]?.frame);
 
 let userEmail = ref("");
 let idUser = ref("");
@@ -159,32 +162,37 @@ const saveChanges = () => {
 
 // save the values ​​in firebase
 const saveValuesToFirebase = (newTitle, newDescription) => {
-  dbFrame.value.at(props.indexFrame).cards.at(props.indexCard).title = newTitle;
-  dbFrame.value.at(props.indexFrame).cards.at(props.indexCard).description =
+  frameList.value[props.indexFrame].cards[props.indexCard].title = newTitle;
+  frameList.value[props.indexFrame].cards[props.indexCard].description =
     newDescription;
 
   const frameDocRef = doc(db, "users", idUser.value);
 
   updateDoc(frameDocRef, {
-    frame: dbFrame.value,
+    workspace: dbFrame,
   });
 };
 
 // Update values ​​if they change
-watchEffect(() => {
-  // checks if the objects exist
-
-  if (
-    dbFrame.value &&
-    dbFrame.value.at(props.indexFrame) &&
-    dbFrame.value.at(props.indexFrame).cards &&
-    dbFrame.value.at(props.indexFrame).cards.at(props.indexCard)
-  ) {
-    title.value =
-      dbFrame.value.at(props.indexFrame).cards.at(props.indexCard).title || "";
-    description.value =
-      dbFrame.value.at(props.indexFrame).cards.at(props.indexCard)
-        .description || "";
+watchEffect(async () => {
+  try {
+    // Checks if objects exist
+    if (
+      frameList.value &&
+      frameList.value[props.indexFrame] &&
+      frameList.value[props.indexFrame].cards &&
+      frameList.value[props.indexFrame].cards[props.indexCard]
+    ) {
+      title.value =
+        frameList.value[props.indexFrame].cards[props.indexCard].title;
+      description.value =
+        frameList.value[props.indexFrame].cards[props.indexCard].description;
+    } else {
+      dbFrame = await getDataWorkspace();
+      frameList.value = dbFrame[currentPageId.value]?.frame;
+    }
+  } catch (error) {
+    console.error(error);
   }
 });
 </script>

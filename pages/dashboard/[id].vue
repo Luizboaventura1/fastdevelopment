@@ -3,7 +3,3 @@
     <KanbanRoot />
   </div>
 </template>
-
-<script setup>
-import KanbanRoot from '~/components/Kanban/KanbanRoot.vue';
-</script>

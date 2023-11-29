@@ -8,10 +8,11 @@
     </WorkspaceContainer>
     <FrameBar space-y="6">
       <TitleWorkspace> Quadros </TitleWorkspace>
+      <Search placeholder-input="Buscar quadro..." />
     </FrameBar>
     <Grid col="2">
       <CreateNewFrameRoot>
-        <NewFrameButton>
+        <NewFrameButton @click="handleCreateNewFrame.open">
           <TitleWorkspace> Criar novo quadro </TitleWorkspace>
         </NewFrameButton>
       </CreateNewFrameRoot>
@@ -20,10 +21,26 @@
         :key="index"
         :frameID="String(index)"
       >
-        <TitleWorkspace xl> {{ frame.title }} </TitleWorkspace>
+        <TitleWorkspace lg> {{ frame.title }} </TitleWorkspace>
       </FrameRoot>
     </Grid>
   </WorkspaceContainer>
+  <ModalCreateNewFrame
+    @closeModal="handleCreateNewFrame.close"
+    :stateModal="stateModalCreateNewFrame"
+  >
+    <div class="flex justify-between">
+      <TitleWorkspace lg> Criar novo quadro </TitleWorkspace>
+      <CloseButton size="15" :event="handleCreateNewFrame.close" />
+    </div>
+    <InputModal
+      @inputValue="(val) => (inputCreateNewFrame = val)"
+      placeholderInput="Nome do quadro"
+    />
+    <ConfirmButtonModal :event="createNewFrame">
+      Criar Quadro
+    </ConfirmButtonModal>
+  </ModalCreateNewFrame>
 </template>
 
 <script setup>
@@ -36,6 +53,11 @@ import Grid from "./components/WorkspaceComponents/Grid/Grid.vue";
 import CreateNewFrameRoot from "./components/WorkspaceComponents/CreateNewFrame/CreateNewFrameRoot.vue";
 import NewFrameButton from "./components/WorkspaceComponents/CreateNewFrame/NewFrameButton.vue";
 import { useFrame } from "~/stores/frame";
+import Search from "./components/WorkspaceComponents/Search.vue";
+import ModalCreateNewFrame from "./components/WorkspaceComponents/CreateNewFrame/ModalCreateNewFrame/ModalCreateNewFrame.vue";
+import InputModal from "./components/WorkspaceComponents/CreateNewFrame/ModalCreateNewFrame/InputModal.vue";
+import ConfirmButtonModal from "./components/WorkspaceComponents/CreateNewFrame/ModalCreateNewFrame/ConfirmButtonModal.vue";
+import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import {
   collection,
@@ -43,6 +65,8 @@ import {
   where,
   getDocs,
   getFirestore,
+  doc,
+  updateDoc
 } from "firebase/firestore";
 
 const auth = getAuth();
@@ -77,8 +101,7 @@ onAuthStateChanged(auth, async (user) => {
       idUser.value = doc.id;
 
       // get name
-      userName.value = doc.data().name
-
+      userName.value = doc.data().name;
     });
   }
 });
@@ -93,6 +116,37 @@ const addModalStateToCards = () => {
     });
   });
 };
+
+// Modal create new Frame
+
+let stateModalCreateNewFrame = ref(false);
+let inputCreateNewFrame = ref("");
+
+const handleCreateNewFrame = {
+  open: () => (stateModalCreateNewFrame.value = true),
+  close: () => (stateModalCreateNewFrame.value = false),
+};
+
+const createNewFrame = () => {
+  frames.push({
+    title: inputCreateNewFrame.value,
+    frame: [],
+  });
+
+  handleCreateNewFrame.close()
+};
+
+// Update the list in firebase when changing card position
+
+const updateFrameInFirebase = async () => {
+  const frameDocRef = doc(db, "users", idUser.value);
+
+  await updateDoc(frameDocRef, {
+    workspace: frames,
+  });
+};
+
+watch(frames, () => updateFrameInFirebase());
 </script>
 
 <style lang="scss" scoped></style>

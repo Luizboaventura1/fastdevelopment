@@ -13,7 +13,7 @@ import { useFrame } from "~/stores/frame";
 
 const currentPageId = useCookie("currentPageId")
 
-const frames = useFrame().frame[currentPageId.value].frame;
+const frames = useFrame().frame;
 
 let props = defineProps({
   indexCard: Number,
@@ -26,7 +26,7 @@ let newListInput = ref("");
 
 const addNewList = () => {
   if (validateCard(newListInput.value)) {
-    frames.push({
+    frames[currentPageId.value].frame.push({
       title: newListInput.value,
       cards: [],
     });

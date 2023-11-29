@@ -1,7 +1,7 @@
 <template>
   <div
     :class="`my-${props.spaceY} mx-${props.spaceX}`"
-    class="flex justify-between rounded-full bg-secondaryColorF px-4 py-3 ring-1 ring-zinc-700"
+    class="flex justify-between gap-4 rounded-full bg-secondaryColorF px-4 py-3 ring-1 ring-zinc-700"
   >
     <slot />
   </div>

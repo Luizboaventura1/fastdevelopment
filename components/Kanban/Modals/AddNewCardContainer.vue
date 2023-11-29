@@ -12,7 +12,8 @@ import { useFrame } from "~/stores/frame";
 
 const currentPageId = useCookie("currentPageId")
 
-const dbFrame = useFrame().frame[currentPageId.value].frame;
+const dbFrame = useFrame().frame;
+let frameList = ref(dbFrame[currentPageId.value].frame)
 
 let props = defineProps({
   indexFrame: Number,
@@ -24,7 +25,7 @@ let titleInput = ref("");
 
 const addNewCard = () => {
   if (validateCard(titleInput.value)) {
-    dbFrame.at(props.indexFrame).cards.push({
+    frameList.value[props.indexFrame].cards.push({
       title: titleInput.value,
       description: "",
     });

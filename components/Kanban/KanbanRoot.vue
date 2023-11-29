@@ -1,12 +1,12 @@
 <template>
   <div class="flex h-full">
     <VueDraggableNext
-      :list="frames[idRoute].frame"
+      :list="frames[currentPageId]?.frame || []"
       group="lists"
       class="kanban flex flex-row rounded-md gap-3 p-4 h-full"
     >
       <div
-        v-for="(frame, indexFrame) in frames[idRoute].frame"
+        v-for="(frame, indexFrame) in frames[currentPageId]?.frame || []"
         :key="indexFrame"
         class="me-2 w-[280px] h-full"
       >
@@ -147,9 +147,9 @@ import TitleOptionsModal from "../Common/Popups/OptionsModal/TitleOptionsModal.v
 import CloseButton from "../Common/FeedBack/CloseButton.vue";
 import { useRoute } from "#vue-router";
 
+const route = useRoute()
 const currentPageId = useCookie("currentPageId")
 
-const route = useRoute()
 const idRoute = route.params.id
 currentPageId.value = idRoute
 
@@ -157,35 +157,35 @@ const auth = getAuth();
 const db = getFirestore();
 
 let frames = useFrame().frame;
+
 let userEmail = ref("");
 let idUser = ref("");
 
-onMounted(() => {
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      userEmail.value = user.email;
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    userEmail.value = user.email;
 
-      // get frame
+    // get frame
 
-      const q = query(
-        collection(db, "users"),
-        where("email", "==", userEmail.value)
-      );
+    const q = query(
+      collection(db, "users"),
+      where("email", "==", userEmail.value)
+    );
 
-      const querySnapshot = await getDocs(q);
+    const querySnapshot = await getDocs(q);
 
-      querySnapshot.forEach((doc) => {
-        // add data to local frame
-        if (frames.length === 0) {
-          frames.push(...doc.data().workspace);
-        }
+    querySnapshot.forEach((doc) => {
+      // add data to local frame
+      if (frames.length === 0) {
+        frames.push(...doc.data().workspace);
+      }
 
-        // get user id from firestore
-        idUser.value = doc.id;
-      });
-    }
-  });
+      // get user id from firestore
+      idUser.value = doc.id;
+    });
+  }
 });
+
 
 // Modal edit card
 
