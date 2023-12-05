@@ -1,34 +1,52 @@
 import { initializeApp } from 'firebase/app'
-import { getAuth } from "firebase/auth"
+import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 
-export default defineNuxtPlugin(async nuxtApp => {
+async function fetchRouteKey() {
+  try {
+    const route = await useFetch('/api/route')
+    return route.data.value.ROUTE_KEY
+  } catch (error) {
+    console.error('Erro ao obter a chave da rota:', error)
+    throw error
+  }
+}
 
-  const ROUTE_KEY = await useFetch('/api/route')
-  .then(route => route.data.value.ROUTE_KEY)
-  
-  const FIREBASE_DATA = await useFetch(`/api/firebase/${ROUTE_KEY}`)
-  .then(firebase => firebase.data.value)
-  
-  const firebaseConfig = {
-    apiKey: FIREBASE_DATA.data.API_KEY,
-    authDomain: FIREBASE_DATA.data.AUTH_DOMAIN,
-    projectId: FIREBASE_DATA.data.PROJECT_ID,
-    storageBucket: FIREBASE_DATA.data.STORAGE_BUCKET,
-    messagingSenderId: FIREBASE_DATA.data.MESSAGING_SENDER_ID,
-    appId: FIREBASE_DATA.data.APP_ID,
-    measurementId: FIREBASE_DATA.data.MEASUREMENT_ID
-  };
+async function fetchFirebaseData(routeKey) {
+  try {
+    const firebaseData = await useFetch(`/api/firebase/${routeKey}`)
+    return firebaseData.data.value
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
 
-  const app = initializeApp(firebaseConfig)
+export default defineNuxtPlugin(async (nuxtApp) => {
+  try {
+    const routeKey = await fetchRouteKey()
+    const firebaseData = await fetchFirebaseData(routeKey)
 
-  const auth = getAuth(app)
-  const firestore = getFirestore(app)
+    const firebaseConfig = {
+      apiKey: firebaseData.data.API_KEY,
+      authDomain: firebaseData.data.AUTH_DOMAIN,
+      projectId: firebaseData.data.PROJECT_ID,
+      storageBucket: firebaseData.data.STORAGE_BUCKET,
+      messagingSenderId: firebaseData.data.MESSAGING_SENDER_ID,
+      appId: firebaseData.data.APP_ID,
+      measurementId: firebaseData.data.MEASUREMENT_ID,
+    }
 
-  nuxtApp.vueApp.provide('auth', auth)
-  nuxtApp.provide('auth', auth)
+    const app = initializeApp(firebaseConfig)
+    const auth = getAuth(app)
+    const firestore = getFirestore(app)
 
-  nuxtApp.vueApp.provide('firestore', firestore)
-  nuxtApp.provide('firestore', firestore)
+    nuxtApp.vueApp.provide('auth', auth)
+    nuxtApp.provide('auth', auth)
 
+    nuxtApp.vueApp.provide('firestore', firestore)
+    nuxtApp.provide('firestore', firestore)
+  } catch (error) {
+    console.error(error)
+  }
 })
