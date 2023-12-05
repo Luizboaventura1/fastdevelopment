@@ -28,11 +28,11 @@ Make the build
 npm run build
 ```
 
-# License
+## License
 
 - FastDevelopment © 2023 by Luiz Henrique is licensed under Attribution-NonCommercial-NoDerivatives 4.0 International 
 
-# Technologies used
+## Technologies used
 
 - Vue.js 3
 - Nuxt.js 3
@@ -40,17 +40,17 @@ npm run build
 - Pinia
 - Scss
 
-# Database
+## Database
 
 - Firebase
 
-# Libs
+## Libs
 
 - https://motion.vueuse.org
 
-# Interface
+## Interface
 
-### Kanban board
+## Kanban board
 
 ![](./assets/documentation-images/kanban-board.png)
 
