@@ -40,6 +40,7 @@
           <p class="text-sm mx-2 mt-4 sm:mt-0">Desenvolvido por
             <a
               class="font-bold hover:underline"
+              target="_blank"
               href="https://github.com/Luizboaventura1"
             >
               Luiz
