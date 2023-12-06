@@ -1,34 +1,10 @@
 <template>
   <TemplateAuth>
     <form class="py-5 px-9 bg-secondaryColorF w-full max-w-xl rounded-md">
-      <h1 class="text-slate-50 text-2xl font-bold py-4 mb-4">
-        Bem vindo(a)
-      </h1>
-      <InputEmail 
-        typeInput="email"
-        placeholderInput="Seu email"
-        @valueInput="(val) => email = val"
-        :error="emailInputError"
-      />
-      <InputPassword 
-        placeholderInput="Sua senha"
-        @valueInput="(val) => password = val"
-        :error="passwordInputError"
-      />
-      <div class="my-3" />
-      <SubmitButton
-        :event="loginButton"
-      >
-        LOGIN
-      </SubmitButton>
-      <div class="mt-3"></div>
-      <GoogleButton 
-        :event="loginWithGoogle"
-      />
+      <h1 class="text-slate-50 text-2xl font-bold py-4 mb-4">Bem vindo(a)</h1>
+      <GoogleButton :event="loginWithGoogle">Login com Google</GoogleButton>
       <div class="text-center mt-4">
-        <p
-          class="text-white text-sm"
-        >
+        <p class="text-white text-sm">
           Não tem uma conta?
           <NuxtLink
             class="text-violet-500 hover:text-primaryColorF"
@@ -40,137 +16,65 @@
       </div>
     </form>
   </TemplateAuth>
-  <ErrorMessage
-    :popup="statePopup"
-    :message="errorMessagePopup"
-   />
-   <Loading
-    :visibility="loading"
-  />
+  <Loading :visibility="loading" />
+  <ToastError :state="stateToastError" :message="toastMessage" />
 </template>
 
 <script setup>
-import TemplateAuth from '../components/TemplateAuth.vue';
-import InputEmail from '../components/InputEmail.vue';
-import InputPassword from '../components/InputPassword.vue'
-import ErrorMessage from '../components/Popups/ErrorMessage.vue';
-import SubmitButton from '../components/SubmitButton.vue';
-import { signInWithEmailAndPassword, signInWithPopup, getAuth, GoogleAuthProvider } from 'firebase/auth';
-import GoogleButton from '../components/GoogleButton.vue';
-import { useRouter } from '#vue-router';
-import Loading from '~/components/Common/Loadings/Loading.vue';
+import TemplateAuth from "../components/TemplateAuth.vue";
+import {
+  signInWithPopup,
+  getAuth,
+  GoogleAuthProvider,
+} from "firebase/auth";
+import GoogleButton from "../components/GoogleButton.vue";
+import { useRouter } from "#vue-router";
+import Loading from "~/components/Common/Loadings/Loading.vue";
+import ToastError from "@/components/Common/Toast/Error"
 
-const auth = getAuth()
+const auth = getAuth();
 
-const router = useRouter()
-let loading = ref(false)
-
-let email = ref('')
-let password = ref('')
-
-const loginButton = () => {
-  if (validateForm()) {
-    loading.value = true
-
-    signInWithEmailAndPassword(auth, email.value, password.value)
-    .then(() => {
-      const logged = useCookie('token')
-      logged.value = true
-      loading.value = false // Disable Loading
-      
-      // go dashboard
-      router.push('/dashboard/workspace')
-    })
-    .catch(() => {
-      ErrorMessagePopup('Conta não encontrada')
-    })
-  }
-}
+const router = useRouter();
+let loading = ref(false);
 
 const loginWithGoogle = async () => {
-  const provider = new GoogleAuthProvider()
-  loading.value = true
+  loading.value = true;
 
-  await signInWithPopup(auth, provider).then(() => {
-    const logged = useCookie('token')
-    logged.value = true
-    loading.value = false // Disable Loading
-    
-    // go dashboard
-    router.push('/dashboard/workspace')
-  })
-}
+  try {
+    const provider = new GoogleAuthProvider();
+    const result = await signInWithPopup(auth, provider);
 
-let emailInputError = ref('')
-let passwordInputError = ref('')
+    if (result.user) {
+      const { uid, email, displayName } = result.user;
 
-const validateForm = () => {
-  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
-  const passwordRegex = /^\S+$/
+      // create token
+      const logged = useCookie("token");
+      logged.value = true;
 
-  // returns at the end whether everything is correct or not with a true or false
-  let stateValidade = ref(false)
+      if (!(await checkIfTheUserExists(email))) {
+        await addUserInFirestore(displayName, email, "", uid);
+      }
 
-  const generalState = ref({
-    email: false,
-    password: false
-  })
-
-  if (email.value === '') {
-    emailInputError.value = 'Email obrigatório'
-  } 
-
-  else if (!emailRegex.test(email.value)) {
-    emailInputError.value = 'Email inválido'
+      // go to dashboard
+      router.push("/dashboard/workspace");
+    }
+  } catch (error) {
+    loading.value = false;
+    openToast('Verifique sua conexão!')
   }
-
-  else if (email.value.length > 30) {
-    emailInputError.value = 'Máximo de 30 caracteres'
-  }
-
-  else {
-    generalState.value.email = true
-  }
-
-  // Validate Password
-
-  if (password.value === '') {
-    passwordInputError.value = 'Senha obrigatória'
-  } 
-
-  else if (password.value.length < 8) {
-    passwordInputError.value = 'Mínimo de 8 caracteres'
-  }
-
-  else if (password.value.length > 30) {
-    passwordInputError.value = 'Máximo de 30 caracteres'
-  }
-
-  else if (!passwordRegex.test(password.value)) {
-    passwordInputError.value = 'Senha inválida'
-  }
-
-  else {
-    generalState.value.password = true
-  }
-
-  if (generalState.value.email && generalState.value.password)
-    return stateValidade.value = true
-  else
-    return stateValidade.value
-}
+};
 
 useHead({
-  title: 'Login'
-})
+  title: "Login",
+});
 
-let statePopup = ref(false)
-let errorMessagePopup = ref('')
+let stateToastError = ref(false)
+let toastMessage = ref("")
 
-const ErrorMessagePopup = (message) => {
-  errorMessagePopup.value = message
-  statePopup.value = true
-  setTimeout(() => statePopup.value = false,2000)
+const openToast = (message) => {
+  stateToastError.value = true
+  toastMessage.value = message
+
+  setTimeout(() => stateToastError.value = false, 3000)
 }
-
 </script>

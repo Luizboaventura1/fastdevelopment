@@ -1,39 +1,12 @@
 <template>
   <TemplateAuth>
     <form class="py-5 px-9 bg-secondaryColorF w-full max-w-xl rounded-md">
-      <h1 class="text-slate-50 text-2xl font-bold py-4 mb-4">
-        Criar conta
-      </h1>
-      <InputName 
-        placeholderInput="Seu nome"
-        @valueInput="(val) => name = val"
-        :error="inputNameError"
-      />
-      <InputEmail 
-        typeInput="email"
-        placeholderInput="Seu email"
-        @valueInput="(val) => email = val"
-        :error="emailInputError"
-      />
-      <InputPassword 
-        placeholderInput="Sua senha"
-        @valueInput="(val) => password = val"
-        :error="passwordInputError"
-      />
-      <div class="my-3" />
-      <SubmitButton
-        :event="registerButton"
+      <h1 class="text-slate-50 text-2xl font-bold py-4 mb-4">Criar conta</h1>
+      <GoogleButton :event="loginWithGoogle"
+        >Criar conta com Google</GoogleButton
       >
-        CADASTRAR
-      </SubmitButton>
-      <div class="mt-3"></div>
-      <GoogleButton
-        :event="loginWithGoogle"
-      />
       <div class="text-center mt-4">
-        <p
-          class="text-white text-sm"
-        >
+        <p class="text-white text-sm">
           Tem uma conta?
           <NuxtLink
             class="text-violet-500 hover:text-primaryColorF"
@@ -45,195 +18,62 @@
       </div>
     </form>
   </TemplateAuth>
-  <ErrorMessage
-    :popup="statePopup"
-    :message="errorMessagePopup"
-   />
-  <Loading
-    :visibility="loading"
-  />
+  <Loading :visibility="loading" />
+  <ToastError :state="stateToastError" :message="toastMessage" />
 </template>
 
 <script setup>
-import TemplateAuth from '../components/TemplateAuth.vue';
-import InputEmail from '../components/InputEmail.vue';
-import InputPassword from '../components/InputPassword.vue'
-import InputName from '../components/InputName.vue';
-import SubmitButton from '../components/SubmitButton.vue';
-import ErrorMessage from '../components/Popups/ErrorMessage.vue';
-import GoogleButton from '../components/GoogleButton.vue';
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithPopup, getAuth } from "firebase/auth";
-import { collection, addDoc , getFirestore } from "firebase/firestore";
+import TemplateAuth from "../components/TemplateAuth.vue";
+import GoogleButton from "../components/GoogleButton.vue";
+import { signInWithPopup, getAuth } from "firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth";
-import { useRouter } from '#vue-router';
-import Loading from '~/components/Common/Loadings/Loading.vue';
+import { useRouter } from "#vue-router";
+import Loading from "~/components/Common/Loadings/Loading.vue";
+import ToastError from "@/components/Common/Toast/Error";
 
-const auth = getAuth()
-const db = getFirestore()
+const auth = getAuth();
 
-const router = useRouter()
-let loading = ref(false)
-
-let name = ref('')
-let email = ref('')
-let password = ref('')
-
-const registerButton = () => {
-  if (validateForm()) {
-    loading.value = true
-    createUser(name.value,email.value,password.value)
-
-    const logged = useCookie('token')
-    logged.value = true
-  }
-}
+const router = useRouter();
+let loading = ref(false);
 
 const loginWithGoogle = async () => {
+  loading.value = true;
   try {
-    const provider = new GoogleAuthProvider()
-    const result = await signInWithPopup(auth, provider)
+    const provider = new GoogleAuthProvider();
+    const result = await signInWithPopup(auth, provider);
 
     if (result.user) {
-      const { uid, email, displayName } = result.user
-      addUserInFirestore(displayName, email, '', uid)
+      const { uid, email, displayName } = result.user;
 
       // create token
-      const logged = useCookie('token')
-      logged.value = true
+      const logged = useCookie("token");
+      logged.value = true;
+
+      if (!(await checkIfTheUserExists(email))) {
+        await addUserInFirestore(displayName, email, "", uid);
+      }
 
       // go to dashboard
-      router.push('/dashboard/workspace')
+      router.push("/dashboard/workspace");
     }
   } catch (error) {
-    ErrorMessagePopup('Erro em criar a conta')
+    loading.value = false;
+    openToast('Verifique sua conexão!')
   }
-}
-
-const createUser = (name,email,password) => {
-
-  createUserWithEmailAndPassword(auth, email, password).then(() => {
-    loading.value = false
-    router.push('/dashboard/workspace')
-  })
-  .catch(() => {
-    ErrorMessagePopup('Usuário existente')
-  })
-
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const uid = user.uid
-      addUserInFirestore(name,email,password,uid)
-    }
-  })
-}
-
-function addUserInFirestore (name,email,password,uid) {
-  addDoc(collection(db, "users"), {
-    name,
-    email,
-    password,
-    uid,
-    frame: []
-  });
-}
-
-
-let inputNameError = ref('')
-let emailInputError = ref('')
-let passwordInputError = ref('')
-
-const validateForm = () => {
-  const nameRegex = /^[A-Za-z\s]+$/
-  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
-  const passwordRegex = /^\S+$/
-
-  // returns at the end whether everything is correct or not with a true or false
-  let stateValidade = ref(false)
-
-  const generalState = ref({
-    name: false,
-    email: false,
-    password: false
-  })
-
-  // Validate Name
-
-  if (name.value.trim() === '') {
-    inputNameError.value = 'Nome obrigatório'
-  } 
-
-  else if (name.value.length < 3) {
-    inputNameError.value = 'Mínimo de 3 caracteres'
-  }
-
-  else if (name.value.length > 20) {
-    inputNameError.value = 'Máximo de 20 caracteres'
-  }
-
-  else if (!nameRegex.test(name.value)) {
-    inputNameError.value = 'Nome inválido'
-  }
-
-  else {
-    generalState.value.name = true
-  }
-
-  // Validate Email
-
-  if (email.value === '') {
-    emailInputError.value = 'Email obrigatório'
-  } 
-
-  else if (!emailRegex.test(email.value)) {
-    emailInputError.value = 'Email inválido'
-  }
-
-  else if (email.value.length > 30) {
-    emailInputError.value = 'Máximo de 30 caracteres'
-  }
-
-  else {
-    generalState.value.email = true
-  }
-
-  // Validate Password
-
-  if (password.value === '') {
-    passwordInputError.value = 'Senha obrigatória'
-  } 
-
-  else if (password.value.length < 8) {
-    passwordInputError.value = 'Mínimo de 8 caracteres'
-  }
-
-  else if (password.value.length > 30) {
-    passwordInputError.value = 'Máximo de 30 caracteres'
-  }
-
-  else if (!passwordRegex.test(password.value)) {
-    passwordInputError.value = 'Senha inválida'
-  }
-
-  else {
-    generalState.value.password = true
-  }
-
-  if (generalState.value.name && generalState.value.email && generalState.value.password)
-    return stateValidade.value = true
-  else
-    return stateValidade.value
-}
-
+};
+  
 useHead({
-  title: 'Criar conta'
-})
+  title: "Criar conta",
+});
 
-let statePopup = ref(false)
-let errorMessagePopup = ref('')
 
-const ErrorMessagePopup = (message) => {
-  errorMessagePopup.value = message
-  statePopup.value = true
-  setTimeout(() => statePopup.value = false,2000)
+let stateToastError = ref(false)
+let toastMessage = ref("")
+
+const openToast = (message) => {
+  stateToastError.value = true
+  toastMessage.value = message
+
+  setTimeout(() => stateToastError.value = false, 3000)
 }
 </script>

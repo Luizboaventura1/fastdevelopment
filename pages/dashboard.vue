@@ -65,7 +65,6 @@ import ItemAside from "./dashboard/components/DashBoardComponents/ItemAside.vue"
 import HomeIcon from "~/components/Common/Icons/HomeIcon.vue";
 
 const auth = getAuth();
-
 const router = useRouter();
 
 // starts true to check if the user is logged in

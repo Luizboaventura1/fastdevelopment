@@ -8,7 +8,7 @@
     <span
       class="text-white ms-3 font-medium"
     >
-      Login com Google
+      <slot />
     </span>
   </button>
 </template>

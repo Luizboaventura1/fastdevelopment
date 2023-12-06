@@ -15,9 +15,11 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@vueuse/motion/nuxt',
     'nuxt-gtag',
+    'nuxt-primevue',
   ],
   plugins: [
-    "~/plugins/firebase.js"
+    "~/plugins/firebase.js",
+    "@/plugins/primevue.js"
   ],
   pinia: {
     autoImports: [

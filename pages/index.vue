@@ -143,11 +143,10 @@ import Pricing from "./home/Pricing.vue";
 const auth = getAuth();
 
 const startButton = () => {
-  if (logged.value) {
-    location.href = "/dashboard/frame";
-  } else {
-    location.href = "/auth/register";
-  }
+  if (logged.value) 
+    router.push("/dashboard/frame");
+  else 
+    router.push("/auth/register");
 };
 
 // SEO
@@ -172,7 +171,7 @@ onAuthStateChanged(auth, (user) => {
   else logged.value = false;
 });
 
-//if the token is true it takes the user to the desktop
+// if the token is true it takes the user to the desktop
 
 let router = useRouter();
 
