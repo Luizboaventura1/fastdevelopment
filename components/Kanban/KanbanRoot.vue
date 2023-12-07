@@ -34,43 +34,18 @@
           </div>
           <div class="cards overflow-y-auto">
             <VueDraggableNext v-model="frame.cards" group="people">
-              <div
+              <CardRoot
                 v-for="(card, indexCard) in frame.cards"
                 :key="card"
                 @click.stop="() => editCard(indexFrame, indexCard)"
-                class="card flex items-center cursor-pointer w-full bg-secondaryColorF p-1 rounded-lg h-[40px] my-2"
               >
-                <div class="text-white text-sm px-3 truncate w-full max-w-xs">
+                <CardTitle>
                   {{ card.title }}
-                </div>
-                <div class="edit-card h-full flex items-center">
-                  <div
-                    @click.stop="openModalEditCard(indexFrame, indexCard)"
-                    class="edit-card-button w-[28px] h-[28px] flex items-center justify-center rounded-lg"
-                  >
-                    <svg
-                      class="w-[15px] h-[15px]"
-                      xmlns="http://www.w3.org/2000/svg"
-                      version="1.1"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                      width="512"
-                      height="512"
-                      x="0"
-                      y="0"
-                      viewBox="0 0 24 24"
-                      style="enable-background: new 0 0 512 512"
-                      xml:space="preserve"
-                    >
-                      <g>
-                        <path
-                          d="M1.172 19.119A4 4 0 0 0 0 21.947V24h2.053a4 4 0 0 0 2.828-1.172L18.224 9.485l-3.709-3.709ZM23.145.855a2.622 2.622 0 0 0-3.71 0l-3.506 3.507 3.709 3.709 3.507-3.506a2.622 2.622 0 0 0 0-3.71Z"
-                          opacity="1"
-                          data-original="#000000"
-                          class=""
-                        ></path>
-                      </g>
-                    </svg>
-                  </div>
+                </CardTitle>
+                <div class="edit-card h-full flex items-center absolute top-0 right-3">
+                  <EditCardButton
+                    @editCard="openModalEditCard(indexFrame, indexCard)"
+                  />
                   <OptionsModalRoot
                     class="-mt-11"
                     v-on-click-outside="closeCard"
@@ -87,14 +62,16 @@
                         Editar
                       </ActionOptionsModal>
                       <ActionOptionsModal
-                        :event="() => openWarningMessage('Apagar o cartão?')"
+                        :event="
+                          () => controlWarningMessage.open('Apagar o cartão?')
+                        "
                       >
                         Excluir
                       </ActionOptionsModal>
                     </template>
                   </OptionsModalRoot>
                 </div>
-              </div>
+              </CardRoot>
             </VueDraggableNext>
           </div>
           <AddNewCardContainer :indexFrame="indexFrame" />
@@ -109,8 +86,8 @@
   <WarningMessage
     :state="stateWarningMessage"
     :message="warningMessage"
-    :cancel="cancelWarningMessage"
-    :confirm="confirmWarningMessage"
+    :cancel="controlWarningMessage.close"
+    :confirm="controlWarningMessage.confirmWarningMessage"
   />
   <EditCardRoot
     :stateModal="stateModalEditCard"
@@ -132,6 +109,8 @@ import { useFrame } from "~/stores/frame";
 import SettingsButton from "./Buttons/SettingsButton.vue";
 import ModalEditList from "./Modals/ModalEditList.vue";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
+import CardRoot from "./Card/CardRoot.vue";
+import CardTitle from "./Card/CardTitle.vue";
 import {
   collection,
   query,
@@ -145,13 +124,14 @@ import OptionsModalRoot from "../Common/Popups/OptionsModal/OptionsModalRoot.vue
 import ActionOptionsModal from "../Common/Popups/OptionsModal/ActionOptionsModal.vue";
 import TitleOptionsModal from "../Common/Popups/OptionsModal/TitleOptionsModal.vue";
 import CloseButton from "../Common/FeedBack/CloseButton.vue";
+import EditCardButton from "./Card/EditCardButton.vue";
 import { useRoute } from "#vue-router";
 
-const route = useRoute()
-const currentPageId = useCookie("currentPageId")
+const route = useRoute();
+const currentPageId = useCookie("currentPageId");
 
-const idRoute = route.params.id
-currentPageId.value = idRoute
+const idRoute = route.params.id;
+currentPageId.value = idRoute;
 
 const auth = getAuth();
 const db = getFirestore();
@@ -178,6 +158,7 @@ onAuthStateChanged(auth, async (user) => {
       // add data to local frame
       if (frames.length === 0) {
         frames.push(...doc.data().workspace);
+        addModalStateToCards();
       }
 
       // get user id from firestore
@@ -186,6 +167,16 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
+const addModalStateToCards = () => {
+  frames.forEach((framesArr) => {
+    framesArr.frame.forEach((frameArr) => {
+      frameArr.stateModal = false; // add status to list
+      frameArr.cards.forEach((card) => {
+        card.stateModal = false; // add status to card
+      });
+    });
+  });
+};
 
 // Modal edit card
 
@@ -198,7 +189,9 @@ const closeCard = () =>
     .cards.at(currentIndexCard.value.indexCard).stateModal = false);
 
 const closeModalList = () =>
-  (frames[idRoute].frame.at(currentIndexCard.value.indexFrame).stateModal = false);
+  (frames[idRoute].frame.at(
+    currentIndexCard.value.indexFrame
+  ).stateModal = false);
 
 /*
   The function below openModalEditCard  receives the name of the list and the card index, 
@@ -208,9 +201,7 @@ const closeModalList = () =>
 
 const openModalEditCard = (indexFrame, indexCard) => {
   // Open the card modal
-  frames[idRoute].frame.at(indexFrame).cards.at(indexCard).stateModal = !frames[idRoute].frame
-    .at(indexFrame)
-    .cards.at(indexCard).stateModal;
+  frames[idRoute].frame.at(indexFrame).cards.at(indexCard).stateModal = true;
 
   currentIndexCard.value.indexFrame = indexFrame;
   currentIndexCard.value.indexCard = indexCard;
@@ -226,22 +217,22 @@ const openModalEditList = (indexFrame) => {
 let stateWarningMessage = ref(false);
 let warningMessage = ref("");
 
-const openWarningMessage = (message) => {
-  stateWarningMessage.value = true;
-  warningMessage.value = message;
-};
+let controlWarningMessage = {
+  open: (msg) => {
+    stateWarningMessage.value = true;
+    warningMessage.value = msg;
+  },
+  close: () => (stateWarningMessage.value = false),
+  confirmWarningMessage: () => {
+    frames[idRoute].frame
+      .at(currentIndexCard.value.indexFrame)
+      .cards.splice(currentIndexCard.value.indexCard, 1);
 
-const cancelWarningMessage = () => (stateWarningMessage.value = false);
+    // Update list in Firebase
+    updateFrameInFirebase();
 
-const confirmWarningMessage = () => {
-  frames[idRoute].frame
-    .at(currentIndexCard.value.indexFrame)
-    .cards.splice(currentIndexCard.value.indexCard, 1);
-
-  // Update list in Firebase
-  updateFrameInFirebase();
-
-  stateWarningMessage.value = false;
+    stateWarningMessage.value = false;
+  },
 };
 
 // Edit Card
@@ -256,6 +247,8 @@ let idCard = ref();
 const editCard = (indexFrame, indexCard) => {
   idFrame.value = indexFrame;
   idCard.value = indexCard;
+  useState("indexFrame").value = indexFrame;
+  useState("indexCard").value = indexCard;
 
   stateModalEditCard.value = true;
 };

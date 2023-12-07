@@ -3,7 +3,7 @@
     <div
       v-if="props.stateModal"
       @click.stop="$emit('closeModal')"
-      class="background fixed z-50 right-0 top-0 w-screen h-screen flex items-center justify-center"
+      class="background fixed z-50 right-0 top-0 w-screen h-screen flex items-center justify-center px-4"
     >
       <div
         @click.stop

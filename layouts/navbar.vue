@@ -26,9 +26,12 @@
 import LoginButton from '@/pages/home/LoginButton.vue';
 import RegisterButton from '@/pages/home/RegisterButton.vue';
 import LogoFastDevelopment from '../components/Common/Icons/LogoFastDevelopment.vue'
+import { useRouter } from '#vue-router';
 
-const login = () => location.href = '/auth/login'
+const router = useRouter()
 
-const register = () => location.href = '/auth/register'
+const login = () => router.push('/auth/login')
+
+const register = () => router.push('/auth/register')
 
 </script>

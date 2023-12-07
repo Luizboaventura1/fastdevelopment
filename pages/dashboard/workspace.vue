@@ -137,7 +137,6 @@ const createNewFrame = () => {
 };
 
 // Update the list in firebase when changing card position
-
 const updateFrameInFirebase = async () => {
   const frameDocRef = doc(db, "users", idUser.value);
 
@@ -146,7 +145,10 @@ const updateFrameInFirebase = async () => {
   });
 };
 
-watch(frames, () => updateFrameInFirebase());
+watch(frames, () => {
+  // any changes already updated in firebase
+  updateFrameInFirebase();
+});
 </script>
 
 <style lang="scss" scoped></style>

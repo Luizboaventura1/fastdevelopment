@@ -111,8 +111,7 @@ const currentPageId = useCookie("currentPageId");
 const auth = getAuth();
 const db = getFirestore();
 
-let dbFrame = useFrame().frame;
-let frameList = ref(dbFrame[currentPageId.value]?.frame);
+let workspace = useFrame().frame;
 
 let userEmail = ref("");
 let idUser = ref("");
@@ -154,46 +153,40 @@ let title = ref("");
 let description = ref("");
 
 // saves card changes
-const saveChanges = () => {
-  saveValuesToFirebase(title.value, description.value);
+const saveChanges = async () => {
+  await saveValuesToFirebase();
 
   emit("closeModal");
 };
 
 // save the values ​​in firebase
-const saveValuesToFirebase = (newTitle, newDescription) => {
-  frameList.value[props.indexFrame].cards[props.indexCard].title = newTitle;
-  frameList.value[props.indexFrame].cards[props.indexCard].description =
-    newDescription;
+const saveValuesToFirebase = async () => {
+  workspace[currentPageId.value].frame[props.indexFrame].cards[
+    props.indexCard
+  ].title = title.value;
+  
+  workspace[currentPageId.value].frame[props.indexFrame].cards[
+    props.indexCard
+  ].description = description.value;
 
   const frameDocRef = doc(db, "users", idUser.value);
 
-  updateDoc(frameDocRef, {
-    workspace: dbFrame,
+  await updateDoc(frameDocRef, {
+    workspace: workspace,
   });
 };
 
 // Update values ​​if they change
-watchEffect(async () => {
-  try {
-    // Checks if objects exist
-    if (
-      frameList.value &&
-      frameList.value[props.indexFrame] &&
-      frameList.value[props.indexFrame].cards &&
-      frameList.value[props.indexFrame].cards[props.indexCard]
-    ) {
-      title.value =
-        frameList.value[props.indexFrame].cards[props.indexCard].title;
-      description.value =
-        frameList.value[props.indexFrame].cards[props.indexCard].description;
-    } else {
-      dbFrame = await getDataWorkspace();
-      frameList.value = dbFrame[currentPageId.value]?.frame;
-    }
-  } catch (error) {
-    console.error(error);
-  }
+watchEffect(() => {
+  title.value =
+    workspace[currentPageId.value]?.frame[props.indexFrame]?.cards[
+      props.indexCard
+    ]?.title;
+
+  description.value =
+    workspace[currentPageId.value]?.frame[props.indexFrame]?.cards[
+      props.indexCard
+    ]?.description;
 });
 </script>
 
