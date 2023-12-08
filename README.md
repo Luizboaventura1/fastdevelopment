@@ -57,7 +57,9 @@ npm run build
 
 ## Libs
 
-- https://motion.vueuse.org
+- ![Motion vueuse](https://motion.vueuse.org)
+- ![Prime Vue](https://primevue.org)
+- ![Vue draggable](https://sortablejs.github.io/Vue.Draggable/#/simple)
 
 ## Interface
 
