@@ -61,8 +61,6 @@ npm run build
 
 ## Interface
 
-<div align="center">
-![](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHQ2a3dmYmNtdGJhNjN0eTNtOW9tMjRqNDVwdXZpMDg2OWlyNnU3MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/mGO1hoEvogACWwaXVB/giphy.gif)
-</div>
+<div align="center">![](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHQ2a3dmYmNtdGJhNjN0eTNtOW9tMjRqNDVwdXZpMDg2OWlyNnU3MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/mGO1hoEvogACWwaXVB/giphy.gif)</div>
 
 _In development..._
