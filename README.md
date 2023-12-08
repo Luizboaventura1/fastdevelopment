@@ -37,6 +37,16 @@ Make the build
 ```bash
 npm run build
 ```
+<h4 align="center"> 
+	🚧  FastDevelopment 🚀 In development...  🚧
+</h4>
+
+### Features
+
+- [x] Login system
+- [x] Kanban board
+- [ ] Workspace
+- [ ] addition of members
 
 ## License
 
@@ -66,5 +76,3 @@ npm run build
 <p align="center">
   <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjEx…9naWZfYnlfaWQmY3Q9Zw/mGO1hoEvogACWwaXVB/giphy.gif" alt="Descrição da imagem">
 </p>
-
-_In development..._
