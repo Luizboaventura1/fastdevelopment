@@ -61,5 +61,8 @@ npm run build
 
 ## Interface
 
-![](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjEx…9naWZfYnlfaWQmY3Q9Zw/mGO1hoEvogACWwaXVB/giphy.gif)
+<p align="center">
+  <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjEx…9naWZfYnlfaWQmY3Q9Zw/mGO1hoEvogACWwaXVB/giphy.gif" alt="Descrição da imagem">
+</p>
+
 _In development..._
