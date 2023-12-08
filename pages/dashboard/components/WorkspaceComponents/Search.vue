@@ -3,9 +3,10 @@
     v-model="inputValue"
     @input="$emit('inputValue',inputValue)"
     name="nome"
-    class="max-w-sm w-full border-0 outline-0 text-white bg-secondaryColorF"
-    type="search"
+    class="max-w-sm w-full border-0 outline-0 text-white bg-secondaryColorF placeholder-neutral-500"
+    type="text"
     :placeholder="props.placeholderInput"
+    autocomplete="off"
   >
 </template>
 
@@ -17,11 +18,3 @@ let props = defineProps({
 let inputValue = ref()
 
 </script>
-
-<style lang="scss" scoped>
-
-::placeholder {
-  color: #6b6b71;
-}
-
-</style>
