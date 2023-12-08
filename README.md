@@ -1,9 +1,6 @@
-# FastDevelopment
+
 <h1 align="center">Nome do Projeto</h1>
-
-## What's FastDevelopment?
-
-FastDevelopment is a tool for those who want more productivity in their projects, but with an easy-to-use platform and a clean, modern design.
+<p align="center">FastDevelopment is a tool for those who want more productivity in their projects, but with an easy-to-use platform and a clean, modern design.</p>
 
 Deploy: https://fastdevelopment.vercel.app
 
