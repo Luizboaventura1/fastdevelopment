@@ -1,4 +1,7 @@
-![](./assets/logo-fastdevelopment.png)
+<div align="center">
+  <img src="./assets/logo-fastdevelopment.png" width="150">
+</div>
+
 <h1 align="center">FastDevelopment</h1>
 ## What's FastDevelopment
 <p align="center">FastDevelopment is a tool for those who want more productivity in their projects, but with an easy-to-use platform and a clean, modern design.</p>
@@ -6,6 +9,7 @@
 Deploy: https://fastdevelopment.vercel.app
 
 ### Developer guide
+
 [click here](https://github.com/Luizboaventura1/fastdevelopment/tree/main/docs/developer-guide)
 
 ### User guide
@@ -15,21 +19,26 @@ Deploy: https://fastdevelopment.vercel.app
 ## Get started with a few commands
 
 install dependencies
+
 ```bash
 npm install
 ```
+
 Run project
+
 ```bash
 npm run dev
 ```
+
 Make the build
+
 ```bash
 npm run build
 ```
 
 ## License
 
-- FastDevelopment © 2023 by Luiz Henrique is licensed under Attribution-NonCommercial-NoDerivatives 4.0 International 
+- FastDevelopment © 2023 by Luiz Henrique is licensed under Attribution-NonCommercial-NoDerivatives 4.0 International
 
 ## Technologies used
 
@@ -54,5 +63,3 @@ npm run build
 ![](./assets/documentation-images/kanban-board.png)
 
 _In development..._
-
-
