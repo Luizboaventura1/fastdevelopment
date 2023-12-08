@@ -50,9 +50,10 @@ npm run build
 - Pinia
 - Scss
 
-## Database
+## Database and tools
 
 - Firebase
+- Figma
 
 ## Libs
 
