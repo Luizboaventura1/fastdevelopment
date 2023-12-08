@@ -15,6 +15,7 @@ module.exports = {
       },
       colors: {
         primaryColorF: '#8257e5',
+        primaryColorFHover: "#6743ba",
         secondaryColorF: '#202024',//#202024
         subSecondaryColorF: '#121214',//#121214,
         textPrimaryColorF: "#f8fafc",
