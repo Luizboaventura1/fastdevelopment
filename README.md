@@ -52,7 +52,7 @@ npm run build
 
 - FastDevelopment © 2023 by Luiz Henrique is licensed under Attribution-NonCommercial-NoDerivatives 4.0 International
 
-## Technologies used
+## 🛠 Technologies
 
 - Vue.js 3
 - Nuxt.js 3
