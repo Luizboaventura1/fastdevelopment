@@ -6,19 +6,19 @@
 
 <p align="center">FastDevelopment is a tool for those who want more productivity in their projects, but with an easy-to-use platform and a clean, modern design.</p>
 
-## Deploy
+## Deploy 🚀
 
 Link: https://fastdevelopment.vercel.app
 
-### Developer guide
+### Developer guide 📚
 
 [click here](https://github.com/Luizboaventura1/fastdevelopment/tree/main/docs/developer-guide)
 
-### User guide
+### User guide 📖
 
 [click here](https://github.com/Luizboaventura1/fastdevelopment/tree/main/docs/user-guide)
 
-## Get started with a few commands
+## Get started with a few commands ⚙️
 
 install dependencies
 
@@ -38,14 +38,14 @@ Make the build
 npm run build
 ```
 
-### Features
+### Features 🌟
 
 - [x] Login system
 - [x] Kanban board
 - [ ] Workspace
 - [ ] addition of members
 
-## License
+## License 📜
 
 - FastDevelopment © 2023 by Luiz Henrique is licensed under Attribution-NonCommercial-NoDerivatives 4.0 International
 
@@ -57,24 +57,24 @@ npm run build
 - Pinia
 - Scss
 
-## Database and tools
+## Database and tools 🗃️
 
 - Firebase
 - Figma
 
-## Libs
+## Libs 📚
 
 - [Motion vueuse](https://motion.vueuse.org)
 - [Prime Vue](https://primevue.org)
 - [Vue draggable](https://sortablejs.github.io/Vue.Draggable/#/simple)
 
-## Interface
+## Interface 🎨
 
 <p align="center">
   <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjEx…9naWZfYnlfaWQmY3Q9Zw/mGO1hoEvogACWwaXVB/giphy.gif" alt="Descrição da imagem">
 </p>
 
-## Status
+## Status 🚦
 
 <h4 align="center"> 
 	🚧  FastDevelopment 🚀 In development...  🚧
