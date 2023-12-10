@@ -1,5 +1,5 @@
 <template>
-  <div class="relative search-workspace max-w-sm w-full" ref="containerResultsRef">
+  <div class="relative search-workspace max-w-sm w-full">
     <SearchInput
       @inputValue="(val) => Search(val)"
       placeholderInput="Buscar quadro"
@@ -104,11 +104,9 @@ onUnmounted(() => {
   document.body.removeEventListener("click", handleClickOutside);
 });
 
-let containerResultsRef = ref()
-
 const handleClickOutside = (event) => {
   // Check if the click occurred outside ContainerResults
-  const containerResultsElement = containerResultsRef.value
+  const containerResultsElement = document.querySelector(".search-workspace");
 
   if (
     containerResultsElement &&
