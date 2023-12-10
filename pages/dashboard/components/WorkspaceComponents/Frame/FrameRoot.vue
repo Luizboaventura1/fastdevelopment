@@ -1,7 +1,7 @@
 <template>
   <div
     @click.stop="$router.push(`/dashboard/${props.frameID}`)"
-    class="frame cursor-pointer w-full h-[200px] ring-1 ring-zinc-700 hover:ring-zinc-500 transition-all duration-300 rounded-lg p-4 relative overflow-hidden"
+    class="frame frame-root cursor-pointer w-full h-[200px] ring-1 ring-zinc-700 hover:ring-zinc-500 transition-all duration-300 rounded-lg p-4 relative overflow-hidden"
   >
     <slot />
 
@@ -91,6 +91,28 @@ let controlWarningMessage = {
     deleteFrame()
     stateWarningMessage.value = false;
   },
+};
+
+// Add a click event listener to the main element (e.g. body)
+onMounted(() => {
+  document.body.addEventListener("click", handleClickOutside);
+});
+
+onUnmounted(() => {
+  document.body.removeEventListener("click", handleClickOutside);
+});
+
+const handleClickOutside = (event) => {
+  // Check if the click occurred outside frame
+  const frameElement = document.querySelector(".frame-root");
+
+  if (
+    frameElement &&
+    !frameElement.contains(event.target)
+  ) {
+    // Close frame
+    stateSettings.value = false
+  }
 };
 </script>
 

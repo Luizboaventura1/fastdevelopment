@@ -1,17 +1,28 @@
 <template>
-  <div
-    class="h-screen w-screen bg-subSecondaryColorF flex justify-center items-center"
-  >
-    <button class="text-white bg-blue-400 p-5" @click="toggle">
-      Show toast
-    </button>
-    <ToastError :state="state" message="Verifique sua conexão" />
-  </div>
+  <p class="text-color-alfa">
+    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Praesentium
+    cupiditate ullam atque eius saepe? Esse ipsum, consequatur, dolorum sed
+    labore distinctio quo a expedita quisquam, cupiditate sequi magni nesciunt
+    autem?
+  </p>
 </template>
 
 <script setup>
-import ToastError from "@/components/Common/Toast/Error";
+import { mount } from '@vue/test-utils'
+// The component to test
+const MessageComponent = {
+  template: '<p>{{ msg }}</p>',
+  props: ['msg']
+}
 
-let state = ref(false);
-const toggle = () => (state.value = !state.value);
+test('displays message', () => {
+  const wrapper = mount(MessageComponent, {
+    props: {
+      msg: 'Hello world'
+    }
+  })
+
+  // Assert the rendered text of the component
+  expect(wrapper.text()).toContain('Hello world')
+})
 </script>

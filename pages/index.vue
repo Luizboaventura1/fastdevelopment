@@ -178,6 +178,7 @@ let router = useRouter();
 onBeforeMount(() => {
   if (logged.value) router.push("/dashboard/workspace");
 });
+
 </script>
 
 <style lang="scss">

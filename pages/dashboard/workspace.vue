@@ -3,12 +3,12 @@
     <TitleWorkspace lg> Página inicial </TitleWorkspace>
     <WorkspaceContainer ms>
       <Greeting>
-        {{ userName }}
+        {{ getFirstName(userName) }}
       </Greeting>
     </WorkspaceContainer>
     <FrameBar space-y="6">
       <TitleWorkspace> Quadros </TitleWorkspace>
-      <Search placeholder-input="Buscar quadro..." />
+      <SearchWorkspace />
     </FrameBar>
     <Grid col="2">
       <CreateNewFrameRoot>
@@ -53,7 +53,7 @@ import Grid from "./components/WorkspaceComponents/Grid/Grid.vue";
 import CreateNewFrameRoot from "./components/WorkspaceComponents/CreateNewFrame/CreateNewFrameRoot.vue";
 import NewFrameButton from "./components/WorkspaceComponents/CreateNewFrame/NewFrameButton.vue";
 import { useFrame } from "~/stores/frame";
-import Search from "./components/WorkspaceComponents/Search.vue";
+import SearchWorkspace from "./components/WorkspaceComponents/SearchWorkspace";
 import ModalCreateNewFrame from "./components/WorkspaceComponents/CreateNewFrame/ModalCreateNewFrame/ModalCreateNewFrame.vue";
 import InputModal from "./components/WorkspaceComponents/CreateNewFrame/ModalCreateNewFrame/InputModal.vue";
 import ConfirmButtonModal from "./components/WorkspaceComponents/CreateNewFrame/ModalCreateNewFrame/ConfirmButtonModal.vue";
@@ -149,6 +149,10 @@ watch(frames, () => {
   // any changes already updated in firebase
   updateFrameInFirebase();
 });
+
+const getFirstName = (val) => {
+  return val.split(' ')[0]
+}
 </script>
 
 <style lang="scss" scoped></style>
