@@ -6,14 +6,16 @@
     />
 
     <ContainerResults @click.stop :state="stateContainerResults">
-      <li v-for="(item, index) in searchedItems" :key="index">
-        <SearchResult
-          tabindex="0"
-          @click="$router.push(`/dashboard/${item.id}`)"
-        >
-          {{ item.title }}
-        </SearchResult>
-      </li>
+      <TransitionGroup name="list" tag="ul">
+        <li v-for="(item, index) in searchedItems" :key="index">
+          <SearchResult
+            tabindex="0"
+            @click="$router.push(`/dashboard/${item.id}`)"
+          >
+            {{ item.title }}
+          </SearchResult>
+        </li>
+      </TransitionGroup>
       <NoResults v-if="searchedItems.length === 0">
         Sem resultados :(
       </NoResults>
@@ -116,4 +118,25 @@ const handleClickOutside = (event) => {
     controlContainerResults.close();
   }
 };
+
 </script>
+
+<style lang="scss" scoped>
+.list-move, /* apply transition to moving elements */
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.2s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.list-leave-active {
+  position: absolute;
+}
+</style>
