@@ -74,6 +74,18 @@ npm run build
   <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjEx…9naWZfYnlfaWQmY3Q9Zw/mGO1hoEvogACWwaXVB/giphy.gif" alt="Descrição da imagem">
 </p>
 
+## How to Contribute 🚀
+
+1. **Fork the Repository:**
+   - Fork this repository by clicking the "Fork" button in the top right corner of this page. This will create a copy of the repository in your GitHub account.
+
+2. **Clone the Repository:**
+   - Clone the forked repository to your local development environment.
+
+   ```bash
+   git clone git@github.com:Luizboaventura1/fastdevelopment.git
+   cd my-awesome-project
+
 ## Status 🚦
 
 <h4 align="center"> 
