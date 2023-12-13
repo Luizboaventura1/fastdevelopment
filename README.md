@@ -12,11 +12,11 @@ Link: https://fastdevelopment.vercel.app
 
 ### Developer guide 📚
 
-[click here](https://github.com/Luizboaventura1/fastdevelopment/tree/main/docs/developer-guide)
+[click here](./docs/developer-guide/structure.md)
 
 ### User guide 📖
 
-[click here](https://github.com/Luizboaventura1/fastdevelopment/tree/main/docs/user-guide)
+[click here](./docs/user-guide/Introdution.md)
 
 ## Get started with a few commands ⚙️
 
