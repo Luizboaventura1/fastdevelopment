@@ -84,7 +84,7 @@ npm run build
 
    ```bash
    git clone git@github.com:Luizboaventura1/fastdevelopment.git
-   cd my-awesome-project
+   cd fastdevelopment
 
 ## Status 🚦
 
