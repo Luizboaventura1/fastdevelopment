@@ -12,7 +12,7 @@ Link: https://fastdevelopment.vercel.app
 
 ### Developer guide 📚
 
-[click here](./docs/developer-guide/structure.md)
+[click here](./docs/developer-guide)
 
 ### User guide 📖
 
