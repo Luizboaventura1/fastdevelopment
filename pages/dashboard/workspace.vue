@@ -33,10 +33,13 @@
       <TitleWorkspace lg> Criar novo quadro </TitleWorkspace>
       <CloseButton size="15" :event="handleCreateNewFrame.close" />
     </div>
-    <InputModal
-      @inputValue="(val) => (inputCreateNewFrame = val)"
-      placeholderInput="Nome do quadro"
-    />
+    <div>
+      <InputModal
+        @inputValue="(val) => (inputCreateNewFrame = val)"
+        placeholderInput="Nome do quadro"
+      />
+      <ErrorMessage :message="errorMessageFrame" />
+    </div>
     <ConfirmButtonModal :event="createNewFrame">
       Criar Quadro
     </ConfirmButtonModal>
@@ -59,6 +62,7 @@ import InputModal from "./components/WorkspaceComponents/CreateNewFrame/ModalCre
 import ConfirmButtonModal from "./components/WorkspaceComponents/CreateNewFrame/ModalCreateNewFrame/ConfirmButtonModal.vue";
 import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
+import ErrorMessage from "~/components/Common/ErrorComponents/ErrorMessage.vue";
 import {
   collection,
   query,
@@ -121,6 +125,7 @@ const addModalStateToCards = () => {
 
 let stateModalCreateNewFrame = ref(false);
 let inputCreateNewFrame = ref("");
+let errorMessageFrame = ref("");
 
 const handleCreateNewFrame = {
   open: () => (stateModalCreateNewFrame.value = true),
@@ -128,13 +133,24 @@ const handleCreateNewFrame = {
 };
 
 const createNewFrame = () => {
+  if (validateFrame(inputCreateNewFrame.value)) {
   frames.push({
     title: inputCreateNewFrame.value,
     frame: [],
   });
 
   handleCreateNewFrame.close()
+  } else {
+    errorMessageFrame.value = "Nome do quadro obrigatório!"
+  }
 };
+
+watch(inputCreateNewFrame, () => {
+  // remove an error message
+  if (inputCreateNewFrame.value.length != 0) {
+    errorMessageFrame.value = ""
+  }
+})
 
 // Update the list in firebase when changing card position
 const updateFrameInFirebase = async () => {
