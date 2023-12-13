@@ -47,7 +47,7 @@ npm run build
 
 ## License 📜
 
-- FastDevelopment © 2023 by Luiz Henrique is licensed under Attribution-NonCommercial-NoDerivatives 4.0 International
+- [MIT](./LICENSE)
 
 ## 🛠 Technologies
 
