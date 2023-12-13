@@ -86,6 +86,10 @@ npm run build
    git clone git@github.com:Luizboaventura1/fastdevelopment.git
    cd fastdevelopment
 
+### Attention 🚨
+
+It is not yet possible to contribute to the project, but you will soon be able to make your contributions.
+
 ## Status 🚦
 
 <h4 align="center"> 
