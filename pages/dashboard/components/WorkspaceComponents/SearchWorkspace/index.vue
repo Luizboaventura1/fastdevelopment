@@ -28,12 +28,9 @@ import ContainerResults from "./ContainerResults.vue";
 import SearchResult from "./SearchResult.vue";
 import SearchInput from "./SearchInput.vue";
 import NoResults from "./NoResults.vue";
+import { useFrame } from "@/stores/frame.js"
 
-let workspace = [];
-
-onMounted(async () => {
-  workspace = [...(await getDataWorkspace())];
-});
+let workspace = useFrame().frame || [];
 
 let input = ref();
 let searchedItems = ref([]);
