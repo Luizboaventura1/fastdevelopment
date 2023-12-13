@@ -22,13 +22,19 @@
             placeholder="Nome do quadro"
             v-model="frameName"
           />
+          <div>
+            <ErrorMessage :message="errorMessageFrame" />
+          </div>
         </div>
         <div class="flex gap-4 mt-3 self-start">
           <SaveButton @button="saveChanges"> Salvar </SaveButton>
           <CancelButton @button="toggleSettings"> Cancelar </CancelButton>
         </div>
         <div class="self-end flex justify-end">
-          <DeleteButton @button="controlWarningMessage.open('Apagar Quadro?')" size="18" />
+          <DeleteButton
+            @button="controlWarningMessage.open('Apagar Quadro?')"
+            size="18"
+          />
         </div>
       </div>
     </Transition>
@@ -48,6 +54,7 @@ import SaveButton from "~/components/Buttons/SaveButton.vue";
 import DeleteButton from "@/components/Buttons/DeleteButton.vue";
 import { useFrame } from "~/stores/frame";
 import WarningMessage from "~/components/Common/FeedBack/WarningMessage.vue";
+import ErrorMessage from "~/components/Common/ErrorComponents/ErrorMessage.vue";
 
 let props = defineProps({
   frameID: String,
@@ -59,22 +66,34 @@ const toggleSettings = () => (stateSettings.value = !stateSettings.value);
 
 // Get the current frame
 let frame = useFrame().frame[props.frameID];
-// Get frame name
 let frameName = ref(frame.title);
 
 const saveChanges = () => {
-  // Gets the new frame name
-  frame.title = frameName.value;
+  if (validateFrame(frameName.value)) {
+    // Gets the new frame name
+    frame.title = frameName.value;
 
-  toggleSettings();
+    toggleSettings();
+  } else {
+    errorMessageFrame.value = "Nome do quadro obrigatório!";
+  }
 };
 
 const deleteFrame = () => {
   let workspace = useFrame().frame;
   workspace.splice(props.frameID, 1);
 
-  toggleSettings()
+  toggleSettings();
 };
+
+let errorMessageFrame = ref("");
+
+watch(frameName, () => {
+  // remove an error message
+  if (frameName.value.length != 0) {
+    errorMessageFrame.value = "";
+  }
+});
 
 // Warning message
 
@@ -88,7 +107,7 @@ let controlWarningMessage = {
   },
   close: () => (stateWarningMessage.value = false),
   confirmWarningMessage: () => {
-    deleteFrame()
+    deleteFrame();
     stateWarningMessage.value = false;
   },
 };
@@ -106,12 +125,9 @@ const handleClickOutside = (event) => {
   // Check if the click occurred outside frame
   const frameElement = document.querySelector(".frame-root");
 
-  if (
-    frameElement &&
-    !frameElement.contains(event.target)
-  ) {
+  if (frameElement && !frameElement.contains(event.target)) {
     // Close frame
-    stateSettings.value = false
+    stateSettings.value = false;
   }
 };
 </script>
