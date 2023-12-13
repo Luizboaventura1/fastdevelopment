@@ -51,16 +51,16 @@ npm run build
 
 ## 🛠 Technologies
 
-- Vue.js 3
-- Nuxt.js 3
-- Tailwind css
-- Pinia
-- Scss
+- [Vue.js 3](https://vuejs.org)
+- [Nuxt.js 3](https://nuxt.com)
+- [Tailwind css](https://tailwindcss.com)
+- [Pinia](https://pinia.vuejs.org)
+- [Scss](https://sass-lang.com)
 
 ## Database and tools 🗃️
 
-- Firebase
-- Figma
+- [Firebase](https://firebase.google.com/?hl=pt-br)
+- [Figma](www.figma.com)
 
 ## Libs 📚
 
