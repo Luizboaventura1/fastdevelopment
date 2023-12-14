@@ -1,5 +1,47 @@
 # Guia do desenvolvedor 📚
 
+- [Instalação](#instalação)
+- [Versão do node](#versão-do-node)
+- [Como se localizar no projeto](#como-me-localizar-no-projeto)
+- [Estrutura de pasta](#estrutura-de-pastas)
+- [Pasta específica do componente](#pasta-específica-do-componente)
+- [Idioma](#idioma)
+
+## Instalação
+
+1. **Faça um Fork:**
+   - Fork este repositório clicando no botão "Fork" no canto superior direito desta página. Isso criará uma cópia do repositório na sua conta GitHub.
+
+2. **Clone o Repositório:**
+   - Clone o repositório forked em seu ambiente de desenvolvimento local.
+
+   ```bash
+   git clone git@github.com:Luizboaventura1/fastdevelopment.git
+   cd fastdevelopment
+
+3. **Crie seu projeto no Firebase**
+  - coloque as variáveis ​​de ambiente como no exemplo `.env.template`.
+
+### .env.template
+
+```
+# Crie um projeto no firebase e coloque suas chaves
+API_KEY=
+AUTH_DOMAIN=
+PROJECT_ID=
+STORAGE_BUCKET=
+MESSAGING_SENDER_ID=
+APP_ID=
+MEASUREMENT_ID=
+
+# Faça sua própria chave, exemplo: g3f3-3r5g-3fwd-3fwc
+ROUTE_KEY=
+```  
+
+## Versão do node
+
+`v18.16.0`
+
 ## Como me localizar no projeto?
 
 `/pages`
@@ -8,10 +50,6 @@
   - Controle as rotas que o usário pode acessar nessa pasta
 `/components/common`
   - Componentes globais
-
-## Versão do node
-
-`v18.16.0`
 
 ## Estrutura de pastas
 
@@ -32,6 +70,6 @@ A pasta `components/common` fica todos os components usados em toda a aplicaçã
 
 Basta seguir essa padrão para componentes específicos, senão jogue tudo na pasta `/components/common`
 
-# Atenção 🚨
+## Idioma
 
-Ainda não é possivel contribuir com o projeto, mas em breve você poderá fazer suas contribuições.
+  - ### [en-us](../en-us/structure.md)

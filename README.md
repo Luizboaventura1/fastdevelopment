@@ -86,9 +86,10 @@ npm run build
    git clone git@github.com:Luizboaventura1/fastdevelopment.git
    cd fastdevelopment
 
-### Attention 🚨
+3. **Create your firebase project**
+  - put the environment variables in the `.env.template` example.
 
-It is not yet possible to contribute to the project, but you will soon be able to make your contributions.
+[Detailed installation here](./docs//developer-guide/en-us/structure.md)
 
 ## Status 🚦
 
