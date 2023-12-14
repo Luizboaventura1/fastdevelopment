@@ -44,11 +44,11 @@ ROUTE_KEY=
 
 ## How can I locate myself in the project?
 
-`/pages`
+#### `/pages`
   - Here are all the project routes
-`/middleware`
+#### `/middleware`
   - Control the routes that the user can access in this folder
-`/components/common`
+#### `/components/common`
   - Global components
 
 ## Folder Structure

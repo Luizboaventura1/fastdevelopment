@@ -44,11 +44,11 @@ ROUTE_KEY=
 
 ## Como me localizar no projeto?
 
-`/pages`
+#### `/pages`
   - Aqui fica todas as rotas do projeto
-`/middleware`
+#### `/middleware`
   - Controle as rotas que o usário pode acessar nessa pasta
-`/components/common`
+#### `/components/common`
   - Componentes globais
 
 ## Estrutura de pastas
