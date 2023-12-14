@@ -38,6 +38,8 @@ MEASUREMENT_ID=
 ROUTE_KEY=
 ```  
 
+Then just create a document called `users` in firestore and you will be able to use the application and contribute.
+
 ## Node version
 
 `v18.16.0`

@@ -38,6 +38,8 @@ MEASUREMENT_ID=
 ROUTE_KEY=
 ```  
 
+Depois basta criar um documento chamado `users` no firestore e assim você conseguira usar a aplicacao e contribuir.
+
 ## Versão do node
 
 `v18.16.0`
