@@ -2,9 +2,9 @@
   <header class="bg-subSecondaryColorF">
     <div class="container m-auto px-4">
       <nav class="py-10">
-        <BackButton>
+        <SecondaryButton @click="$router.back()">
           Voltar
-        </BackButton>
+        </SecondaryButton>
       </nav>
       <main>
         <h1
@@ -45,7 +45,7 @@
 </template>
 
 <script setup>
-import BackButton from "~/components/Buttons/BackButton.vue";
+import SecondaryButton from "~/components/Common/Buttons/SecondaryButton.vue";
 
 
 useHead({

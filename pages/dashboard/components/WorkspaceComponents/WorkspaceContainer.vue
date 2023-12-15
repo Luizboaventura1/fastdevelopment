@@ -1,5 +1,5 @@
 <template>
-  <div :class="`p-${padding}`">
+  <div :class="`${padding}`">
     <slot />
   </div>
 </template>
@@ -21,9 +21,9 @@ let props = defineProps({
 });
 
 const padding = computed(() => {
-  if (props.sm) return "4";
-  else if (props.md) return "6";
-  else if (props.lg) return "8";
+  if (props.sm) return "p-4";
+  else if (props.md) return "p-6";
+  else if (props.lg) return "p-8";
 });
 </script>
 

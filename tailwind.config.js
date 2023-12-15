@@ -14,12 +14,16 @@ module.exports = {
         custom: ['Inter']
       },
       colors: {
-        primaryColorF: '#8257e5',
-        primaryColorFHover: "#6743ba",
-        secondaryColorF: '#202024',
-        subSecondaryColorF: '#121214',
-        textPrimaryColorF: "#f8fafc",
-        primaryBorder: "#393939"
+        primaryColorF: "#8257E5",
+        primaryColorFHover: "#6743BA",
+        secondaryColorF: "#202024",
+        secondaryColorFHover: "#303036",
+        textPrimaryColorF: "#EEEEEE",
+        textSecondaryColorF: "#A7A6A6",
+        subSecondaryColorF: "#121214",
+        primaryBorderF: "#393939",
+        secondaryBorderF: "#373737FE",
+        thirdBorderF: "#4E4E4E"
       }
     },
   },

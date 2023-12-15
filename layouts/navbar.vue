@@ -1,5 +1,5 @@
 <template>
-  <nav class="h-[70px] flex">
+  <nav class="h-[70px] flex px-0 lg:px-6">
     <div class="w-4/12 flex items-center">
       <div class="logo-fastdavelopment text-violet-500 text-lg font-medium">
         <LogoFastDevelopment

@@ -24,7 +24,7 @@
 
 <script setup>
 import { useFrame } from "~/stores/frame";
-import WarningMessage from "./WarningMessage.vue";
+import WarningMessage from "@/components/Common/FeedBack/WarningMessage.vue";
 import OptionsModalRoot from "@/components/Common/Popups/OptionsModal/OptionsModalRoot.vue";
 import ActionOptionsModal from "@/components/Common/Popups/OptionsModal/ActionOptionsModal.vue";
 import TitleOptionsModal from "@/components/Common/Popups/OptionsModal/TitleOptionsModal.vue";

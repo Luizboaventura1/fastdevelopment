@@ -57,7 +57,7 @@ import { signOut, getAuth, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "#vue-router";
 import BurguerButton from "./dashboard/components/DashBoardComponents/Navbar/BurguerButton.vue";
 import Loading from "~/components/Common/Loadings/Loading.vue";
-import WarningMessage from "~/components/Kanban/Modals/WarningMessage.vue";
+import WarningMessage from "@/components/Common/FeedBack/WarningMessage.vue";
 import DividerDefault from "~/components/Common/Dividers/DividerDefault.vue";
 import AccountRoot from "~/components/Common/Popups/Account/AccountRoot.vue";
 import NotificationModalRoot from "~/components/Notifications/NotificationModal/NotificationModalRoot.vue";

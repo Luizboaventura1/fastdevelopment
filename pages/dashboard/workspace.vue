@@ -40,9 +40,9 @@
       />
       <ErrorMessage :message="errorMessageFrame" />
     </div>
-    <ConfirmButtonModal :event="createNewFrame">
+    <PrimaryButton @click="createNewFrame" medium>
       Criar Quadro
-    </ConfirmButtonModal>
+    </PrimaryButton>
   </ModalCreateNewFrame>
 </template>
 
@@ -59,10 +59,10 @@ import { useFrame } from "~/stores/frame";
 import SearchWorkspace from "./components/WorkspaceComponents/SearchWorkspace";
 import ModalCreateNewFrame from "./components/WorkspaceComponents/CreateNewFrame/ModalCreateNewFrame/ModalCreateNewFrame.vue";
 import InputModal from "./components/WorkspaceComponents/CreateNewFrame/ModalCreateNewFrame/InputModal.vue";
-import ConfirmButtonModal from "./components/WorkspaceComponents/CreateNewFrame/ModalCreateNewFrame/ConfirmButtonModal.vue";
 import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import ErrorMessage from "~/components/Common/ErrorComponents/ErrorMessage.vue";
+import PrimaryButton from "~/components/Common/Buttons/PrimaryButton.vue";
 import {
   collection,
   query,

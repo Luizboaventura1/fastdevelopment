@@ -17,7 +17,7 @@
       >
         <div>
           <input
-            class="bg-subSecondaryColorF w-full max-w-[70%] h-[40px] text-white px-3 py-1 outline-none ring-2 ring-primaryBorder focus:ring-primaryColorF rounded-md"
+            class="bg-subSecondaryColorF w-full max-w-[70%] h-[40px] text-white px-3 py-1 outline-none ring-2 ring-primaryBorderF focus:ring-primaryColorF rounded-md"
             type="text"
             placeholder="Nome do quadro"
             v-model="frameName"
@@ -27,8 +27,8 @@
           </div>
         </div>
         <div class="flex gap-4 mt-3 self-start">
-          <SaveButton @button="saveChanges"> Salvar </SaveButton>
-          <CancelButton @button="toggleSettings"> Cancelar </CancelButton>
+          <PrimaryButton @click="saveChanges" small> Salvar </PrimaryButton>
+          <SecondaryButton @click="toggleSettings" small> Cancelar </SecondaryButton>
         </div>
         <div class="self-end flex justify-end">
           <DeleteButton
@@ -49,12 +49,12 @@
 
 <script setup>
 import FrameSettingsBtn from "../Buttons/FrameSettingsBtn.vue";
-import CancelButton from "@/components/Buttons/CancelButton.vue";
-import SaveButton from "~/components/Buttons/SaveButton.vue";
-import DeleteButton from "@/components/Buttons/DeleteButton.vue";
+import SecondaryButton from "~/components/Common/Buttons/SecondaryButton.vue";
+import PrimaryButton from "~/components/Common/Buttons/PrimaryButton.vue";
 import { useFrame } from "~/stores/frame";
 import WarningMessage from "~/components/Common/FeedBack/WarningMessage.vue";
 import ErrorMessage from "~/components/Common/ErrorComponents/ErrorMessage.vue";
+import DeleteButton from "~/components/Common/Buttons/DeleteButton.vue";
 
 let props = defineProps({
   frameID: String,

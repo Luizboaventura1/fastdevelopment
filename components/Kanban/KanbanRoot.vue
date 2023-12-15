@@ -101,7 +101,7 @@
 <script setup>
 import { VueDraggableNext } from "vue-draggable-next";
 import { vOnClickOutside } from "@vueuse/components";
-import WarningMessage from "./Modals/WarningMessage.vue";
+import WarningMessage from "@/components/Common/FeedBack/WarningMessage.vue";
 import EditCardRoot from "./EditCard/EditCardRoot.vue";
 import AddNewCardContainer from "./Modals/AddNewCardContainer.vue";
 import AddNewList from "./Modals/AddNewList.vue";

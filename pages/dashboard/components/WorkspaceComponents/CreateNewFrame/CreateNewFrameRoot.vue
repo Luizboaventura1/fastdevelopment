@@ -5,7 +5,6 @@
 </template>
 
 <script setup>
-let route = useRoute()
 
 </script>
 
