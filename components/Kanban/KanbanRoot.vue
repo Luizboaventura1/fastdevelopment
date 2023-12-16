@@ -102,15 +102,15 @@
 import { VueDraggableNext } from "vue-draggable-next";
 import { vOnClickOutside } from "@vueuse/components";
 import WarningMessage from "@/components/Common/FeedBack/WarningMessage.vue";
-import EditCardRoot from "./EditCard/EditCardRoot.vue";
-import AddNewCardContainer from "./Modals/AddNewCardContainer.vue";
-import AddNewList from "./Modals/AddNewList.vue";
+import EditCardRoot from "./components/EditCard/EditCardRoot.vue";
+import AddNewCardContainer from "./components/Modals/AddNewCardContainer.vue";
+import AddNewList from "./components/Modals/AddNewList.vue";
 import { useFrame } from "~/stores/frame";
-import SettingsButton from "./Buttons/SettingsButton.vue";
-import ModalEditList from "./Modals/ModalEditList.vue";
+import SettingsButton from "./components/Buttons/SettingsButton.vue";
+import ModalEditList from "./components/Modals/ModalEditList.vue";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
-import CardRoot from "./Card/CardRoot.vue";
-import CardTitle from "./Card/CardTitle.vue";
+import CardRoot from "./components/Card/CardRoot.vue";
+import CardTitle from "./components/Card/CardTitle.vue"
 import {
   collection,
   query,
@@ -124,7 +124,7 @@ import OptionsModalRoot from "../Common/Popups/OptionsModal/OptionsModalRoot.vue
 import ActionOptionsModal from "../Common/Popups/OptionsModal/ActionOptionsModal.vue";
 import TitleOptionsModal from "../Common/Popups/OptionsModal/TitleOptionsModal.vue";
 import CloseButton from "../Common/FeedBack/CloseButton.vue";
-import EditCardButton from "./Card/EditCardButton.vue";
+import EditCardButton from "./components/Card/EditCardButton.vue";
 import { useRoute } from "#vue-router";
 
 const route = useRoute();

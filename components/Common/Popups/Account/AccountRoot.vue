@@ -18,7 +18,7 @@
         alt="User"
       />
     </div>
-    <div class="absolute bottom-9 right-5">
+    <div class="absolute z-40 bottom-9 right-5">
       <OptionsModalRoot
         v-on-click-outside.bubble="closeCard"
         :stateModal="stateModal"

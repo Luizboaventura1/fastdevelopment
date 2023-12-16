@@ -1,19 +1,19 @@
 <template>
   <WorkspaceContainer md>
-    <TitleWorkspace lg> Página inicial </TitleWorkspace>
+    <PrimaryText md> Página inicial </PrimaryText>
     <WorkspaceContainer ms>
       <Greeting>
         {{ getFirstName(userName) }}
       </Greeting>
     </WorkspaceContainer>
     <FrameBar space-y="6">
-      <TitleWorkspace> Quadros </TitleWorkspace>
+      <PrimaryText> Quadros </PrimaryText>
       <SearchWorkspace />
     </FrameBar>
     <Grid col="2">
       <CreateNewFrameRoot>
         <NewFrameButton @click="handleCreateNewFrame.open">
-          <TitleWorkspace> Criar novo quadro </TitleWorkspace>
+          <PrimaryText> Criar novo quadro </PrimaryText>
         </NewFrameButton>
       </CreateNewFrameRoot>
       <FrameRoot
@@ -21,7 +21,7 @@
         :key="index"
         :frameID="String(index)"
       >
-        <TitleWorkspace lg> {{ frame.title }} </TitleWorkspace>
+        <PrimaryText lg> {{ frame.title }} </PrimaryText>
       </FrameRoot>
     </Grid>
   </WorkspaceContainer>
@@ -30,7 +30,7 @@
     :stateModal="stateModalCreateNewFrame"
   >
     <div class="flex justify-between">
-      <TitleWorkspace lg> Criar novo quadro </TitleWorkspace>
+      <PrimaryText lg> Criar novo quadro </PrimaryText>
       <CloseButton size="15" :event="handleCreateNewFrame.close" />
     </div>
     <div>
@@ -47,7 +47,6 @@
 </template>
 
 <script setup>
-import TitleWorkspace from "./components/WorkspaceComponents/TitleWorkspace.vue";
 import WorkspaceContainer from "./components/WorkspaceComponents/WorkspaceContainer.vue";
 import Greeting from "./components/WorkspaceComponents/Greeting.vue";
 import FrameBar from "./components/WorkspaceComponents/FrameBar.vue";
@@ -63,6 +62,7 @@ import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import ErrorMessage from "~/components/Common/ErrorComponents/ErrorMessage.vue";
 import PrimaryButton from "~/components/Common/Buttons/PrimaryButton.vue";
+import PrimaryText from "@/components/Common/Text/PrimaryText"
 import {
   collection,
   query,

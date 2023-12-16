@@ -74,18 +74,10 @@
           />
         </main>
         <div class="buttons h-[40px] bg-secondaryColorF flex gap-3 px-3 my-3">
-          <button
-            @click="saveChanges"
-            class="px-4 py-2 w-8/12 bg-primaryColorF hover:bg-violet-700 transition-colors rounded-md font-medium text-white"
-          >
-            Salvar
-          </button>
-          <button
-            @click="$emit('closeModal')"
-            class="px-4 py-2 w-4/12 bg-subSecondaryColorF hover:bg-zinc-950 transition-colors rounded-md font-medium text-white"
-          >
+          <PrimaryButton full @click="saveChanges"> Salvar </PrimaryButton>
+          <SecondaryButton @click="$emit('closeModal')">
             Cancelar
-          </button>
+          </SecondaryButton>
         </div>
       </div>
     </div>
@@ -94,6 +86,8 @@
 
 <script setup>
 import CloseButton from "@/components/Common/FeedBack/CloseButton.vue";
+import PrimaryButton from "~/components/Common/Buttons/PrimaryButton.vue";
+import SecondaryButton from "~/components/Common/Buttons/SecondaryButton.vue";
 import { useFrame } from "~/stores/frame";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import {
@@ -164,7 +158,7 @@ const saveValuesToFirebase = async () => {
   workspace[currentPageId.value].frame[props.indexFrame].cards[
     props.indexCard
   ].title = title.value;
-  
+
   workspace[currentPageId.value].frame[props.indexFrame].cards[
     props.indexCard
   ].description = description.value;

@@ -4,10 +4,12 @@
       class="h-[60px] bg-secondaryColorF flex items-center justify-between px-4"
     >
       <BurguerButton :event="dashboardToggle" />
+      
       <div class="flex items-center gap-3">
         <NotificationModalRoot />
         <AccountRoot size="30" />
       </div>
+
     </nav>
     <div class="w-full h-full flex">
       <aside
