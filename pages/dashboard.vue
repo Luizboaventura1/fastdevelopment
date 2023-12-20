@@ -79,15 +79,13 @@ definePageMeta({
 const logout = async () => {
   loading.value = true;
 
-  // end the session
   await signOut(auth).then(() => {
-    loading.value = false; // Disable Loading
+    loading.value = false;
 
     // blocks the routes
     const logged = useCookie("token");
     logged.value = false;
 
-    // back home
     router.push("/");
   });
 };

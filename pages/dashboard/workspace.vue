@@ -40,9 +40,7 @@
       />
       <ErrorMessage :message="errorMessageFrame" />
     </div>
-    <PrimaryButton @click="createNewFrame" medium>
-      Criar Quadro
-    </PrimaryButton>
+    <PrimaryButton @click="createNewFrame" medium> Criar Quadro </PrimaryButton>
   </ModalCreateNewFrame>
 </template>
 
@@ -54,64 +52,41 @@ import FrameRoot from "./components/WorkspaceComponents/Frame/FrameRoot.vue";
 import Grid from "./components/WorkspaceComponents/Grid/Grid.vue";
 import CreateNewFrameRoot from "./components/WorkspaceComponents/CreateNewFrame/CreateNewFrameRoot.vue";
 import NewFrameButton from "./components/WorkspaceComponents/CreateNewFrame/NewFrameButton.vue";
-import { useFrame } from "~/stores/frame";
 import SearchWorkspace from "./components/WorkspaceComponents/SearchWorkspace";
 import ModalCreateNewFrame from "./components/WorkspaceComponents/CreateNewFrame/ModalCreateNewFrame/ModalCreateNewFrame.vue";
 import InputModal from "./components/WorkspaceComponents/CreateNewFrame/ModalCreateNewFrame/InputModal.vue";
 import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
-import { onAuthStateChanged, getAuth } from "firebase/auth";
 import ErrorMessage from "~/components/Common/ErrorComponents/ErrorMessage.vue";
 import PrimaryButton from "~/components/Common/Buttons/PrimaryButton.vue";
-import PrimaryText from "@/components/Common/Text/PrimaryText"
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  getFirestore,
-  doc,
-  updateDoc
-} from "firebase/firestore";
+import PrimaryText from "@/components/Common/Text/PrimaryText";
+import { getFirestore, doc, updateDoc } from "firebase/firestore";
+import { useWorkspace } from "~/stores/workspace";
 
-const auth = getAuth();
+let workspace = ref([]);
 const db = getFirestore();
 
-let frames = useFrame().frame;
-let userName = ref("");
+let frames = ref(useWorkspace().frames);
+let userName = ref(useCookie("name").value || "");
 let userEmail = ref("");
 let idUser = ref("");
 
-onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    userEmail.value = user.email;
+onMounted(async () => {
+  await useWorkspace()
+    .workspace()
+    .then((data) => {
+      workspace.value = data;
+      userEmail.value = data.email;
+      idUser.value = data.id;
 
-    // get frame
-
-    const q = query(
-      collection(db, "users"),
-      where("email", "==", userEmail.value)
-    );
-
-    const querySnapshot = await getDocs(q);
-
-    querySnapshot.forEach((doc) => {
-      // add data to local frame
-      if (frames.length === 0) {
-        frames.push(...doc.data().workspace);
+      if (frames.value.length === 0) {
+        frames.value.push(...data.frames);
         addModalStateToCards();
       }
-
-      // get user id from firestore
-      idUser.value = doc.id;
-
-      // get name
-      userName.value = doc.data().name;
     });
-  }
 });
 
 const addModalStateToCards = () => {
-  frames.forEach((framesArr) => {
+  frames.value.forEach((framesArr) => {
     framesArr.frame.forEach((frameArr) => {
       frameArr.stateModal = false; // add status to list
       frameArr.cards.forEach((card) => {
@@ -134,41 +109,53 @@ const handleCreateNewFrame = {
 
 const createNewFrame = () => {
   if (validateFrame(inputCreateNewFrame.value)) {
-  frames.push({
-    title: inputCreateNewFrame.value,
-    frame: [],
-  });
+    frames.value.push({
+      title: inputCreateNewFrame.value,
+      frame: [],
+    });
 
-  handleCreateNewFrame.close()
+    handleCreateNewFrame.close();
   } else {
-    errorMessageFrame.value = "Nome do quadro obrigatório!"
+    errorMessageFrame.value = "Nome do quadro obrigatório!";
   }
 };
 
 watch(inputCreateNewFrame, () => {
   // remove an error message
   if (inputCreateNewFrame.value.length != 0) {
-    errorMessageFrame.value = ""
+    errorMessageFrame.value = "";
   }
-})
+});
 
 // Update the list in firebase when changing card position
 const updateFrameInFirebase = async () => {
-  const frameDocRef = doc(db, "users", idUser.value);
+  if (idUser.value) {
+    const frameDocRef = doc(db, "users", idUser.value);
 
-  await updateDoc(frameDocRef, {
-    workspace: frames,
-  });
+    await updateDoc(frameDocRef, {
+      workspace: frames.value,
+    });
+  }
 };
 
-watch(frames, () => {
+watchEffect(() => {
   // any changes already updated in firebase
   updateFrameInFirebase();
 });
 
-const getFirstName = (val) => {
-  return val.split(' ')[0]
-}
+onMounted(async () => {
+  let name = useCookie("name").value;
+
+  if (name === undefined) {
+    // Add the username to the cookie if it does not exist
+    await useWorkspace()
+      .workspace()
+      .then((data) => {
+        useCookie("name").value = data.name;
+        userName.value = data.name;
+      });
+  }
+});
 </script>
 
 <style lang="scss" scoped></style>
