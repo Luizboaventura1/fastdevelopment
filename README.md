@@ -88,6 +88,9 @@ npm run build
 
 3. **Create your firebase project**
   - put the environment variables in the `.env.template` example.
+  
+4. **Firebase configuration**
+  - Create a "users" document in Firebase and then create the Google login option in Firebase Authentication
 
 [Detailed installation here](./docs//developer-guide/en-us/structure.md)
 

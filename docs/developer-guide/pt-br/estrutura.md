@@ -22,6 +22,9 @@
 3. **Crie seu projeto no Firebase**
   - coloque as variáveis ​​de ambiente como no exemplo `.env.template`.
 
+4. **Configuração do Firebase**
+  - Crie um documento "users" no Firebase e depois crie a opção de login do Google no Firebase Authentication
+
 ### .env.template
 
 ```
