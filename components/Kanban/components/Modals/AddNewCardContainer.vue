@@ -8,12 +8,12 @@
 
 <script setup>
 import AddCardFormRoot from "~/components/Common/Forms/AddCardForm/AddCardFormRoot.vue";
-import { useFrame } from "~/stores/frame";
+import { useWorkspace } from "@/stores/workspace.js"
 
 const currentPageId = useCookie("currentPageId")
 
-const dbFrame = useFrame().frame;
-let frameList = ref(dbFrame[currentPageId.value].frame)
+const frames = useWorkspace().frames;
+let frameList = ref(frames[currentPageId.value].frame)
 
 let props = defineProps({
   indexFrame: Number,

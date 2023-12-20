@@ -28,9 +28,9 @@ import ContainerResults from "./ContainerResults.vue";
 import SearchResult from "./SearchResult.vue";
 import SearchInput from "./SearchInput.vue";
 import NoResults from "./NoResults.vue";
-import { useFrame } from "@/stores/frame.js"
+import { useWorkspace } from "~/stores/workspace";
 
-let workspace = useFrame().frame || [];
+let frames = useWorkspace().frames || [];
 
 let input = ref();
 let searchedItems = ref([]);
@@ -50,19 +50,19 @@ const Search = (val) => {
   if (input.value.length != 0) {
     clearSearchedItems();
 
-    for (let j = 0; j < workspace.length; j++) {
+    for (let j = 0; j < frames.length; j++) {
       let inputLength = input.value.length;
 
       // takes a part of each string to compare
       let search = removeDiacritics(getPieceOfString(input.value, inputLength));
       let databaseWord = removeDiacritics(
-        getPieceOfString(workspace[j].title, inputLength)
+        getPieceOfString(frames[j].title, inputLength)
       );
 
       if (search === databaseWord) {
         // if the user value is in the database it will be displayed
         searchedItems.value.push({
-          title: workspace[j].title,
+          title: frames[j].title,
           id: j,
         });
       }

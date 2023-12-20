@@ -28,7 +28,9 @@
         </div>
         <div class="flex gap-4 mt-3 self-start">
           <PrimaryButton @click="saveChanges" small> Salvar </PrimaryButton>
-          <SecondaryButton @click="toggleSettings" small> Cancelar </SecondaryButton>
+          <SecondaryButton @click="toggleSettings" small>
+            Cancelar
+          </SecondaryButton>
         </div>
         <div class="self-end flex justify-end">
           <DeleteButton
@@ -51,7 +53,7 @@
 import FrameSettingsBtn from "../Buttons/FrameSettingsBtn.vue";
 import SecondaryButton from "~/components/Common/Buttons/SecondaryButton.vue";
 import PrimaryButton from "~/components/Common/Buttons/PrimaryButton.vue";
-import { useFrame } from "~/stores/frame";
+import { useWorkspace } from "~/stores/workspace";
 import WarningMessage from "~/components/Common/FeedBack/WarningMessage.vue";
 import ErrorMessage from "~/components/Common/ErrorComponents/ErrorMessage.vue";
 import DeleteButton from "~/components/Common/Buttons/DeleteButton.vue";
@@ -61,12 +63,16 @@ let props = defineProps({
 });
 
 let stateSettings = ref(false);
-
 const toggleSettings = () => (stateSettings.value = !stateSettings.value);
 
 // Get the current frame
-let frame = useFrame().frame[props.frameID];
-let frameName = ref(frame.title);
+let frame = useWorkspace().frames[props.frameID];
+let frameName = ref(frame?.title || "");
+
+watchEffect(() => {
+  frame = useWorkspace().frames[props.frameID];
+  frameName.value = frame.title;
+});
 
 const saveChanges = () => {
   if (validateFrame(frameName.value)) {
@@ -80,8 +86,8 @@ const saveChanges = () => {
 };
 
 const deleteFrame = () => {
-  let workspace = useFrame().frame;
-  workspace.splice(props.frameID, 1);
+  let frames = useWorkspace().frames;
+  frames.splice(props.frameID, 1);
 
   toggleSettings();
 };
@@ -90,7 +96,7 @@ let errorMessageFrame = ref("");
 
 watch(frameName, () => {
   // remove an error message
-  if (frameName.value.length != 0) {
+  if (frameName.length != 0) {
     errorMessageFrame.value = "";
   }
 });

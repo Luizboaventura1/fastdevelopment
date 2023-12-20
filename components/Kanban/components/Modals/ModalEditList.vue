@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { useFrame } from "~/stores/frame";
+import { useWorkspace } from "@/stores/workspace.js"
 import WarningMessage from "@/components/Common/FeedBack/WarningMessage.vue";
 import OptionsModalRoot from "@/components/Common/Popups/OptionsModal/OptionsModalRoot.vue";
 import ActionOptionsModal from "@/components/Common/Popups/OptionsModal/ActionOptionsModal.vue";
@@ -32,8 +32,8 @@ import CloseButton from "@/components/Common/FeedBack/CloseButton.vue";
 
 const currentPageId = useCookie("currentPageId")
 
-const dbFrame = useFrame().frame;
-let frameList = ref(dbFrame[currentPageId.value].frame)
+const frames = useWorkspace().frames;
+let frameList = ref(frames[currentPageId.value].frame)
 
 const props = defineProps({
   stateModal: Boolean,

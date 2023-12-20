@@ -88,48 +88,24 @@
 import CloseButton from "@/components/Common/FeedBack/CloseButton.vue";
 import PrimaryButton from "~/components/Common/Buttons/PrimaryButton.vue";
 import SecondaryButton from "~/components/Common/Buttons/SecondaryButton.vue";
-import { useFrame } from "~/stores/frame";
-import { onAuthStateChanged, getAuth } from "firebase/auth";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  doc,
-  updateDoc,
-  getFirestore,
-} from "firebase/firestore";
+import { useWorkspace } from "~/stores/workspace";
+import { doc, updateDoc, getFirestore } from "firebase/firestore";
 
 const currentPageId = useCookie("currentPageId");
 
-const auth = getAuth();
 const db = getFirestore();
 
-let workspace = useFrame().frame;
-
-let userEmail = ref("");
+let frames = useWorkspace().frames;
 let idUser = ref("");
 
 // Get id in firestore
 
-onMounted(() => {
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      userEmail.value = user.email;
-
-      const q = query(
-        collection(db, "users"),
-        where("email", "==", userEmail.value)
-      );
-
-      const querySnapshot = await getDocs(q);
-
-      querySnapshot.forEach((doc) => {
-        // Get id
-        idUser.value = doc.id;
-      });
-    }
-  });
+onMounted(async () => {
+  await useWorkspace()
+    .workspace()
+    .then((data) => {
+      idUser.value = data.id;
+    });
 });
 
 const props = defineProps({
@@ -155,32 +131,30 @@ const saveChanges = async () => {
 
 // save the values ​​in firebase
 const saveValuesToFirebase = async () => {
-  workspace[currentPageId.value].frame[props.indexFrame].cards[
+  frames[currentPageId.value].frame[props.indexFrame].cards[
     props.indexCard
   ].title = title.value;
 
-  workspace[currentPageId.value].frame[props.indexFrame].cards[
+  frames[currentPageId.value].frame[props.indexFrame].cards[
     props.indexCard
   ].description = description.value;
 
   const frameDocRef = doc(db, "users", idUser.value);
 
   await updateDoc(frameDocRef, {
-    workspace: workspace,
+    workspace: frames,
   });
 };
 
 // Update values ​​if they change
 watchEffect(() => {
-  title.value =
-    workspace[currentPageId.value]?.frame[props.indexFrame]?.cards[
+  let currentPage =
+    frames[currentPageId.value]?.frame[props.indexFrame]?.cards[
       props.indexCard
-    ]?.title;
-
-  description.value =
-    workspace[currentPageId.value]?.frame[props.indexFrame]?.cards[
-      props.indexCard
-    ]?.description;
+    ];
+    
+  title.value = currentPage?.title;
+  description.value = currentPage?.description;
 });
 </script>
 

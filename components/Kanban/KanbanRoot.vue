@@ -105,17 +105,11 @@ import WarningMessage from "@/components/Common/FeedBack/WarningMessage.vue";
 import EditCardRoot from "./components/EditCard/EditCardRoot.vue";
 import AddNewCardContainer from "./components/Modals/AddNewCardContainer.vue";
 import AddNewList from "./components/Modals/AddNewList.vue";
-import { useFrame } from "~/stores/frame";
 import SettingsButton from "./components/Buttons/SettingsButton.vue";
 import ModalEditList from "./components/Modals/ModalEditList.vue";
-import { onAuthStateChanged, getAuth } from "firebase/auth";
 import CardRoot from "./components/Card/CardRoot.vue";
 import CardTitle from "./components/Card/CardTitle.vue"
 import {
-  collection,
-  query,
-  where,
-  getDocs,
   doc,
   updateDoc,
   getFirestore,
@@ -126,6 +120,7 @@ import TitleOptionsModal from "../Common/Popups/OptionsModal/TitleOptionsModal.v
 import CloseButton from "../Common/FeedBack/CloseButton.vue";
 import EditCardButton from "./components/Card/EditCardButton.vue";
 import { useRoute } from "#vue-router";
+import { useWorkspace } from "@/stores/workspace.js"
 
 const route = useRoute();
 const currentPageId = useCookie("currentPageId");
@@ -133,39 +128,20 @@ const currentPageId = useCookie("currentPageId");
 const idRoute = route.params.id;
 currentPageId.value = idRoute;
 
-const auth = getAuth();
 const db = getFirestore();
-
-let frames = useFrame().frame;
-
-let userEmail = ref("");
+let frames = useWorkspace().frames;
 let idUser = ref("");
 
-onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    userEmail.value = user.email;
-
-    // get frame
-
-    const q = query(
-      collection(db, "users"),
-      where("email", "==", userEmail.value)
-    );
-
-    const querySnapshot = await getDocs(q);
-
-    querySnapshot.forEach((doc) => {
-      // add data to local frame
-      if (frames.length === 0) {
-        frames.push(...doc.data().workspace);
-        addModalStateToCards();
-      }
-
-      // get user id from firestore
-      idUser.value = doc.id;
-    });
-  }
-});
+onMounted(async () => {
+  await useWorkspace().workspace()
+  .then(data => {
+    idUser.value = data.id
+    if (frames.length === 0) {
+      frames.push(...data.frames)
+      addModalStateToCards()
+    }
+  })
+})
 
 const addModalStateToCards = () => {
   frames.forEach((framesArr) => {
