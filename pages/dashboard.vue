@@ -4,19 +4,18 @@
       class="h-[60px] bg-secondaryColorF flex items-center justify-between px-4"
     >
       <BurguerButton :event="dashboardToggle" />
-      
+
       <div class="flex items-center gap-3">
         <NotificationModalRoot />
         <AccountRoot size="30" />
       </div>
-
     </nav>
     <div class="w-full h-full flex">
       <aside
         class="bg-secondaryColorF overflow-hidden"
         :style="`width:${dashboardWidth}px;`"
       >
-        <div class="p-4">
+        <div class="p-4 grid gap-y-1">
           <ItemAside link="/dashboard/workspace" text="Página inicial">
             <template #icon>
               <HomeIcon size="25" />
@@ -24,6 +23,20 @@
           </ItemAside>
 
           <DividerDefault spaceY="2" />
+
+          <DropdownProjets title="Seus quadros">
+            <template #icon>
+              <ControlPanelIcon size="25" />
+            </template>
+            <DropdownItem
+              v-for="(frame, index) in frames"
+              :key="index"
+              :link="`/dashboard/${index}`"
+            >
+                {{ frame.title }}
+            </DropdownItem>
+          </DropdownProjets>
+
           <ItemAside
             @click="() => openWarningMessage('Sair da conta?')"
             text="Sair"
@@ -65,6 +78,10 @@ import AccountRoot from "~/components/Common/Popups/Account/AccountRoot.vue";
 import NotificationModalRoot from "~/components/Notifications/NotificationModal/NotificationModalRoot.vue";
 import ItemAside from "./dashboard/components/DashBoardComponents/ItemAside.vue";
 import HomeIcon from "~/components/Common/Icons/HomeIcon.vue";
+import DropdownProjets from "@/components/Common/Dropdown/DropdownProjects";
+import DropdownItem from "@/components/Common/Dropdown/DropdownProjects/DropdownItem.vue";
+import ControlPanelIcon from "~/components/Common/Icons/ControlPanelIcon.vue";
+import { useWorkspace } from "@/stores/workspace";
 
 const auth = getAuth();
 const router = useRouter();
@@ -146,6 +163,17 @@ useHead({
     { name: "keywords", content: "Kanban,desenvolvimento ágil,jira,trello" },
     { name: "author", content: "Luiz" },
   ],
+});
+
+let workspace = ref();
+let frames = useWorkspace().frames
+
+onMounted(async () => {
+  workspace.value = await useWorkspace().workspace();
+  
+  if (!frames) {
+    frames = workspace.value.frames
+  }
 });
 </script>
 

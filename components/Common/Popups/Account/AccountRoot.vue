@@ -11,7 +11,7 @@
         class="absolute z-0"
       />
       <img
-        @click.stop="closeModal"
+        @click.stop="toggleModal"
         v-if="userPhoto == undefined ? false : true"
         class="w-full absolute z-10"
         :src="userPhoto"
@@ -20,12 +20,13 @@
     </div>
     <div class="absolute z-40 bottom-9 right-5">
       <OptionsModalRoot
-        v-on-click-outside.bubble="closeCard"
+        class="options-modal-container"
+        @click.stop
         :stateModal="stateModal"
       >
         <template #nav>
           <TitleOptionsModal> Sua conta </TitleOptionsModal>
-          <CloseButton :event="closeCard" size="16" />
+          <CloseButton :event="closeOptionsModal" size="16" />
         </template>
 
         <template #buttons>
@@ -51,7 +52,6 @@
 </template>
 
 <script setup>
-import { vOnClickOutside } from "@vueuse/components";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import {
   collection,
@@ -72,14 +72,6 @@ import ActionLinkOptionsModal from "../OptionsModal/ActionLinkOptionsModal.vue";
 let props = defineProps({
   size: String,
 });
-
-const closeModal = () => {
-  if (stateModal.value) {
-    stateModal.value = false;
-  } else {
-    stateModal.value = true;
-  }
-};
 
 const router = useRouter();
 let loading = ref(false);
@@ -118,7 +110,29 @@ onMounted(() => {
 let stateModal = ref(false);
 
 //When you click outside the modal it will close
-const closeCard = () => (stateModal.value = false);
+const closeOptionsModal = () => (stateModal.value = false);
+
+const toggleModal = () => {
+  stateModal.value = !stateModal.value;
+};
+
+const handleClickOutside = (event) => {
+  const modalElement = document.querySelector(".options-modal-container");
+
+  if (modalElement && !modalElement.contains(event.target)) {
+    stateModal.value = false;
+  }
+};
+
+onMounted(() => {
+  document.body.addEventListener("click", handleClickOutside);
+});
+
+onBeforeUnmount(() => {
+  document.body.removeEventListener("click", handleClickOutside);
+});
+
+// Logout
 
 const logout = async () => {
   loading.value = true;

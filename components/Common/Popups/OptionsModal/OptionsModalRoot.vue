@@ -17,7 +17,6 @@
 <script setup>
 defineProps({
   stateModal: Boolean,
-  event: Function
 })
 </script>
 

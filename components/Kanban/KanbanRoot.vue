@@ -42,7 +42,9 @@
                 <CardTitle>
                   {{ card.title }}
                 </CardTitle>
-                <div class="edit-card h-full flex items-center absolute top-0 right-3">
+                <div
+                  class="edit-card h-full flex items-center absolute top-0 right-3"
+                >
                   <EditCardButton
                     @editCard="openModalEditCard(indexFrame, indexCard)"
                   />
@@ -108,19 +110,15 @@ import AddNewList from "./components/Modals/AddNewList.vue";
 import SettingsButton from "./components/Buttons/SettingsButton.vue";
 import ModalEditList from "./components/Modals/ModalEditList.vue";
 import CardRoot from "./components/Card/CardRoot.vue";
-import CardTitle from "./components/Card/CardTitle.vue"
-import {
-  doc,
-  updateDoc,
-  getFirestore,
-} from "firebase/firestore";
+import CardTitle from "./components/Card/CardTitle.vue";
+import { doc, updateDoc, getFirestore } from "firebase/firestore";
 import OptionsModalRoot from "../Common/Popups/OptionsModal/OptionsModalRoot.vue";
 import ActionOptionsModal from "../Common/Popups/OptionsModal/ActionOptionsModal.vue";
 import TitleOptionsModal from "../Common/Popups/OptionsModal/TitleOptionsModal.vue";
 import CloseButton from "../Common/FeedBack/CloseButton.vue";
 import EditCardButton from "./components/Card/EditCardButton.vue";
 import { useRoute } from "#vue-router";
-import { useWorkspace } from "@/stores/workspace.js"
+import { useWorkspace } from "@/stores/workspace.js";
 
 const route = useRoute();
 const currentPageId = useCookie("currentPageId");
@@ -133,15 +131,16 @@ let frames = useWorkspace().frames;
 let idUser = ref("");
 
 onMounted(async () => {
-  await useWorkspace().workspace()
-  .then(data => {
-    idUser.value = data.id
-    if (frames.length === 0) {
-      frames.push(...data.frames)
-      addModalStateToCards()
-    }
-  })
-})
+  await useWorkspace()
+    .workspace()
+    .then((data) => {
+      idUser.value = data.id;
+      if (frames.length === 0) {
+        frames.push(...data.frames);
+        addModalStateToCards();
+      }
+    });
+});
 
 const addModalStateToCards = () => {
   frames.forEach((framesArr) => {
@@ -159,15 +158,15 @@ const addModalStateToCards = () => {
 let currentIndexCard = ref({ indexFrame: undefined, indexCard: undefined });
 
 //When you click outside the modal it will close
-const closeCard = () =>
-  (frames[idRoute].frame
-    .at(currentIndexCard.value.indexFrame)
-    .cards.at(currentIndexCard.value.indexCard).stateModal = false);
+const closeCard = () => {
+  frames[idRoute].frame.at(currentIndexCard.value.indexFrame).cards.at(
+    currentIndexCard.value.indexCard
+  ).stateModal = false;
+};
 
-const closeModalList = () =>
-  (frames[idRoute].frame.at(
-    currentIndexCard.value.indexFrame
-  ).stateModal = false);
+const closeModalList = () => {
+  frames[idRoute].frame.at(currentIndexCard.value.indexFrame).stateModal = false;
+};
 
 /*
   The function below openModalEditCard  receives the name of the list and the card index, 
