@@ -7,7 +7,7 @@ const props = defineProps({
 <template>
   <ul
     v-if="props.state"
-    class="results absolute z-20 w-full left-0 top-9 bg-subSecondaryColorF rounded-lg overflow-x-hidden overflow-y-auto max-h-[300px]"
+    class="results absolute z-20 w-full left-0 top-9 bg-subSecondaryColorF rounded-lg overflow-y-auto max-h-[300px]"
   >
     <slot />
   </ul>

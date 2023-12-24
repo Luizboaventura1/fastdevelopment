@@ -1,6 +1,6 @@
 <template>
-  <div class="text-center w-full py-4 absolute">
-    <span class="text-white font-medium">
+  <div class="text-center w-full p-3">
+    <span class="text-zinc-300 font-medium">
       <slot />
     </span>
   </div>

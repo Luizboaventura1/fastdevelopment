@@ -6,6 +6,7 @@
     />
 
     <ContainerResults @click.stop :state="stateContainerResults">
+      <NoResults v-if="stateNoResults"> Sem resultados :( </NoResults>
       <TransitionGroup name="list" tag="ul">
         <li v-for="(item, index) in searchedItems" :key="index">
           <SearchResult
@@ -16,9 +17,6 @@
           </SearchResult>
         </li>
       </TransitionGroup>
-      <NoResults v-if="searchedItems.length === 0">
-        Sem resultados :(
-      </NoResults>
     </ContainerResults>
   </div>
 </template>
@@ -36,43 +34,35 @@ let input = ref();
 let searchedItems = ref([]);
 
 const Search = (val) => {
-  input.value = val;
+  controlNoResults.close();
+  input.value = val.trim();
 
   // closes the search modal if the input is empty
-  if (input.value.length === 0) {
-    controlContainerResults.close();
-  } else {
+  if (input.value) {
     controlContainerResults.open();
+  } else {
+    controlContainerResults.close();
   }
-
-  input.value = removeSpaces(input.value);
 
   if (input.value.length != 0) {
     clearSearchedItems();
 
-    for (let j = 0; j < frames.length; j++) {
-      let inputLength = input.value.length;
+    frames.forEach((frame, index) => {
+      let search = removeDiacritics((input.value));
+      let title = removeDiacritics(frame.title);
 
-      // takes a part of each string to compare
-      let search = removeDiacritics(getPieceOfString(input.value, inputLength));
-      let databaseWord = removeDiacritics(
-        getPieceOfString(frames[j].title, inputLength)
-      );
-
-      if (search === databaseWord) {
-        // if the user value is in the database it will be displayed
+      if (title.includes(search)) {
         searchedItems.value.push({
-          title: frames[j].title,
-          id: j,
+          title: frame.title,
+          id: index,
         });
       }
+    });
+
+    if (!searchedItems.value.length) {
+      controlNoResults.open();
     }
   }
-};
-
-const getPieceOfString = (string, index) => {
-  let formattedIndex = index === 0 ? 1 : index;
-  return string.split("").splice(0, formattedIndex).join("");
 };
 
 const removeDiacritics = (val) => {
@@ -82,8 +72,6 @@ const removeDiacritics = (val) => {
     .replace(/[\u0300-\u036f]/g, "");
 };
 
-const removeSpaces = (val) => val.split(" ").join("");
-
 let stateContainerResults = ref(false);
 const controlContainerResults = {
   open: () => (stateContainerResults.value = true),
@@ -92,6 +80,12 @@ const controlContainerResults = {
 
 const clearSearchedItems = () => {
   searchedItems.value = [];
+};
+
+let stateNoResults = ref(false);
+let controlNoResults = {
+  open: () => (stateNoResults.value = true),
+  close: () => (stateNoResults.value = false),
 };
 
 // Add a click event listener to the main element (e.g. body)
@@ -115,7 +109,6 @@ const handleClickOutside = (event) => {
     controlContainerResults.close();
   }
 };
-
 </script>
 
 <style lang="scss" scoped>
