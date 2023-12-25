@@ -48,7 +48,7 @@ const Search = (val) => {
     clearSearchedItems();
 
     frames.forEach((frame, index) => {
-      let search = removeDiacritics((input.value));
+      let search = removeDiacritics(input.value);
       let title = removeDiacritics(frame.title);
 
       if (title.includes(search)) {

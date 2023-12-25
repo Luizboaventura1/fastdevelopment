@@ -1,18 +1,24 @@
 <template>
   <div class="dashboard">
     <nav
-      class="h-[60px] bg-secondaryColorF flex items-center justify-between px-4"
+      class="h-[60px] bg-secondaryColorF flex items-center gap-3 px-4"
     >
-      <BurguerButton :event="dashboardToggle" />
+      <div class="w-2/12 flex items-center">
+        <BurguerButton :event="dashboardToggle" />
+      </div>
 
-      <div class="flex items-center gap-3">
+      <div class="w-full flex justify-center">
+        <SearchEngine :array="frames" />
+      </div>
+
+      <div class="flex items-center justify-end gap-3 w-2/12">
         <NotificationModalRoot />
         <AccountRoot size="30" />
       </div>
     </nav>
     <div class="w-full h-full flex">
       <aside
-        class="bg-secondaryColorF overflow-hidden"
+        class="bg-secondaryColorF overflow-hidden overflow-y-auto"
         :style="`width:${dashboardWidth}px;`"
       >
         <div class="p-4 grid gap-y-1">
@@ -82,6 +88,7 @@ import DropdownProjets from "@/components/Common/Dropdown/DropdownProjects";
 import DropdownItem from "@/components/Common/Dropdown/DropdownProjects/DropdownItem.vue";
 import ControlPanelIcon from "~/components/Common/Icons/ControlPanelIcon.vue";
 import { useWorkspace } from "@/stores/workspace";
+import SearchEngine from "@/components/Common/Search/SearchEngine"
 
 const auth = getAuth();
 const router = useRouter();
@@ -166,7 +173,7 @@ useHead({
 });
 
 let workspace = ref();
-let frames = useWorkspace().frames
+let frames = useWorkspace().frames || []
 
 onMounted(async () => {
   workspace.value = await useWorkspace().workspace();

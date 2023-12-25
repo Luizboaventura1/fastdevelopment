@@ -71,7 +71,7 @@ let frameName = ref(frame?.title || "");
 
 watchEffect(() => {
   frame = useWorkspace().frames[props.frameID];
-  frameName.value = frame.title;
+  frameName.value = frame?.title;
 });
 
 const saveChanges = () => {

@@ -1,6 +1,6 @@
 <template>
   <nuxt-link :to="props.link">
-    <li class="flex items-center whitespace-nowrap text-sm cursor-pointer text-textPrimaryColorF font-medium w-full h-[40px] hover:bg-thirdColorF rounded-lg duration-300 transition-colors p-2">
+    <li class="font-medium text-white text-sm w-full py-3 px-5 cursor-pointer hover:bg-secondaryColorF transition-colors duration-200">
       <slot />
     </li>
   </nuxt-link>
