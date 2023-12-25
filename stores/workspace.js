@@ -39,6 +39,7 @@ export const useWorkspace = defineStore("workspace", {
               querySnapshot.forEach((doc) => {
                 result = {
                   id: doc.id,
+                  photoUrl: user.photoURL,
                   name: doc.data().name,
                   email: doc.data().email,
                   frames: doc.data().workspace,
