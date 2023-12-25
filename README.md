@@ -71,7 +71,12 @@ npm run build
 ## Interface 🎨
 
 <p align="center">
-	![2023-12-25 16-42-45](https://github.com/Luizboaventura1/fastdevelopment/assets/122652168/69f4785b-80c1-4f63-88a6-6b037675d8db)
+
+
+
+https://github.com/Luizboaventura1/fastdevelopment/assets/122652168/d68f8fd6-cd29-4cc6-929d-339dc4155a08
+
+
 </p>
 
 ## How to Contribute 🚀
