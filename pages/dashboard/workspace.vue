@@ -61,6 +61,9 @@ import PrimaryButton from "~/components/Common/Buttons/PrimaryButton.vue";
 import PrimaryText from "@/components/Common/Text/PrimaryText";
 import { getFirestore, doc, updateDoc } from "firebase/firestore";
 import { useWorkspace } from "~/stores/workspace";
+import { useRouter } from "#vue-router";
+
+const router = useRouter()
 
 let workspace = ref([]);
 const db = getFirestore();
@@ -109,12 +112,15 @@ const handleCreateNewFrame = {
 
 const createNewFrame = () => {
   if (validateFrame(inputCreateNewFrame.value)) {
-    frames.value.push({
+    frames.value.unshift({
       title: inputCreateNewFrame.value,
       frame: [],
     });
 
     handleCreateNewFrame.close();
+    
+    //Go to the last created frame
+    router.push('0')
   } else {
     errorMessageFrame.value = "Nome do quadro obrigatório!";
   }

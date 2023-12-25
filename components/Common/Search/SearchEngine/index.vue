@@ -106,10 +106,6 @@ const handleClickOutsite = () => {
 
 let arr = ref(props.array || []);
 
-const getRecentProjects = (arr) => {
-  return arr.reverse().splice(0, 4);
-};
-
 let recentProjects = ref(getRecentProjects([...arr.value]));
 
 watchEffect(() => {
