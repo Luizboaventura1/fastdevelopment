@@ -42,11 +42,12 @@
     </div>
   </header>
   <NuxtLayout name="footer" />
+  <SpeedInsights />
 </template>
 
 <script setup>
 import SecondaryButton from "~/components/Common/Buttons/SecondaryButton.vue";
-
+import { SpeedInsights } from "@vercel/speed-insights/nuxt"
 
 useHead({
   title: 'Política de Privacidade'

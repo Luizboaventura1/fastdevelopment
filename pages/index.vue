@@ -17,6 +17,7 @@
   </Header>
 
   <NuxtLayout name="footer" />
+  <SpeedInsights />
 </template>
 
 <script setup>
@@ -27,6 +28,7 @@ import { getAuth } from "firebase/auth";
 import MainTitle from "@/components/Common/Text/MainTitle";
 import SecondaryText from "@/components/Common/Text/SecondaryText";
 import PrimaryButton from "@/components/Common/Buttons/PrimaryButton.vue";
+import { SpeedInsights } from "@vercel/speed-insights/nuxt"
 
 const auth = getAuth();
 

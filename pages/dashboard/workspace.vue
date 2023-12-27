@@ -42,6 +42,7 @@
     </div>
     <PrimaryButton @click="createNewFrame" medium> Criar Quadro </PrimaryButton>
   </ModalCreateNewFrame>
+  <SpeedInsights />
 </template>
 
 <script setup>
@@ -62,6 +63,7 @@ import PrimaryText from "@/components/Common/Text/PrimaryText";
 import { getFirestore, doc, updateDoc } from "firebase/firestore";
 import { useWorkspace } from "~/stores/workspace";
 import { useRouter } from "#vue-router";
+import { SpeedInsights } from "@vercel/speed-insights/nuxt"
 
 const router = useRouter()
 

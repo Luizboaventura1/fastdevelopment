@@ -70,7 +70,7 @@
     :cancel="cancelWarningMessage"
     :confirm="confirmWarningMessage"
   />
-  <SpeedInsights/>
+  <SpeedInsights />
 </template>
 
 <script setup>

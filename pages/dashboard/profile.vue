@@ -130,10 +130,12 @@
       </div>
     </footer>
   </header>
+  <SpeedInsights />
 </template>
 
 <script setup>
 import { useWorkspace } from "~/stores/workspace";
+import { SpeedInsights } from "@vercel/speed-insights/nuxt"
 
 let userInfo = useCookie("userInfo");
 let totalTasks = ref(0);
