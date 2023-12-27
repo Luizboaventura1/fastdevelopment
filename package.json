@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",
+    "@vercel/speed-insights": "^1.0.2",
     "@vueuse/components": "^10.5.0",
     "@vueuse/core": "^10.5.0",
     "@vueuse/motion": "^2.0.0",

@@ -70,6 +70,7 @@
     :cancel="cancelWarningMessage"
     :confirm="confirmWarningMessage"
   />
+  <SpeedInsights/>
 </template>
 
 <script setup>
@@ -89,6 +90,7 @@ import DropdownItem from "@/components/Common/Dropdown/DropdownProjects/Dropdown
 import ControlPanelIcon from "~/components/Common/Icons/ControlPanelIcon.vue";
 import { useWorkspace } from "@/stores/workspace";
 import SearchEngine from "@/components/Common/Search/SearchEngine"
+import { SpeedInsights } from "@vercel/speed-insights/nuxt"
 
 const auth = getAuth();
 const router = useRouter();
