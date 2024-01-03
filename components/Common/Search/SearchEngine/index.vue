@@ -2,13 +2,13 @@
   <div @click.stop class="w-full max-w-[460px] rounded-lg relative h-[38px]">
     <input
       type="text"
-      class="rounded-full w-full h-[38px] absolute top-0 left-0 z-20 outline-none ring-1 ring-thirdBorderF focus:ring-zinc-400 bg-secondaryColorF focus:bg-subSecondaryColorF py-2 px-3 text-white text-sm"
+      class="rounded-full w-full h-[38px] absolute top-0 left-0 z-40 outline-none ring-1 ring-thirdBorderF focus:ring-zinc-400 bg-secondaryColorF focus:bg-subSecondaryColorF py-2 px-3 text-white text-sm"
       placeholder="Buscar..."
       @input="search"
       @click="search"
       v-model="input"
     />
-    <div class="absolute top-0 left-0 w-full z-10">
+    <div class="absolute top-0 left-0 w-full z-30">
       <ContainerResults :state="state">
         <div v-if="stateRecentProjects">
           <div class="flex px-5">

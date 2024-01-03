@@ -1,5 +1,5 @@
 <template>
-  <div class="container-add-new-card bg-subSecondaryColorF rounded-lg">
+  <div class="container-add-new-card rounded-lg">
     <button
       @click="openCardModal"
       :class="`${cardVisibility}`"
@@ -37,12 +37,12 @@
         v-model="inputValue"
         @input="$emit('inputValue', inputValue)"
         placeholder="Descrição..."
-        class="resize-none bg-secondaryColorF w-full text-white text-sm px-3 py-2 outline-none ring-2 ring-transparent focus:ring-primaryColorF rounded-md"
+        class="resize-none bg-secondaryColorF w-full text-white text-sm px-3 py-2 outline-none ring-2 ring-transparent focus:ring-primaryColorF ring-1 ring-thirdColorF rounded-md"
       />
       <div class="button-container flex gap-2 mt-2">
         <button
           @click="props.event"
-          class="add-new-card-btn select-none text-sm px-4 py-2 w-full rounded-lg text-white bg-secondaryColorF transition-colors hover:bg-primaryColorF font-medium"
+          class="add-new-card-btn select-none text-sm px-4 py-2 w-full rounded-lg text-white bg-subSecondaryColorF ring-1 ring-thirdColorF transition-colors hover:bg-primaryColorF font-medium"
         >
           Adicionar
         </button>

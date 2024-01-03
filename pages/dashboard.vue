@@ -55,7 +55,7 @@
       </aside>
       <div class="flex-1 w-[calc(100% - 280px)] overflow-x-auto h-full">
         <header class="h-full">
-          <main class="bg-subSecondaryColorF overflow-x-auto p-3 h-full">
+          <main class="bg-subSecondaryColorF overflow-x-auto p-3 h-full relative">
             <NuxtPage />
           </main>
         </header>

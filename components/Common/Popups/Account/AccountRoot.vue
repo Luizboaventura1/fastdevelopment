@@ -1,19 +1,12 @@
 <template>
   <div class="relative w-[45px]">
     <div
-      :class="`w-[${props.size}px] h-[${props.size}px]`"
-      class="rounded-full relative overflow-hidden cursor-pointer"
+      :style="`width: ${props.size}px;height: ${props.size}px;`"
+      class="rounded-full overflow-hidden cursor-pointer"
     >
       <img
-        @click.stop="stateModal = !stateModal"
-        src="../../../../assets/avatar-fast-development.png"
-        alt="Default photo"
-        class="absolute z-0"
-      />
-      <img
         @click.stop="toggleModal"
-        v-if="userPhoto == undefined ? false : true"
-        class="w-full absolute z-10"
+        class="w-full"
         :src="userPhoto"
         alt="User"
       />
