@@ -1,8 +1,8 @@
 <template>
   <div
     v-if="props.stateModal"
-    @click="props.closeModalBtn"
-    class="background flex items-start justify-end absolute right-0 top-0 z-10 w-full h-full"
+    @click="changeWarningMessage.open"
+    class="background flex items-start justify-end fixed right-0 bottom-0 z-10 w-full h-[calc(100%-60px)]"
   >
     <div
       @click.stop
@@ -17,10 +17,10 @@
           />
         </div>
         <div class="w-2/12 flex items-center justify-end">
-          <CloseButton size="16" :event="props.closeModalBtn" />
+          <CloseButton size="16" :event="changeWarningMessage.open" />
         </div>
       </nav>
-      <main class="h-full flex">
+      <main class="h-[calc(100%-70px)] flex">
         <div class="w-9/12 h-full">
           <main class="description px-3 grid grid-rows-[auto,1fr,auto] h-full">
             <div class="flex items-center h-[60px] py-4">
@@ -28,18 +28,16 @@
                 Descrição
               </h1>
             </div>
-            <textarea
-              v-model="description"
-              cols="12"
-              rows="12"
-              placeholder="Sua descrição..."
-              class="w-full h-full outline-none text-sm resize-none bg-transparent p-2 rounded-lg text-textPrimaryColorF"
+            <Editor
+              placeholder-f="adicionar descrição..."
+              @getHtml="(html) => description = html"
+              :htmlInput="description"
             />
-            <div class="h-[60px] flex items-center gap-3 px-3">
+            <div class="h-[60px] flex items-center gap-3">
               <PrimaryButton full @click="saveChanges" small>
                 Salvar
               </PrimaryButton>
-              <SecondaryButton @click="$emit('closeModal')" small>
+              <SecondaryButton @click="changeWarningMessage.open" small>
                 Cancelar
               </SecondaryButton>
             </div>
@@ -60,6 +58,12 @@
     :message="warningMessage"
     :confirm="confirmWarningMessage"
   />
+  <WarningMessage
+    :state="changeWarningMessage.state"
+    :cancel="changeWarningMessage.close"
+    :message="changeWarningMessage.message"
+    :confirm="changeWarningMessage.confirm"
+  />
 </template>
 
 <script setup>
@@ -71,6 +75,7 @@ import { doc, updateDoc, getFirestore } from "firebase/firestore";
 import EditCardButton from "./EditCardButton.vue";
 import BinIcon from "@/components/Common/Icons/BinIcon.vue";
 import WarningMessage from "~/components/Common/FeedBack/WarningMessage.vue";
+import Editor from "@/components/Common/Editor";
 
 const currentPageId = useCookie("currentPageId");
 
@@ -102,6 +107,7 @@ const emit = defineEmits(["closeModal"]);
 // Card title and description
 let title = ref("");
 let description = ref("");
+let oldDescription = ref("")
 
 // saves card changes
 const saveChanges = async () => {
@@ -136,6 +142,7 @@ watchEffect(() => {
 
   title.value = currentPage?.title;
   description.value = currentPage?.description;
+  oldDescription.value = currentPage?.description;
 });
 
 // Warning message
@@ -156,6 +163,28 @@ const confirmWarningMessage = () => {
   stateWarningMessage.value = false;
   emit("closeModal");
 };
+
+// Change popup
+
+const changeWarningMessage = ref({
+  message: 'Descartar alterações?',
+  state: false,
+  open: function () {
+    if (description.value != oldDescription.value) {
+      changeWarningMessage.value.state = true
+    } else {
+      emit("closeModal")
+    }
+  },
+  close: function () {
+    changeWarningMessage.value.state = false
+  },
+  confirm: function () {
+    emit("closeModal")
+    changeWarningMessage.value.state = false
+  }
+})
+
 </script>
 
 <style lang="scss" scoped>
