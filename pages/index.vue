@@ -10,7 +10,7 @@
       <SecondaryText class="py-4 text-sm sm:text-md md:text-lg">
         Melhore o controle de gestão dos seus projetos com facilidade. Crie sua conta Hoje!
       </SecondaryText>
-      <PrimaryButton @click="startButton" large>
+      <PrimaryButton @click="handleStartButton" large>
         {{ logged ? "Ir para o dashboard" : "Começar!" }}
       </PrimaryButton>
     </Main>
@@ -31,11 +31,20 @@ import PrimaryButton from "@/components/Common/Buttons/PrimaryButton.vue";
 import { SpeedInsights } from "@vercel/speed-insights/nuxt"
 
 const auth = getAuth();
+const { gtag } = useGtag()
 
 const startButton = () => {
   if (logged.value) router.push("/dashboard/workspace");
   else router.push("/auth/register");
 };
+
+const handleStartButton = () => {
+  startButton()
+  
+  gtag('event', 'click', {
+    event_category: 'CTA Home',
+  });
+}
 
 // SEO
 
