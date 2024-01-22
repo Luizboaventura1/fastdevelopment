@@ -27,9 +27,7 @@ export default defineNuxtConfig({
       ['defineStore', 'definePiniaStore'],
     ],
   },
-  runtimeConfig: {
-    gtag: {
-      id: 'G-1P1CHBPTH6'
-    }
-  },
+  gtag: {
+    id: 'G-1P1CHBPTH6'
+  }
 })
