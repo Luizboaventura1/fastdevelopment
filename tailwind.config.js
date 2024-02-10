@@ -24,7 +24,8 @@ module.exports = {
         subSecondaryColorF: "#121214",
         primaryBorderF: "#393939",
         secondaryBorderF: "#373737FE",
-        thirdBorderF: "#4E4E4E"
+        thirdBorderF: "#4E4E4E",
+        "primary-icon-color": "#686873",
       }
     },
   },
