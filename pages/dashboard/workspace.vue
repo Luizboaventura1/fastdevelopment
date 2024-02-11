@@ -73,7 +73,7 @@ const db = getFirestore();
 let frames = ref(useWorkspace().frames);
 let userName = ref(useCookie("name").value || "");
 let userEmail = ref("");
-let idUser = ref("");
+let userId = ref("");
 
 onMounted(async () => {
   await useWorkspace()
@@ -81,7 +81,7 @@ onMounted(async () => {
     .then((data) => {
       workspace.value = data;
       userEmail.value = data.email;
-      idUser.value = data.id;
+      userId.value = data.id;
 
       if (frames.value.length === 0) {
         frames.value.push(...data.frames);
@@ -137,8 +137,8 @@ watch(inputCreateNewFrame, () => {
 
 // Update the list in firebase when changing card position
 const updateFrameInFirebase = async () => {
-  if (idUser.value) {
-    const frameDocRef = doc(db, "users", idUser.value);
+  if (userId.value) {
+    const frameDocRef = doc(db, "users", userId.value);
 
     await updateDoc(frameDocRef, {
       workspace: frames.value,
