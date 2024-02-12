@@ -7,6 +7,7 @@
     viewBox="0 0 64 64"
     style="enable-background: new 0 0 512 512"
     xml:space="preserve"
+    class="fill-primary-icon-color"
   >
     <g>
       <path
@@ -24,9 +25,3 @@ defineProps({
   size: String,
 });
 </script>
-
-<style scoped lang="scss">
-svg {
-  fill: #686873;
-}
-</style>

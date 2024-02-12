@@ -1,5 +1,5 @@
 <template>
-  <h1 :class="`${font}`" class="font-medium text-white">
+  <h1 :class="`${font}`" class="font-medium text-textPrimaryColorF">
     <slot />
   </h1>
 </template>
