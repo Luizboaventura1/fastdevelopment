@@ -20,4 +20,3 @@ logs
 
 # Local env files
 .env
-nuxt.config.ts
