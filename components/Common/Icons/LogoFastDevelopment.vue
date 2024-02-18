@@ -7,9 +7,7 @@
 </template>
 
 <script setup>
-
 defineProps({
   size: String,
-})
-
+});
 </script>

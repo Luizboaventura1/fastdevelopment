@@ -28,6 +28,7 @@ const addNewCard = () => {
     frameList.value[props.indexFrame].cards.push({
       title: titleInput.value,
       description: "",
+      labels: []
     });
   }
 };

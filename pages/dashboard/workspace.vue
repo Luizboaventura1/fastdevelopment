@@ -117,6 +117,7 @@ const createNewFrame = () => {
     frames.value.unshift({
       title: inputCreateNewFrame.value,
       frame: [],
+      labels: []
     });
 
     handleCreateNewFrame.close();

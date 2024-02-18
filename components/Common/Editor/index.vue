@@ -1,8 +1,10 @@
 <template>
   <div
-    :style="`background-color:${bgEditor};height:${props.height}px;width:${props.width}px;`"
-    class="h-full w-full ring-1 grid grid-rows-[auto,auto,1fr] bg-subSecondaryColorF ring-thirdBorderF overflow-hidden rounded-md"
-    :class="editorBackground"
+    :style="`background-color:${bgEditor};width:${props.width}px;`"
+    class="w-full ring-1 grid grid-rows-[auto,auto,1fr] bg-subSecondaryColorF ring-thirdBorderF overflow-hidden rounded-md"
+    :class="`${editorBackground} h-[${
+      props.height + 'px' ? props.height + 'px' : 'h-full'
+    }]`"
   >
     <Toolbar>
       <ButtonTemplate @click="bold" size="30"
@@ -51,7 +53,7 @@
     </Toolbar>
     <DividerDefault />
     <div class="overflow-y-auto">
-      <editor-content :editor="editor" fontSize="16" />
+      <editor-content :editor="editor" />
     </div>
   </div>
 </template>
@@ -105,7 +107,7 @@ const editor = useEditor({
   ],
   editorProps: {
     attributes: {
-      class: "text-textPrimaryColorF p-4 outline-none border-none",
+      class: "text-textPrimaryColorF text-sm p-4 outline-none border-none",
     },
   },
   editable: true,
@@ -180,7 +182,6 @@ watchEffect(() => {
     emit("getHtml", editor.value.getHTML());
   }
 });
-
 </script>
 
 <style lang="scss">

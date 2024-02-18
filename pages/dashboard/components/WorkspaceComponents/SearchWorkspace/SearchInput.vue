@@ -3,7 +3,7 @@
     v-model="inputValue"
     @input="$emit('inputValue', inputValue)"
     name="nome"
-    class="w-full border-0 p-4 rounded-2xl outline-0 h-[30px] text-white bg-secondaryColorF text-sm"
+    class="w-full border-0 p-4 rounded-2xl outline-0 h-[30px] text-white bg-secondaryColorF text-sm placeholder-zinc-400"
     type="text"
     :placeholder="props.placeholderInput"
     autocomplete="off"

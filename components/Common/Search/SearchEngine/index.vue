@@ -2,7 +2,7 @@
   <div @click.stop class="w-full max-w-[460px] rounded-lg relative h-[38px]">
     <input
       type="text"
-      class="rounded-full w-full h-[38px] absolute top-0 left-0 z-40 outline-none ring-1 ring-thirdBorderF focus:ring-zinc-400 bg-secondaryColorF focus:bg-subSecondaryColorF py-2 px-3 text-white text-sm"
+      class="rounded-full w-full h-[38px] absolute top-0 left-0 z-40 outline-none ring-1 ring-thirdBorderF focus:ring-zinc-400 bg-secondaryColorF focus:bg-subSecondaryColorF py-2 px-3 text-white text-sm placeholder-zinc-400"
       placeholder="Buscar..."
       @input="search"
       @click="search"

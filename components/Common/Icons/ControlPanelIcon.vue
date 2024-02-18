@@ -7,6 +7,7 @@
       xmlns:xlink="http://www.w3.org/1999/xlink"
       viewBox="0 0 32 32"
       xml:space="preserve"
+      class="fill-primary-icon-color"
     >
       <g>
         <path
@@ -24,9 +25,3 @@ defineProps({
   size: String,
 });
 </script>
-
-<style scoped lang="scss">
-svg {
-  fill: #686873;
-}
-</style>

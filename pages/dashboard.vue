@@ -175,13 +175,13 @@ useHead({
 });
 
 let workspace = ref();
-let frames = useWorkspace().frames || []
+let frames = ref(useWorkspace().frames || [])
 
 onMounted(async () => {
   workspace.value = await useWorkspace().workspace();
   
-  if (!frames) {
-    frames = workspace.value.frames
+  if (!frames.value) {
+    frames.value = useWorkspace().frames
   }
 });
 </script>

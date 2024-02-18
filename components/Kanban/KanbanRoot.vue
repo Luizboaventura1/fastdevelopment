@@ -5,16 +5,12 @@
       group="lists"
       class="kanban flex flex-row rounded-md gap-3 p-4 h-full"
     >
-      <div
+      <ListWrapper
         v-for="(frame, indexFrame) in frames[currentPageId]?.frame || []"
         :key="indexFrame"
-        class="me-2 w-[280px] h-full"
       >
-        <div
-          class="lista grid grid-rows-[auto,1fr,auto] max-h-full w-full relative me-3 bg-secondaryColorF p-3 rounded-lg"
-        >
-
-          <div class="title-container py-2 flex items-center gap-4">
+        <KanbanList>
+          <KanbanListTitle>
             <input
               class="bg-secondaryColorF w-full text-white px-3 py-1 outline-none ring-2 ring-transparent focus:ring-primaryColorF rounded-md"
               type="text"
@@ -32,7 +28,7 @@
                 />
               </div>
             </div>
-          </div>
+          </KanbanListTitle>
 
           <div class="cards overflow-y-auto">
             <VueDraggableNext v-model="frame.cards" group="people">
@@ -40,18 +36,16 @@
                 v-for="(card, indexCard) in frame.cards"
                 :key="card"
                 @click.stop="() => editCard(indexFrame, indexCard)"
-              >
-                {{ card.title }}
-              </Card>
+                :cardDescription="card.title"
+              />
             </VueDraggableNext>
           </div>
 
           <AddNewCardContainer :indexFrame="indexFrame" />
-
-        </div>
-      </div>
+        </KanbanList>
+      </ListWrapper>
     </VueDraggableNext>
-    
+
     <div class="add-new-frame w-[280px] h-auto pt-4">
       <AddNewList />
     </div>
@@ -81,6 +75,9 @@ import AddNewCardContainer from "./components/Modals/AddNewCardContainer.vue";
 import AddNewList from "./components/Modals/AddNewList.vue";
 import SettingsButton from "./components/Buttons/SettingsButton.vue";
 import ModalEditList from "./components/Modals/ModalEditList.vue";
+import KanbanList from "./components/KanbanList";
+import KanbanListTitle from "./components/KanbanList/KanbanListTitle";
+import ListWrapper from "./components/KanbanList/ListWrapper.vue";
 import Card from "./components/Card";
 import { doc, updateDoc, getFirestore } from "firebase/firestore";
 import { useRoute } from "#vue-router";
@@ -101,18 +98,20 @@ onMounted(async () => {
     .workspace()
     .then((data) => {
       idUser.value = data.id;
+      // Receives the frames if the array is empty
       if (frames.length === 0) {
         frames.push(...data.frames);
-        addModalStateToCards();
+        // Adds modal state to lists and cards
+        addModalStateToCardsAndLists();
       }
     });
 });
 
-const addModalStateToCards = () => {
-  frames.forEach((framesArr) => {
-    framesArr.frame.forEach((frameArr) => {
-      frameArr.stateModal = false; // add status to list
-      frameArr.cards.forEach((card) => {
+const addModalStateToCardsAndLists = () => {
+  frames.forEach((frames) => {
+    frames.frame.forEach((list) => {
+      list.stateModal = false; // add status to list
+      list.cards.forEach((card) => {
         card.stateModal = false; // add status to card
       });
     });
@@ -125,7 +124,9 @@ let currentIndexCard = ref({ indexFrame: undefined, indexCard: undefined });
 
 //When you click outside the modal it will close
 const closeModalList = () => {
-  frames[idRoute].frame.at(currentIndexCard.value.indexFrame).stateModal = false;
+  frames[idRoute].frame.at(
+    currentIndexCard.value.indexFrame
+  ).stateModal = false;
 };
 
 const openModalEditList = (indexFrame) => {
@@ -168,8 +169,8 @@ let idCard = ref();
 const editCard = (indexFrame, indexCard) => {
   idFrame.value = indexFrame;
   idCard.value = indexCard;
-  useState("indexFrame").value = indexFrame;
-  useState("indexCard").value = indexCard;
+  useState("frameIndex").value = indexFrame;
+  useState("cardIndex").value = indexCard;
 
   stateModalEditCard.value = true;
 };
@@ -191,17 +192,6 @@ watch(frames, () => {
 </script>
 
 <style lang="scss" scoped>
-
-.kanban {
-  .lista {
-    border: 1px solid #393939;
-    transition: 0.3s;
-    &:hover {
-      border: 1px solid #575757;
-    }
-  }
-}
-
 .add-new-frame div {
   border: 1px solid #393939;
 }
