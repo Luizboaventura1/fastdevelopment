@@ -23,6 +23,7 @@
 
 <script setup>
 import ArrowButton from "./ArrowButton.vue";
+import { useWorkspace } from "~/stores/workspace";
 
 let stateDropdownProjects = useCookie("stateDropdownProjects");
 let quantityProjects = useCookie("quantityProjects");
@@ -39,12 +40,24 @@ onMounted(() => {
 
 watch(stateDropdownProjects, () => {
   totalItems.value = [...document.querySelectorAll(".ul-dropdownitem li")];
-  quantityProjects.value = totalItems.value.length
+  quantityProjects.value = totalItems.value.length;
 });
 
 const props = defineProps({
   title: String,
 });
+
+const frames = useWorkspace().frames;
+
+watch(
+  frames,
+  () => {
+    if (frames.length !== quantityProjects.value) {
+      quantityProjects.value = frames.length;
+    }
+  },
+  { deep: true }
+);
 </script>
 
 <style lang="scss" scoped></style>
