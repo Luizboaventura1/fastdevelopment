@@ -5,6 +5,7 @@
 - [How to find your way around the project](#how-can-i-locate-myself-in-the-project)
 - [Folder structure](#folder-structure)
 - [Component specific folder](#component-specific-folder)
+- [How to manipulate user data?](#how-to-manipulate-user-data)
 - [Language](#language)
 
 ## Installation
@@ -75,6 +76,28 @@ The `components/common` folder contains all the components used throughout the a
     - **/components**
 
 Just follow this pattern for specific components, otherwise throw everything in the `/components/common` folder
+
+## How to manipulate user data?
+
+```javascript
+import { useWorkspace } from "~/stores/workspace";
+
+let frames = useWorkspace().frames;
+```
+By calling `useWorkspace().frames` you can access all user frames, this is the main way to manipulate user data.
+
+See another example taking other types of data:
+```javascript
+onMounted(async () => {
+  await useWorkspace()
+    .workspace()
+    .then((data) => {
+      userEmail.value = data.email;
+      userId.value = data.id;
+    });
+});
+```
+See what data you can get by accessing the `workspace.js` file in the `stores` folder.
 
 ## Language
 

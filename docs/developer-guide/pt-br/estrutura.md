@@ -5,6 +5,7 @@
 - [Como se localizar no projeto](#como-me-localizar-no-projeto)
 - [Estrutura de pasta](#estrutura-de-pastas)
 - [Pasta específica do componente](#pasta-específica-do-componente)
+- [Como manipular os dados do usuário?](#como-manipular-os-dados-do-usuário)
 - [Idioma](#idioma)
 
 ## Instalação
@@ -74,6 +75,28 @@ A pasta `components/common` fica todos os components usados em toda a aplicaçã
     - **/components**
 
 Basta seguir essa padrão para componentes específicos, senão jogue tudo na pasta `/components/common`
+
+## Como manipular os dados do usuário?
+
+```javascript
+import { useWorkspace } from "~/stores/workspace";
+
+let frames = useWorkspace().frames;
+```
+Chamando o `useWorkspace().frames` você consegue acessar todos os quadros do usuário, essa é a forma principal de manipular os dados do usuário.
+
+Veja outro exemplo pegando outros tipos de dados:
+```javascript
+onMounted(async () => {
+  await useWorkspace()
+    .workspace()
+    .then((data) => {
+      userEmail.value = data.email;
+      userId.value = data.id;
+    });
+});
+```
+Veja quais dados você consegue pegar acessando o arquivo `workspace.js` na pasta `stores`.
 
 ## Idioma
 
