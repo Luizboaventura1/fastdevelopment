@@ -1,8 +1,6 @@
 <template>
   <div class="dashboard">
-    <nav
-      class="h-[60px] bg-secondaryColorF flex items-center gap-3 px-4"
-    >
+    <nav class="h-[60px] bg-secondaryColorF flex items-center gap-3 px-4">
       <div class="w-2/12 flex items-center">
         <BurguerButton :event="dashboardToggle" />
       </div>
@@ -39,7 +37,7 @@
               :key="index"
               :link="`/dashboard/${index}`"
             >
-                {{ frame.title }}
+              {{ frame.title }}
             </DropdownItem>
           </DropdownProjets>
 
@@ -55,7 +53,9 @@
       </aside>
       <div class="flex-1 w-[calc(100% - 280px)] overflow-x-auto h-full">
         <header class="h-full">
-          <main class="bg-subSecondaryColorF overflow-x-auto p-3 h-full relative">
+          <main
+            class="bg-subSecondaryColorF overflow-x-auto p-3 h-full relative"
+          >
             <NuxtPage />
           </main>
         </header>
@@ -89,8 +89,8 @@ import DropdownProjets from "@/components/Common/Dropdown/DropdownProjects";
 import DropdownItem from "@/components/Common/Dropdown/DropdownProjects/DropdownItem.vue";
 import ControlPanelIcon from "~/components/Common/Icons/ControlPanelIcon.vue";
 import { useWorkspace } from "@/stores/workspace";
-import SearchEngine from "@/components/Common/Search/SearchEngine"
-import { SpeedInsights } from "@vercel/speed-insights/nuxt"
+import SearchEngine from "@/components/Common/Search/SearchEngine";
+import { SpeedInsights } from "@vercel/speed-insights/nuxt";
 
 const auth = getAuth();
 const router = useRouter();
@@ -174,14 +174,11 @@ useHead({
   ],
 });
 
-let workspace = ref();
-let frames = ref(useWorkspace().frames || [])
+let frames = useWorkspace().frames || [];
 
-onMounted(async () => {
-  workspace.value = await useWorkspace().workspace();
-  
-  if (!frames.value) {
-    frames.value = useWorkspace().frames
+onMounted(() => {
+  if (!frames) {
+    frames = useWorkspace().frames;
   }
 });
 </script>

@@ -3,17 +3,6 @@
     <form class="py-5 px-9 bg-secondaryColorF w-full max-w-xl rounded-md">
       <h1 class="text-slate-50 text-2xl font-bold py-4 mb-4">Bem vindo(a)</h1>
       <GoogleButton :event="loginWithGoogle">Login com Google</GoogleButton>
-      <div class="text-center mt-4">
-        <p class="text-white text-sm">
-          Não tem uma conta?
-          <NuxtLink
-            class="text-violet-500 hover:text-primaryColorF"
-            to="/auth/register"
-          >
-            Fazer cadastro
-          </NuxtLink>
-        </p>
-      </div>
     </form>
   </TemplateAuth>
   <Loading :visibility="loading" />

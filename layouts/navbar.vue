@@ -8,22 +8,16 @@
       </div>
     </div>
     <div class="w-8/12 flex items-center justify-end">
-      <LoginButton
+      <RegisterButton
         :event="login"
       >
         Entrar
-      </LoginButton>
-      <RegisterButton
-        :event="register"
-      >
-        Criar conta
       </RegisterButton>
     </div>
   </nav>
 </template>
 
 <script setup>
-import LoginButton from '@/pages/home/LoginButton.vue';
 import RegisterButton from '@/pages/home/RegisterButton.vue';
 import LogoFastDevelopment from '../components/Common/Icons/LogoFastDevelopment.vue'
 import { useRouter } from '#vue-router';
@@ -31,7 +25,5 @@ import { useRouter } from '#vue-router';
 const router = useRouter()
 
 const login = () => router.push('/auth/login')
-
-const register = () => router.push('/auth/register')
 
 </script>
