@@ -1,6 +1,6 @@
 <template>
   <h1
-    class="font-medium text-white text-lg"
+    class="text-white text-md"
   >
     <slot />
   </h1>

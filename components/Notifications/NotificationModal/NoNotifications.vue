@@ -6,10 +6,10 @@
     <img
       src="../../../assets/void.svg.svg"
       alt="No notifications"
-      class="m-auto"
+      class="m-auto w-[140px]"
     >
     <h1
-      class="font-medium mt-5 text-center text-white"
+      class="mt-5 text-center text-white text-sm"
     >
       <slot />  
     </h1>

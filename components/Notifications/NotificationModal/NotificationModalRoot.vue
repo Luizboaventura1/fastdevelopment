@@ -99,7 +99,7 @@ onMounted(checkAndHandleNoNotifications)
   box-shadow: 0 0 24px rgba(0, 0, 0, 0.413);
   border: 1px solid rgba(55, 55, 55, 0.998);
   width: 100%;
-  max-width: 350px;
+  max-width: 300px;
 }
 
 @media screen and (max-width: 400px) {
