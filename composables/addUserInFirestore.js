@@ -4,13 +4,12 @@ import {
   addDoc
 } from "firebase/firestore";
 
-export default async function addUserInFirestore(name, email, password, uid) {
+export default async function addUserInFirestore(name, email, uid) {
   const DB = getFirestore();
 
   await addDoc(collection(DB, "users"), {
     name,
     email,
-    password,
     uid,
     workspace: [],
   });

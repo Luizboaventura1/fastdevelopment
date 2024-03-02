@@ -35,7 +35,7 @@ const { gtag } = useGtag()
 
 const startButton = () => {
   if (logged.value) router.push("/dashboard/workspace");
-  else router.push("/auth/register");
+  else router.push("/auth/login");
 };
 
 const handleStartButton = () => {

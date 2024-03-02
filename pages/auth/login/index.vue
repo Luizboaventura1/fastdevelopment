@@ -41,7 +41,7 @@ const loginWithGoogle = async () => {
       logged.value = true;
 
       if (!(await checkIfTheUserExists(email))) {
-        await addUserInFirestore(displayName, email, "", uid);
+        await addUserInFirestore(displayName, email, uid);
       }
 
       // go to dashboard

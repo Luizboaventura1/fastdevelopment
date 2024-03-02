@@ -181,6 +181,8 @@ onMounted(() => {
     frames = useWorkspace().frames;
   }
 });
+
+console.log(document.cookie)
 </script>
 
 <style lang="scss" scoped>
