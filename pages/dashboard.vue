@@ -112,7 +112,8 @@ const logout = async () => {
     const logged = useCookie("token");
     logged.value = false;
 
-    router.push("/");
+    deleteAllCookies();
+    //router.push("/");
   });
 };
 
@@ -181,8 +182,6 @@ onMounted(() => {
     frames = useWorkspace().frames;
   }
 });
-
-console.log(document.cookie)
 </script>
 
 <style lang="scss" scoped>

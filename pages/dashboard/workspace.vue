@@ -122,7 +122,7 @@ const createNewFrame = () => {
 
     handleCreateNewFrame.close();
     
-    //Go to the last created frame
+    // Go to the last created frame
     router.push('0')
   } else {
     errorMessageFrame.value = "Nome do quadro obrigatório!";
