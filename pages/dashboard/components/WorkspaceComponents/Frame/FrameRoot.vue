@@ -1,6 +1,6 @@
 <template>
   <div
-    @click.stop="$router.push(`/dashboard/${props.frameID}`)"
+    @click.stop="openFrame"
     class="frame frame-root cursor-pointer w-full h-[200px] ring-1 ring-zinc-700 hover:ring-zinc-500 transition-all duration-300 rounded-lg p-4 relative overflow-hidden"
   >
     <slot />
@@ -57,6 +57,10 @@ import { useWorkspace } from "~/stores/workspace";
 import WarningMessage from "~/components/Common/FeedBack/WarningMessage.vue";
 import ErrorMessage from "~/components/Common/ErrorComponents/ErrorMessage.vue";
 import DeleteButton from "~/components/Common/Buttons/DeleteButton.vue";
+import { useRouter } from "#vue-router";
+
+const router = useRouter();
+let currentPageId = useCookie("currentPageId");
 
 let props = defineProps({
   frameID: String,
@@ -64,6 +68,11 @@ let props = defineProps({
 
 let stateSettings = ref(false);
 const toggleSettings = () => (stateSettings.value = !stateSettings.value);
+
+const openFrame = () => {
+  router.push(`/dashboard/${props.frameID}`);
+  currentPageId.value = props.frameID;
+};
 
 // Get the current frame
 let frame = useWorkspace().frames[props.frameID];
