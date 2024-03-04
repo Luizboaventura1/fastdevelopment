@@ -8,17 +8,17 @@
       </div>
     </div>
     <div class="w-8/12 flex items-center justify-end">
-      <RegisterButton
+      <LoginButton
         :event="login"
       >
         Entrar
-      </RegisterButton>
+      </LoginButton>
     </div>
   </nav>
 </template>
 
 <script setup>
-import RegisterButton from '@/pages/home/RegisterButton.vue';
+import LoginButton from '@/pages/home/LoginButton.vue';
 import LogoFastDevelopment from '../components/Common/Icons/LogoFastDevelopment.vue'
 import { useRouter } from '#vue-router';
 
