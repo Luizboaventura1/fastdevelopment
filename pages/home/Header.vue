@@ -1,17 +1,25 @@
 <template>
-  <header class="h-screen w-full p-4 flex justify-center">
+  <header class="h-full lg:h-[90vh] relative w-full bg-subSecondaryColorF p-4 flex justify-center">
     <div class="container h-full">
       <slot />
     </div>
+    <div class="circle absolute top-10 -left-16"></div>
+    <div class="circle absolute bottom-10 -right-32"></div>
   </header>
 </template>
 
-<style lang="scss" scoped>
-$primary-color: #8257e5;
-$secondary-color: #202024;
-$sub-secondary-color: #121214;
+<style scoped>
+.circle {
+  width: 200px;
+  height: 200px;
+  background-color: rgba(132, 0, 255, 0.83);
+  border-radius: 50%;
+  filter: blur(120px);
+}
 
-header {
-  background-color: $secondary-color;
+@media screen and (max-width: 480px) {
+  .circle {
+    background-color: rgba(132, 0, 255, 0.458);
+  }
 }
 </style>
