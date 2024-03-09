@@ -68,14 +68,14 @@
   <Section>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-14">
       <div
-        class="w-full h-[120px] md:h-[150px] bg-zinc-900 rounded-lg p-5 shadow"
+        class="grid grid-rows-[auto,1fr] w-full min-h-[120px] md:h-[150px] bg-zinc-900 rounded-lg p-5 shadow"
       >
-        <nav class="h-[40px]">
+        <nav>
           <h1 class="text-textPrimaryColorF font-bold">
             🚀 Fácil de implementar
           </h1>
         </nav>
-        <div class="h-[calc(100%-40px)] flex items-center">
+        <div class="flex items-center">
           <SecondaryText>
             Implemente nossa ferramenta de forma fácil em um projeto já em
             andamento.
@@ -83,28 +83,28 @@
         </div>
       </div>
       <div
-        class="w-full h-[120px] md:h-[150px] bg-zinc-900 rounded-lg p-5 shadow"
+        class="grid grid-rows-[auto,1fr] w-full min-h-[120px] md:h-[150px] bg-zinc-900 rounded-lg p-5 shadow"
       >
-        <nav class="h-[40px]">
+        <nav>
           <h1 class="text-textPrimaryColorF font-bold">
             ✔ Totalmente gratuito
           </h1>
         </nav>
-        <div class="h-[calc(100%-40px)] flex items-center">
+        <div class="flex items-center">
           <SecondaryText>
             Desfrute da nossa plataforma 100% gratuita sem pagar nada!
           </SecondaryText>
         </div>
       </div>
       <div
-        class="w-full h-[120px] md:h-[150px] bg-zinc-900 rounded-lg p-5 shadow"
+        class="grid grid-rows-[auto,1fr] w-full min-h-[120px] md:h-[150px] bg-zinc-900 rounded-lg p-5 shadow"
       >
-        <nav class="h-[40px]">
+        <nav>
           <h1 class="text-textPrimaryColorF font-bold">
             ⚙ Gerencie melhor as etapas do seu projeto
           </h1>
         </nav>
-        <div class="h-[calc(100%-40px)] flex items-center">
+        <div class="flex items-center">
           <SecondaryText>
             Gestão eficiente e de fácil visualização do progresso.
           </SecondaryText>
