@@ -54,7 +54,9 @@
         <SecondaryText class="my-6">
           Edite de forma simples e rápida seus cartões.
         </SecondaryText>
-        <PrimaryButton link="/auth/login" large> Testar agora </PrimaryButton>
+        <PrimaryButton @click="$router.push('/auth/login')" large>
+          Testar agora
+        </PrimaryButton>
       </div>
       <div>
         <img
@@ -119,7 +121,7 @@
     </SecondaryText>
     <div class="block md:flex gap-4 justify-center">
       <PrimaryButton
-        link="/auth/login"
+        @click="$router.push('/auth/login')"
         large
         class="w-full md:w-auto mb-4 md:mb-0"
       >

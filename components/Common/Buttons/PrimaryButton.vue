@@ -1,6 +1,5 @@
 <template>
   <button
-    @click="$router.push(props.link)"
     :class="[buttonSize, defaultSize, !buttonWidth ? '' : 'w-full']"
     class="text-white rounded bg-primaryColorF transition-colors duration-300 hover:bg-primaryColorFHover"
   >
@@ -26,7 +25,6 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  link: String,
 });
 
 const buttonWidth = computed(() => props.full);
