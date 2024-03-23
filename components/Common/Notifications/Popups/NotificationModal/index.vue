@@ -17,9 +17,9 @@
           class="notification bg-secondaryColorF rounded-lg p-4 z-40"
         >
           <nav class="flex items-center justify-between">
-            <TitleNotification>
+            <PrimaryText>
               Notificações
-            </TitleNotification>
+            </PrimaryText>
             <CloseButton
               size="15"
               :event="closeModal"
@@ -54,14 +54,14 @@
 </template>
 
 <script setup>
+import PrimaryText from '@/components/Common/Text/PrimaryText'
 import { vOnClickOutside } from '@vueuse/components'
-import TitleNotification from './TitleNotification.vue';
 import CloseButton from '~/components/Common/FeedBack/CloseButton.vue';
 import DividerDefault from '~/components/Common/Dividers/DividerDefault.vue';
-import NoNotifications from './NoNotifications.vue'
+import NoNotifications from './components/NoNotifications.vue'
 import ButtonNav from '~/pages/dashboard/components/DashBoardComponents/ButtonNav.vue';
 import NotificationIcon from '~/pages/dashboard/components/DashBoardComponents/NotificationIcon.vue';
-import NotificationItem from './NotificationItem/NotificationItem.vue';
+import NotificationItem from './components/NotificationItem.vue';
 
 // User Notifications
 let notifications = ref([])

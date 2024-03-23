@@ -10,7 +10,7 @@
       </div>
 
       <div class="flex items-center justify-end gap-3 w-2/12">
-        <NotificationModalRoot />
+        <NotificationModal />
         <AccountRoot size="30" />
       </div>
     </nav>
@@ -82,7 +82,7 @@ import Loading from "~/components/Common/Loadings/Loading.vue";
 import WarningMessage from "@/components/Common/FeedBack/WarningMessage.vue";
 import DividerDefault from "~/components/Common/Dividers/DividerDefault.vue";
 import AccountRoot from "~/components/Common/Popups/Account/AccountRoot.vue";
-import NotificationModalRoot from "~/components/Notifications/NotificationModal/NotificationModalRoot.vue";
+import NotificationModal from "~/components/Common/Notifications/Popups/NotificationModal";
 import ItemAside from "./dashboard/components/DashBoardComponents/ItemAside.vue";
 import HomeIcon from "~/components/Common/Icons/HomeIcon.vue";
 import DropdownProjets from "@/components/Common/Dropdown/DropdownProjects";
