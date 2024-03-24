@@ -6,5 +6,6 @@
 </template>
 
 <script setup>
+import Kanban from './components/Kanban'
 import { SpeedInsights } from "@vercel/speed-insights/nuxt"
 </script>

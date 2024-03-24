@@ -35,7 +35,7 @@
             <DropdownItem
               v-for="(frame, index) in frames"
               :key="index"
-              :link="`/dashboard/${index}`"
+              :link="`/dashboard/frame/${index}`"
             >
               {{ frame.title }}
             </DropdownItem>

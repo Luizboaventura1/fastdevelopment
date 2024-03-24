@@ -11,7 +11,7 @@
         <li v-for="(item, index) in searchedItems" :key="index">
           <SearchResult
             tabindex="0"
-            @click="$router.push(`/dashboard/${item.id}`)"
+            @click="$router.push(`/dashboard/frame/${item.id}`)"
           >
             {{ item.title }}
           </SearchResult>

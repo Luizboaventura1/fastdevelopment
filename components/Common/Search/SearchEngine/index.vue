@@ -19,7 +19,7 @@
           <ItemSearchResult
             v-for="(item, index) in recentProjects"
             :key="index"
-            :link="`/dashboard/${index}`"
+            :link="`/dashboard/frame/${index}`"
           >
             {{ item.title }}
           </ItemSearchResult>
@@ -75,7 +75,7 @@ const search = () => {
 
         searchedItems.value.push({
           title: arr.value[index]?.title,
-          link: `/dashboard/${index}`,
+          link: `/dashboard/frame/${index}`,
         });
       }
     });

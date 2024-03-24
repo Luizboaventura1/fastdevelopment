@@ -32,7 +32,7 @@
 
           <div class="cards overflow-y-auto">
             <VueDraggableNext v-model="frame.cards" group="people">
-              <Card
+              <KanbanCard
                 v-for="(card, indexCard) in frame.cards"
                 :key="card"
                 @click.stop="() => editCard(indexFrame, indexCard)"
@@ -78,7 +78,7 @@ import ModalEditList from "./components/Modals/ModalEditList.vue";
 import KanbanList from "./components/KanbanList";
 import KanbanListTitle from "./components/KanbanList/KanbanListTitle";
 import ListWrapper from "./components/KanbanList/ListWrapper.vue";
-import Card from "./components/Card";
+import KanbanCard from "./components/KanbanCard";
 import { doc, updateDoc, getFirestore } from "firebase/firestore";
 import { useRoute } from "#vue-router";
 import { useWorkspace } from "@/stores/workspace.js";

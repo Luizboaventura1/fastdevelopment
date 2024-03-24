@@ -70,7 +70,7 @@ let stateSettings = ref(false);
 const toggleSettings = () => (stateSettings.value = !stateSettings.value);
 
 const openFrame = () => {
-  router.push(`/dashboard/${props.frameID}`);
+  router.push(`/dashboard/frame/${props.frameID}`);
   currentPageId.value = props.frameID;
 };
 
