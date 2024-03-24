@@ -12,7 +12,7 @@
       />
     </div>
     <div class="absolute z-40 bottom-9 right-5">
-      <OptionsModalRoot
+      <OptionsModal
         class="options-modal-container"
         @click.stop
         :stateModal="stateModal"
@@ -32,7 +32,7 @@
             Fazer logout
           </ActionOptionsModal>
         </template>
-      </OptionsModalRoot>
+      </OptionsModal>
     </div>
   </div>
   <Loading :visibility="loading" />
@@ -53,14 +53,14 @@ import {
   getDocs,
   getFirestore,
 } from "firebase/firestore";
-import OptionsModalRoot from "@/components/Common/Popups/OptionsModal/OptionsModalRoot.vue";
-import ActionOptionsModal from "@/components/Common/Popups/OptionsModal/ActionOptionsModal.vue";
-import TitleOptionsModal from "@/components/Common/Popups/OptionsModal/TitleOptionsModal.vue";
+import OptionsModal from "@/components/Common/Notifications/Popups/OptionsModal";
+import ActionOptionsModal from "@/components/Common/Notifications/Popups/OptionsModal/components/ActionOptionsModal.vue";
+import TitleOptionsModal from "@/components/Common/Notifications/Popups/OptionsModal/components/TitleOptionsModal.vue";
 import CloseButton from "@/components/Common/FeedBack/CloseButton.vue";
-import Loading from "../../Loadings/Loading.vue";
+import Loading from "@/components/Common/Loadings/Loading.vue";
 import { signOut } from "firebase/auth";
-import WarningMessage from "../../FeedBack/WarningMessage.vue";
-import ActionLinkOptionsModal from "../OptionsModal/ActionLinkOptionsModal.vue";
+import WarningMessage from "@/components/Common/FeedBack/WarningMessage.vue";
+import ActionLinkOptionsModal from "@/components/Common/Notifications/Popups/OptionsModal/components/ActionLinkOptionsModal.vue";
 
 let props = defineProps({
   size: String,

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <OptionsModalRoot :stateModal="props.stateModal">
+    <OptionsModal :stateModal="props.stateModal">
       <template #nav>
         <TitleOptionsModal> Ações lista </TitleOptionsModal>
         <CloseButton :event="props.event" size="16" />
@@ -11,7 +11,7 @@
           Excluir
         </ActionOptionsModal>
       </template>
-    </OptionsModalRoot>
+    </OptionsModal>
 
     <WarningMessage
       :state="stateWarningMessage"
@@ -25,9 +25,9 @@
 <script setup>
 import { useWorkspace } from "@/stores/workspace.js"
 import WarningMessage from "@/components/Common/FeedBack/WarningMessage.vue";
-import OptionsModalRoot from "@/components/Common/Popups/OptionsModal/OptionsModalRoot.vue";
-import ActionOptionsModal from "@/components/Common/Popups/OptionsModal/ActionOptionsModal.vue";
-import TitleOptionsModal from "@/components/Common/Popups/OptionsModal/TitleOptionsModal.vue";
+import OptionsModal from "@/components/Common/Notifications/Popups/OptionsModal";
+import ActionOptionsModal from "@/components/Common/Notifications/Popups/OptionsModal/components/ActionOptionsModal.vue";
+import TitleOptionsModal from "@/components/Common/Notifications/Popups/OptionsModal/components/TitleOptionsModal.vue";
 import CloseButton from "@/components/Common/FeedBack/CloseButton.vue";
 
 const currentPageId = useCookie("currentPageId")

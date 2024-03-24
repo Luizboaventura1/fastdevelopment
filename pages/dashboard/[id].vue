@@ -1,6 +1,6 @@
 <template>
   <div class="w-full min-w-max h-full">
-    <KanbanRoot />
+    <Kanban />
     <SpeedInsights />
   </div>
 </template>
