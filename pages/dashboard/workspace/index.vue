@@ -46,22 +46,22 @@
 </template>
 
 <script setup>
-import WorkspaceContainer from "./components/WorkspaceComponents/WorkspaceContainer.vue";
-import Greeting from "./components/WorkspaceComponents/Greeting.vue";
-import FrameBar from "./components/WorkspaceComponents/FrameBar.vue";
-import FrameRoot from "./components/WorkspaceComponents/Frame/FrameRoot.vue";
-import Grid from "./components/WorkspaceComponents/Grid/Grid.vue";
-import CreateNewFrameRoot from "./components/WorkspaceComponents/CreateNewFrame/CreateNewFrameRoot.vue";
-import NewFrameButton from "./components/WorkspaceComponents/CreateNewFrame/NewFrameButton.vue";
-import SearchWorkspace from "./components/WorkspaceComponents/SearchWorkspace";
-import ModalCreateNewFrame from "./components/WorkspaceComponents/CreateNewFrame/ModalCreateNewFrame/ModalCreateNewFrame.vue";
-import InputModal from "./components/WorkspaceComponents/CreateNewFrame/ModalCreateNewFrame/InputModal.vue";
-import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
-import ErrorMessage from "~/components/Common/ErrorComponents/ErrorMessage.vue";
-import PrimaryButton from "~/components/Common/Buttons/PrimaryButton.vue";
+import WorkspaceContainer from "./components/WorkspaceContainer.vue";
+import Greeting from "./components/Greeting.vue";
+import FrameBar from "./components/FrameBar.vue";
+import FrameRoot from "./components/Frame/FrameRoot.vue";
+import Grid from "./components/Grid/Grid.vue";
+import CreateNewFrameRoot from "./components/CreateNewFrame/CreateNewFrameRoot.vue";
+import NewFrameButton from "./components/CreateNewFrame/NewFrameButton.vue";
+import SearchWorkspace from "./components/SearchWorkspace";
+import ModalCreateNewFrame from "./components/CreateNewFrame/ModalCreateNewFrame/ModalCreateNewFrame.vue";
+import InputModal from "./components/CreateNewFrame/ModalCreateNewFrame/InputModal.vue";
+import CloseButton from "@/components/Common/FeedBack/CloseButton.vue";
+import ErrorMessage from "@/components/Common/ErrorComponents/ErrorMessage.vue";
+import PrimaryButton from "@/components/Common/Buttons/PrimaryButton.vue";
 import PrimaryText from "@/components/Common/Text/PrimaryText";
 import { getFirestore, doc, updateDoc } from "firebase/firestore";
-import { useWorkspace } from "~/stores/workspace";
+import { useWorkspace } from "@/stores/workspace";
 import { useRouter } from "#vue-router";
 import { SpeedInsights } from "@vercel/speed-insights/nuxt"
 
