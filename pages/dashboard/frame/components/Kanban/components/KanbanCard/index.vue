@@ -1,6 +1,6 @@
 <template>
   <div
-    class="card text-white px-3 select-none py-1 text-sm cursor-pointer w-full bg-subSecondaryColorF h-full min-h-[40px] rounded-lg my-2"
+    class="card text-white px-3 py-2 select-none text-sm cursor-pointer w-full bg-subSecondaryColorF h-full min-h-[40px] rounded-lg my-2"
   >
     <div class="flex items-center min-h-[30px]">
       <textarea

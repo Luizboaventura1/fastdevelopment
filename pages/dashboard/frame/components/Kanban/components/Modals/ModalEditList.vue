@@ -33,7 +33,7 @@ import CloseButton from "@/components/Common/FeedBack/CloseButton.vue";
 const currentPageId = useCookie("currentPageId")
 
 const frames = useWorkspace().frames;
-let lists = ref(frames[currentPageId.value].frame)
+let lists = frames[currentPageId.value].frame
 
 const props = defineProps({
   stateModal: Boolean,
@@ -42,7 +42,7 @@ const props = defineProps({
 });
 
 const deleteList = () => {
-  lists.value.splice(props.listId, 1);
+  lists.splice(props.listId, 1);
 };
 
 // warning message when deleting the list
