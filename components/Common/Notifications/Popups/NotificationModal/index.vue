@@ -1,12 +1,13 @@
 <template>
   <div class="relative">
-    <ButtonNav
-      @event="toggleModal"
+    <button
+      @click.stop="toggleModal"
+      class="rounded-full transition-colors hover:bg-zinc-800 p-2"
     >
       <NotificationIcon
         size="20"
       />
-    </ButtonNav>
+    </button>
     <div
       class="absolute w-screen flex justify-end top-11 -right-10 sm:right-0"
     >
@@ -59,8 +60,7 @@ import { vOnClickOutside } from '@vueuse/components'
 import CloseButton from '~/components/Common/FeedBack/CloseButton.vue';
 import DividerDefault from '~/components/Common/Dividers/DividerDefault.vue';
 import NoNotifications from './components/NoNotifications.vue'
-import ButtonNav from '~/pages/dashboard/components/DashBoardComponents/ButtonNav.vue';
-import NotificationIcon from '~/pages/dashboard/components/DashBoardComponents/NotificationIcon.vue';
+import NotificationIcon from './components/NotificationIcon.vue';
 import NotificationItem from './components/NotificationItem.vue';
 
 // User Notifications

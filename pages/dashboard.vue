@@ -77,13 +77,13 @@
 import LogoutIcon from "@/components/Common/Icons/LogoutIcon.vue";
 import { signOut, getAuth, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "#vue-router";
-import BurguerButton from "./dashboard/components/DashBoardComponents/Navbar/BurguerButton.vue";
+import BurguerButton from "./dashboard/components/BurguerButton.vue";
 import Loading from "~/components/Common/Loadings/Loading.vue";
 import WarningMessage from "@/components/Common/FeedBack/WarningMessage.vue";
 import DividerDefault from "~/components/Common/Dividers/DividerDefault.vue";
 import Account from "@/components/Common/Notifications/Popups/Account";
 import NotificationModal from "~/components/Common/Notifications/Popups/NotificationModal";
-import ItemAside from "./dashboard/components/DashBoardComponents/ItemAside.vue";
+import ItemAside from "./dashboard/components/ItemAside.vue";
 import HomeIcon from "~/components/Common/Icons/HomeIcon.vue";
 import DropdownProjets from "@/components/Common/Dropdown/DropdownProjects";
 import DropdownItem from "@/components/Common/Dropdown/DropdownProjects/DropdownItem.vue";
