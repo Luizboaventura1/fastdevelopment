@@ -23,17 +23,14 @@
 </template>
 
 <script setup>
-import { useWorkspace } from "@/stores/workspace.js"
+import { useWorkspace } from "@/stores/workspace.js";
 import WarningMessage from "@/components/Common/FeedBack/WarningMessage.vue";
 import OptionsModal from "@/components/Common/Notifications/Popups/OptionsModal";
 import ActionOptionsModal from "@/components/Common/Notifications/Popups/OptionsModal/components/ActionOptionsModal.vue";
 import TitleOptionsModal from "@/components/Common/Notifications/Popups/OptionsModal/components/TitleOptionsModal.vue";
 import CloseButton from "@/components/Common/FeedBack/CloseButton.vue";
 
-const currentPageId = useCookie("currentPageId")
-
-const frames = useWorkspace().frames;
-let lists = frames[currentPageId.value].frame
+const currentPageId = useCookie("currentPageId");
 
 const props = defineProps({
   stateModal: Boolean,
@@ -42,7 +39,8 @@ const props = defineProps({
 });
 
 const deleteList = () => {
-  lists.splice(props.listId, 1);
+  useWorkspace().frames[currentPageId.value].frame.splice(props.listId, 1);
+  useWorkspace().updateWorkspace()
 };
 
 // warning message when deleting the list

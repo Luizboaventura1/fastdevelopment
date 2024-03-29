@@ -29,6 +29,8 @@ const addNewCard = () => {
       description: "",
       labels: []
     });
+
+    useWorkspace().updateWorkspace()
   }
 };
 </script>

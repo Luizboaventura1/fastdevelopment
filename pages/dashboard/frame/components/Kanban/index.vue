@@ -147,7 +147,7 @@ let controlWarningMessage = {
   },
   close: () => (stateWarningMessage.value = false),
   confirmWarningMessage: () => {
-    frames[idRoute].frame[listAndCardId.value.listId].cards.splice(
+    useWorkspace().frames[currentPageId.value].frame[listAndCardId.value.listId].cards.splice(
       listAndCardId.value.indexCard,
       1
     );
