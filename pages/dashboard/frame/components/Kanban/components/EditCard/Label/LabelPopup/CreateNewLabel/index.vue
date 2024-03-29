@@ -66,9 +66,7 @@ import SingleColor from "../SelectColor/SingleColor.vue";
 import PrimaryButton from "~/components/Common/Buttons/PrimaryButton.vue";
 import PrimaryText from "@/components/Common/Text/PrimaryText/index.vue";
 import { useWorkspace } from "~/stores/workspace";
-import { getFirestore, doc, updateDoc } from "firebase/firestore";
 
-const db = getFirestore();
 const CURRENT_PAGE_ID = useCookie("currentPageId");
 let userId = ref("");
 let frames = ref([]); // All frames
@@ -109,7 +107,7 @@ const addLabel = () => {
       };
 
       frame.value.labels.push(NEW_LABEL);
-      updateFrameInFirebase();
+      useWorkspace().updateWorkspace();
     } else {
       colorErrorMessage.value = "Essa etiqueta já existe!";
     }
@@ -132,16 +130,6 @@ watch(labelName, () => {
   }
 });
 
-const updateFrameInFirebase = async () => {
-  if (userId.value) {
-    const frameDocRef = doc(db, "users", userId.value);
-
-    await updateDoc(frameDocRef, {
-      workspace: frames.value,
-    });
-  }
-};
-
 const ALL_COLORS = [
   "#872a36",
   "#2a6087",
@@ -157,7 +145,7 @@ const doesThisLabelExist = () => {
   if (frame.value.labels) {
     return !!frame.value.labels.filter((label) => {
       return (
-        label.color === selectedColor.value && label.title === labelName.value
+        label.color === selectedColor.value
       );
     }).length;
   }

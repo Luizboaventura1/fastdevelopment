@@ -77,7 +77,6 @@
 import { vOnClickOutside } from "@vueuse/components";
 import CloseButton from "@/components/Common/FeedBack/CloseButton.vue";
 import { useWorkspace } from "~/stores/workspace";
-import { doc, updateDoc, getFirestore } from "firebase/firestore";
 import EditCardButton from "./EditCardButton.vue";
 import BinIcon from "@/components/Common/Icons/BinIcon.vue";
 import WarningMessage from "~/components/Common/FeedBack/WarningMessage.vue";
@@ -91,10 +90,8 @@ import ErrorMessage from "~/components/Common/ErrorComponents/ErrorMessage.vue";
 
 const currentPageId = useCookie("currentPageId");
 
-const db = getFirestore();
-
 let frames = useWorkspace().frames;
-let idUser = ref("");
+let userId = ref("");
 
 // Get id in firestore
 
@@ -102,7 +99,7 @@ onMounted(async () => {
   await useWorkspace()
     .workspace()
     .then((data) => {
-      idUser.value = data.id;
+      userId.value = data.id;
     });
 });
 
@@ -147,11 +144,7 @@ const updateCardDetails = async () => {
         props.indexCard
       ].description = description.value;
 
-      // Update in Firebase
-      const frameDocRef = doc(db, "users", idUser.value);
-      await updateDoc(frameDocRef, {
-        workspace: frames,
-      });
+      useWorkspace().updateWorkspace();
     } else {
       titleErrorMessage.value = "Mínimo de 1 caracter!";
     }

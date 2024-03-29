@@ -175,13 +175,15 @@ useHead({
   ],
 });
 
-let frames = useWorkspace().frames || [];
+let frames = ref(useWorkspace().frames || []);
 
-onMounted(() => {
-  if (!frames) {
-    frames = useWorkspace().frames;
-  }
-});
+watch(
+  useWorkspace().frames,
+  () => {
+    frames.value = useWorkspace().frames;
+  },
+  { deep: true }
+);
 </script>
 
 <style lang="scss" scoped>

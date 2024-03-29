@@ -153,14 +153,14 @@ onMounted(() => {
         };
       }
 
+      totalProjects.value = data.frames.length
+
       data.frames.forEach((frame) => {
-        totalProjects.value++;
         frame.frame.forEach((list) => {
-          list.cards.forEach(() => {
-            totalTasks.value++;
-          });
+          totalTasks.value += list.cards.length
         });
       });
+
     });
 });
 </script>

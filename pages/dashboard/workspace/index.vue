@@ -1,30 +1,34 @@
 <template>
   <WorkspaceContainer md>
     <PrimaryText md> Página inicial </PrimaryText>
+
     <WorkspaceContainer ms>
       <Greeting>
         {{ getFirstName(userName) }}
       </Greeting>
     </WorkspaceContainer>
+
     <FrameBar space-y="6">
       <PrimaryText> Quadros </PrimaryText>
       <SearchWorkspace />
     </FrameBar>
+
     <Grid col="2">
       <CreateNewFrameRoot>
         <NewFrameButton @click="handleCreateNewFrame.open">
           <PrimaryText> Criar novo quadro </PrimaryText>
         </NewFrameButton>
       </CreateNewFrameRoot>
-      <FrameRoot
+      <Frame
         v-for="(frame, index) in frames"
         :key="index"
         :frameID="String(index)"
       >
-        <PrimaryText lg> {{ frame.title }} </PrimaryText>
-      </FrameRoot>
+        <PrimaryText lg class="truncate"> {{ frame.title }} </PrimaryText>
+      </Frame>
     </Grid>
   </WorkspaceContainer>
+
   <ModalCreateNewFrame
     @closeModal="handleCreateNewFrame.close"
     :stateModal="stateModalCreateNewFrame"
@@ -42,6 +46,7 @@
     </div>
     <PrimaryButton @click="createNewFrame" medium> Criar Quadro </PrimaryButton>
   </ModalCreateNewFrame>
+
   <SpeedInsights />
 </template>
 
@@ -49,7 +54,7 @@
 import WorkspaceContainer from "./components/WorkspaceContainer.vue";
 import Greeting from "./components/Greeting.vue";
 import FrameBar from "./components/FrameBar.vue";
-import FrameRoot from "./components/Frame/FrameRoot.vue";
+import Frame from "./components/Frame";
 import Grid from "./components/Grid/Grid.vue";
 import CreateNewFrameRoot from "./components/CreateNewFrame/CreateNewFrameRoot.vue";
 import NewFrameButton from "./components/CreateNewFrame/NewFrameButton.vue";
@@ -60,32 +65,27 @@ import CloseButton from "@/components/Common/FeedBack/CloseButton.vue";
 import ErrorMessage from "@/components/Common/ErrorComponents/ErrorMessage.vue";
 import PrimaryButton from "@/components/Common/Buttons/PrimaryButton.vue";
 import PrimaryText from "@/components/Common/Text/PrimaryText";
-import { getFirestore, doc, updateDoc } from "firebase/firestore";
 import { useWorkspace } from "@/stores/workspace";
 import { useRouter } from "#vue-router";
-import { SpeedInsights } from "@vercel/speed-insights/nuxt"
+import { SpeedInsights } from "@vercel/speed-insights/nuxt";
 
-const router = useRouter()
-
-let workspace = ref([]);
-const db = getFirestore();
+const router = useRouter();
 
 let frames = ref(useWorkspace().frames);
-let userName = ref(useCookie("name").value || "");
-let userEmail = ref("");
-let userId = ref("");
+let userName = useCookie("name") || "";
 
 onMounted(async () => {
   await useWorkspace()
     .workspace()
     .then((data) => {
-      workspace.value = data;
-      userEmail.value = data.email;
-      userId.value = data.id;
-
-      if (frames.value.length === 0) {
+      if (!frames.value.length) {
         frames.value.push(...data.frames);
         addModalStateToCards();
+      }
+
+      if (!userName.value) {
+        useCookie("name").value = data.name;
+        userName.value = data.name;
       }
     });
 });
@@ -114,16 +114,17 @@ const handleCreateNewFrame = {
 
 const createNewFrame = () => {
   if (validateFrame(inputCreateNewFrame.value)) {
-    frames.value.unshift({
+    useWorkspace().frames.unshift({
       title: inputCreateNewFrame.value,
       frame: [],
-      labels: []
+      labels: [],
     });
 
     handleCreateNewFrame.close();
-    
+
     // Go to the last created frame
-    router.push('0')
+    const lastFrameCreatedId = 0
+    router.push(`frame/${lastFrameCreatedId}`);
   } else {
     errorMessageFrame.value = "Nome do quadro obrigatório!";
   }
@@ -133,36 +134,6 @@ watch(inputCreateNewFrame, () => {
   // remove an error message
   if (inputCreateNewFrame.value.length != 0) {
     errorMessageFrame.value = "";
-  }
-});
-
-// Update the list in firebase when changing card position
-const updateFrameInFirebase = async () => {
-  if (userId.value) {
-    const frameDocRef = doc(db, "users", userId.value);
-
-    await updateDoc(frameDocRef, {
-      workspace: frames.value,
-    });
-  }
-};
-
-watchEffect(() => {
-  // any changes already updated in firebase
-  updateFrameInFirebase();
-});
-
-onMounted(async () => {
-  let name = useCookie("name").value;
-
-  if (name === undefined) {
-    // Add the username to the cookie if it does not exist
-    await useWorkspace()
-      .workspace()
-      .then((data) => {
-        useCookie("name").value = data.name;
-        userName.value = data.name;
-      });
   }
 });
 </script>

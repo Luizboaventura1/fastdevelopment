@@ -32,15 +32,6 @@ const addNewList = () => {
     });
   }
 };
-
-// Validate Card
-
-const validateCard = (description) => {
-  description.trim();
-  if (description.length === 0) return false;
-
-  return true;
-};
 </script>
 
 <style lang="scss" scoped>

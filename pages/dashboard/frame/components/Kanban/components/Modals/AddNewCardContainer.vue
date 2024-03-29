@@ -12,8 +12,7 @@ import { useWorkspace } from "@/stores/workspace.js"
 
 const currentPageId = useCookie("currentPageId")
 
-const frames = useWorkspace().frames;
-let frameList = ref(frames[currentPageId.value].frame)
+let lists = useWorkspace().frames[currentPageId.value].frame
 
 let props = defineProps({
   indexFrame: Number,
@@ -25,7 +24,7 @@ let titleInput = ref("");
 
 const addNewCard = () => {
   if (validateCard(titleInput.value)) {
-    frameList.value[props.indexFrame].cards.push({
+    lists[props.indexFrame].cards.push({
       title: titleInput.value,
       description: "",
       labels: []

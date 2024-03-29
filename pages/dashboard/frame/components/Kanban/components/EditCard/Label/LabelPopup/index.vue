@@ -86,11 +86,9 @@ import SingleColor from "./SelectColor/SingleColor.vue";
 import SecondaryText from "@/components/Common/Text/SecondaryText";
 import Checkbox from "./Checkbox.vue";
 import { useWorkspace } from "~/stores/workspace";
-import { getFirestore, doc, updateDoc } from "firebase/firestore";
 import WarningMessage from "~/components/Common/FeedBack/WarningMessage.vue";
 import CreateNewLabel from "./CreateNewLabel/index.vue";
 
-const db = getFirestore();
 const CURRENT_PAGE_ID = useCookie("currentPageId");
 let userId = ref("");
 const FRAME_INDEX = useState("frameIndex").value;
@@ -114,21 +112,11 @@ onMounted(() => {
     frame.value.frame[FRAME_INDEX].cards[CARD_INDEX].labels || [];
 });
 
-const updateFrameInFirebase = async () => {
-  if (userId.value) {
-    const frameDocRef = doc(db, "users", userId.value);
-
-    await updateDoc(frameDocRef, {
-      workspace: useWorkspace().frames,
-    });
-  }
-};
-
 // Update every change made
 watch(
   frame,
   () => {
-    updateFrameInFirebase();
+    useWorkspace().updateWorkspace();
   },
   { deep: true }
 );
@@ -194,7 +182,7 @@ const markLabel = (index) => {
     CARD_INDEX
   ].labels = cardLabels.value;
 
-  updateFrameInFirebase();
+  useWorkspace().updateWorkspace();
 };
 
 const unmarkLabel = (index) => {
@@ -202,7 +190,7 @@ const unmarkLabel = (index) => {
   useWorkspace().frames[CURRENT_PAGE_ID.value].frame[FRAME_INDEX].cards[
     CARD_INDEX
   ].labels = cardLabels.value;
-  updateFrameInFirebase();
+  useWorkspace().updateWorkspace();
 };
 
 const deleteLabel = (labelName, color) => {
@@ -226,7 +214,7 @@ const deleteLabel = (labelName, color) => {
   frames.value[CURRENT_PAGE_ID.value].frame = frame.value.frame;
   frames.value[CURRENT_PAGE_ID.value].labels = frame.value.labels;
 
-  updateFrameInFirebase();
+  useWorkspace().updateWorkspace();
 };
 
 // Check if it has any labels or not

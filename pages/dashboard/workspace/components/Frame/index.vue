@@ -78,15 +78,20 @@ const openFrame = () => {
 let frame = useWorkspace().frames[props.frameID];
 let frameName = ref(frame?.title || "");
 
-watchEffect(() => {
-  frame = useWorkspace().frames[props.frameID];
-  frameName.value = frame?.title;
-});
+watch(
+  useWorkspace().frames,
+  () => {
+    frame = useWorkspace().frames[props.frameID];
+    frameName.value = frame?.title;
+  },
+  { deep: true }
+);
 
 const saveChanges = () => {
   if (validateFrame(frameName.value)) {
-    // Gets the new frame name
-    frame.title = frameName.value;
+
+    useWorkspace().frames[props.frameID].title = frameName.value;
+    useWorkspace().updateWorkspace();
 
     toggleSettings();
   } else {
@@ -98,6 +103,7 @@ const deleteFrame = () => {
   let frames = useWorkspace().frames;
   frames.splice(props.frameID, 1);
 
+  useWorkspace().updateWorkspace();
   toggleSettings();
 };
 

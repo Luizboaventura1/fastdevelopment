@@ -4,44 +4,49 @@
       :list="frames[currentPageId]?.frame || []"
       group="lists"
       class="kanban flex flex-row rounded-md gap-3 p-4 h-full"
+      @change="useWorkspace().updateWorkspace()"
     >
       <ListWrapper
-        v-for="(frame, indexFrame) in frames[currentPageId]?.frame || []"
-        :key="indexFrame"
+        v-for="(list, listId) in frames[currentPageId]?.frame || []"
+        :key="listId"
       >
         <KanbanList>
           <KanbanListTitle>
             <input
               class="bg-secondaryColorF w-full text-white px-3 py-1 outline-none ring-2 ring-transparent focus:ring-primaryColorF rounded-md"
               type="text"
-              v-model="frame.title"
-              @input="updateFrameInFirebase"
+              v-model="list.title"
+              @input="updateListName(list.title, listId)"
             />
             <div class="relative">
-              <SettingsButton :event="() => openModalEditList(indexFrame)" />
+              <SettingsButton :event="() => openModalEditList(listId)" />
               <div class="absolute bottom-24 right-0">
                 <ModalEditList
                   v-on-click-outside="closeModalList"
-                  :stateModal="frame.stateModal"
+                  :stateModal="list.stateModal"
                   :event="closeModalList"
-                  :listId="indexFrame"
+                  :listId="listId"
                 />
               </div>
             </div>
           </KanbanListTitle>
 
           <div class="cards overflow-y-auto">
-            <VueDraggableNext v-model="frame.cards" group="people">
+            <VueDraggableNext
+              v-model="list.cards"
+              group="people"
+              @change="useWorkspace().updateWorkspace()"
+            >
               <KanbanCard
-                v-for="(card, indexCard) in frame.cards"
+                v-for="(card, indexCard) in list.cards"
                 :key="card"
-                @click.stop="() => editCard(indexFrame, indexCard)"
+                @click.stop="() => editCard(listId, indexCard)"
                 :cardDescription="card.title"
               />
             </VueDraggableNext>
           </div>
 
-          <AddNewCardContainer :indexFrame="indexFrame" />
+          <AddNewCardContainer :indexFrame="listId" />
         </KanbanList>
       </ListWrapper>
     </VueDraggableNext>
@@ -59,8 +64,8 @@
   />
   <EditCard
     :stateModal="stateModalEditCard"
-    :indexCard="idCard"
-    :indexFrame="idFrame"
+    :indexCard="cardId"
+    :indexFrame="frameId"
     :closeModalBtn="() => (stateModalEditCard = false)"
     @closeModal="stateModalEditCard = false"
   />
@@ -79,7 +84,6 @@ import KanbanList from "./components/KanbanList";
 import KanbanListTitle from "./components/KanbanList/KanbanListTitle";
 import ListWrapper from "./components/KanbanList/ListWrapper.vue";
 import KanbanCard from "./components/KanbanCard";
-import { doc, updateDoc, getFirestore } from "firebase/firestore";
 import { useRoute } from "#vue-router";
 import { useWorkspace } from "@/stores/workspace.js";
 
@@ -89,15 +93,14 @@ const currentPageId = useCookie("currentPageId");
 const idRoute = route.params.id;
 currentPageId.value = idRoute;
 
-const db = getFirestore();
 let frames = useWorkspace().frames;
-let idUser = ref("");
+let userId = ref("");
 
 onMounted(async () => {
   await useWorkspace()
     .workspace()
     .then((data) => {
-      idUser.value = data.id;
+      userId.value = data.id;
       // Receives the frames if the array is empty
       if (frames.length === 0) {
         frames.push(...data.frames);
@@ -120,18 +123,16 @@ const addModalStateToCardsAndLists = () => {
 
 // Modal edit card
 
-let currentIndexCard = ref({ indexFrame: undefined, indexCard: undefined });
+let listAndCardId = ref({ listId: undefined, cardId: undefined });
 
 //When you click outside the modal it will close
 const closeModalList = () => {
-  frames[idRoute].frame.at(
-    currentIndexCard.value.indexFrame
-  ).stateModal = false;
+  frames[idRoute].frame.at(listAndCardId.value.listId).stateModal = false;
 };
 
 const openModalEditList = (indexFrame) => {
   frames[idRoute].frame.at(indexFrame).stateModal = true;
-  currentIndexCard.value.indexFrame = indexFrame;
+  listAndCardId.value.listId = indexFrame;
 };
 
 // Warning message Card
@@ -146,12 +147,13 @@ let controlWarningMessage = {
   },
   close: () => (stateWarningMessage.value = false),
   confirmWarningMessage: () => {
-    frames[idRoute].frame
-      .at(currentIndexCard.value.indexFrame)
-      .cards.splice(currentIndexCard.value.indexCard, 1);
+    frames[idRoute].frame[listAndCardId.value.listId].cards.splice(
+      listAndCardId.value.indexCard,
+      1
+    );
 
-    // Update list in Firebase
-    updateFrameInFirebase();
+    // Update changes in Firebase
+    useWorkspace().updateWorkspace();
 
     stateWarningMessage.value = false;
   },
@@ -163,32 +165,38 @@ let controlWarningMessage = {
 the EditingCard component will receive this data to edit the selected card */
 
 let stateModalEditCard = ref(false);
-let idFrame = ref();
-let idCard = ref();
+let frameId = ref();
+let cardId = ref();
 
 const editCard = (indexFrame, indexCard) => {
-  idFrame.value = indexFrame;
-  idCard.value = indexCard;
+  frameId.value = indexFrame;
+  cardId.value = indexCard;
   useState("frameIndex").value = indexFrame;
   useState("cardIndex").value = indexCard;
 
   stateModalEditCard.value = true;
 };
 
-// Update the list in firebase when changing card position
 
-const updateFrameInFirebase = async () => {
-  const frameDocRef = doc(db, "users", idUser.value);
+let timeoutId = null; // Variable to store the current timeout ID
 
-  await updateDoc(frameDocRef, {
-    workspace: frames,
-  });
+const updateListName = (listName, listId) => {
+  if (validateFrame(listName)) {
+    const debounceTime = 2000;
+
+    // Clear the previous timeout if it exists
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+
+    timeoutId = setTimeout(() => {
+      useWorkspace().frames[currentPageId.value].frame[listId].title = listName;
+      useWorkspace().updateWorkspace();
+      timeoutId = null; // Reset the timeout variable
+    }, debounceTime);
+  }
 };
 
-watch(frames, () => {
-  // any changes already updated in firebase
-  updateFrameInFirebase();
-});
 </script>
 
 <style lang="scss" scoped>

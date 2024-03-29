@@ -4,6 +4,8 @@ import {
   where,
   getDocs,
   getFirestore,
+  doc,
+  updateDoc,
 } from "firebase/firestore";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import { defineStore } from "pinia";
@@ -11,7 +13,7 @@ import { defineStore } from "pinia";
 export const useWorkspace = defineStore("workspace", {
   state: () => {
     return {
-      frames: []
+      frames: [],
     };
   },
   actions: {
@@ -26,7 +28,6 @@ export const useWorkspace = defineStore("workspace", {
           try {
             if (user) {
               userEmail = user.email;
-
               const q = query(
                 collection(db, "users"),
                 where("email", "==", userEmail)
@@ -55,6 +56,48 @@ export const useWorkspace = defineStore("workspace", {
           }
         });
       });
+    },
+    async updateWorkspace() {
+      const auth = getAuth();
+      const db = getFirestore();
+
+      try {
+        const userId = await new Promise((resolve, reject) => {
+          const unsubscribe = onAuthStateChanged(auth, async (user) => {
+            unsubscribe();
+            if (user) {
+              const q = query(
+                collection(db, "users"),
+                where("email", "==", user.email)
+              );
+
+              const querySnapshot = await getDocs(q);
+
+              let userId = null;
+
+              querySnapshot.forEach((doc) => {
+                userId = doc.id;
+              });
+
+              resolve(userId);
+            } else {
+              reject(new Error("Usuário não autenticado"));
+            }
+          });
+        });
+
+        const frameDocRef = doc(db, "users", userId);
+
+        if (this.frames) {
+          await updateDoc(frameDocRef, {
+            workspace: this.frames,
+          });
+        } else {
+          throw new Error("Array não encontrado");
+        }
+      } catch (e) {
+        return e.message;
+      }
     },
   },
 });
