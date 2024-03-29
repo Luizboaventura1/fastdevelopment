@@ -113,7 +113,8 @@ const logout = async () => {
     logged.value = false;
 
     deleteAllCookies();
-    //router.push("/");
+    useWorkspace().frames = [] // Reset
+    router.push("/");
   });
 };
 

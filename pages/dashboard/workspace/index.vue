@@ -72,7 +72,7 @@ import { SpeedInsights } from "@vercel/speed-insights/nuxt";
 const router = useRouter();
 
 let frames = ref(useWorkspace().frames);
-let userName = useCookie("name") || "";
+let userName = ref(useCookie("name").value || "");
 
 onMounted(async () => {
   await useWorkspace()

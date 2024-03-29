@@ -61,6 +61,7 @@ import Loading from "@/components/Common/Loadings/Loading.vue";
 import { signOut } from "firebase/auth";
 import WarningMessage from "@/components/Common/FeedBack/WarningMessage.vue";
 import ActionLinkOptionsModal from "@/components/Common/Notifications/Popups/OptionsModal/components/ActionLinkOptionsModal.vue";
+import { useWorkspace } from "~/stores/workspace";
 
 let props = defineProps({
   size: String,
@@ -137,6 +138,9 @@ const logout = async () => {
     // blocks the routes
     const logged = useCookie("token");
     logged.value = false;
+
+    deleteAllCookies();
+    useWorkspace().frames = [] // Reset
 
     // back home
     router.push("/");
