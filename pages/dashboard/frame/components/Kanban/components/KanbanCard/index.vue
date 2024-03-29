@@ -1,8 +1,8 @@
 <template>
   <div
-    class="card text-white px-3 py-2 select-none text-sm cursor-pointer w-full bg-subSecondaryColorF h-full min-h-[40px] rounded-lg my-2"
+    class="card text-textPrimaryColorF p-[6px] select-none text-sm cursor-pointer w-full bg-subSecondaryColorF h-full min-h-[40px] rounded-lg my-2"
   >
-    <div class="flex items-center min-h-[30px]">
+    <div class="flex items-center min-h-[30px] pointer-events-none">
       <textarea
         ref="textarea"
         rows="1"
@@ -11,7 +11,7 @@
         @keydown.prevent 
         readonly
         class="w-full card-description px-1 flex items-center bg-transparent resize-none border-none outline-none cursor-pointer"
-      />
+      ></textarea>
     </div>
   </div>
 </template>
