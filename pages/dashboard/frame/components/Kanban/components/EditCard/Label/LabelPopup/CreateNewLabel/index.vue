@@ -41,6 +41,7 @@
             v-for="color in ALL_COLORS"
             :key="color"
             @click="SELECTED_COLOR_BUTTON(color)"
+            class="ring-0 ring-white hover:ring-2"
             :color="color"
           />
         </div>
