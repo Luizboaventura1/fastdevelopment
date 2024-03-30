@@ -33,7 +33,7 @@
 
               <SingleColor :color="label.color">
                 <input
-                  class="bg-transparent text-textPrimaryColorF truncate text-sm w-full outline-none border-none py-2"
+                  class="bg-transparent text-white truncate text-sm w-full outline-none border-none py-2"
                   v-model="label.title"
                   type="text"
                 />
@@ -54,7 +54,7 @@
 
                 <SingleColor :color="label.color">
                   <input
-                    class="bg-transparent text-textPrimaryColorF truncate text-sm w-full outline-none border-none py-2"
+                    class="bg-transparent text-white truncate text-sm w-full outline-none border-none py-2"
                     v-model="label.title"
                     type="text"
                   />
