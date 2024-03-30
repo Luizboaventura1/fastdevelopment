@@ -1,5 +1,5 @@
 <template>
-  <AddCardFormRoot
+  <AddCardForm
     buttonName="Adicionar novo cartão"
     @inputValue="(val) => (titleInput = val)"
     :event="addNewCard"
@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import AddCardFormRoot from "~/components/Common/Forms/AddCardForm/AddCardFormRoot.vue";
+import AddCardForm from "@/components/Common/Forms/AddCardForm/index.vue";
 import { useWorkspace } from "@/stores/workspace.js"
 
 const currentPageId = useCookie("currentPageId")

@@ -57,7 +57,7 @@
             Etiqueta
           </EditCardButton>
           <EditCardButton @click="openWarningMessage('Apagar o cartão?')">
-            <BinIcon size="20" />
+            <BinIcon size="18" />
             Excluir
           </EditCardButton>
         </aside>

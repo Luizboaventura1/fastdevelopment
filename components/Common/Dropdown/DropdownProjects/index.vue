@@ -2,7 +2,7 @@
   <div>
     <div
       @click="showProjects"
-      class="flex items-center w-full h-[40px] cursor-pointer px-2 rounded-lg hover:bg-thirdColorF duration-200 transition-colors"
+      class="flex items-center w-full cursor-pointer p-2 rounded-lg hover:bg-thirdColorF duration-200 transition-colors"
     >
       <h1
         class="font-medium text-sm text-textPrimaryColorF whitespace-nowrap w-full flex items-center gap-3"
@@ -10,7 +10,7 @@
         <slot name="icon" />
         {{ props.title }}
       </h1>
-      <ArrowButton size="15" :rotate="stateDropdownProjects" />
+      <ArrowButton size="12" :rotate="stateDropdownProjects" />
     </div>
     <ul
       :style="`height:${stateDropdownProjects ? quantityProjects * itemHeight : 0}px;`"
@@ -27,7 +27,7 @@ import { useWorkspace } from "~/stores/workspace";
 
 let stateDropdownProjects = useCookie("stateDropdownProjects");
 let quantityProjects = useCookie("quantityProjects");
-const itemHeight = 40
+const itemHeight = 36
 
 const showProjects = () => {
   stateDropdownProjects.value = !stateDropdownProjects.value;

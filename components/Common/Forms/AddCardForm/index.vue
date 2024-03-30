@@ -37,17 +37,17 @@
         v-model="inputValue"
         @input="$emit('inputValue', inputValue)"
         placeholder="Descrição..."
-        class="resize-none bg-secondaryColorF w-full text-white text-sm px-3 py-2 outline-none ring-2 ring-transparent focus:ring-primaryColorF ring-1 ring-thirdColorF rounded-md"
+        class="resize-none bg-secondaryColorF placeholder-zinc-400 w-full text-white text-sm px-3 py-2 outline-none ring-transparent focus:ring-primaryColorF ring-1 ring-thirdColorF rounded-md"
       />
-      <div class="button-container flex gap-2 mt-2">
+      <div class="button-container flex items-center gap-2 mt-2">
         <button
           @click="props.event"
-          class="add-new-card-btn select-none text-sm px-4 py-2 w-full rounded-lg text-white bg-subSecondaryColorF ring-1 ring-thirdColorF transition-colors hover:bg-primaryColorF font-medium"
+          class="select-none text-sm px-4 py-2 w-full rounded-lg text-white bg-subSecondaryColorF ring-1 ring-thirdColorF transition-colors hover:bg-primaryColorF font-medium"
         >
           Adicionar
         </button>
         <div class="flex items-center">
-          <CloseButton size="18" :event="openCardModal" />
+          <CloseButton size="15" :event="openCardModal" />
         </div>
       </div>
     </div>

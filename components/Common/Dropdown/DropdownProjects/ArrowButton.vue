@@ -1,5 +1,5 @@
 <template>
-  <button class="rounded-full p-2">
+  <button class="rounded-full">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
@@ -7,8 +7,7 @@
       viewBox="0 0 492.004 492.004"
       xml:space="preserve"
       :style="`width:${props.size}px;height:${props.size}px;`"
-      fill="white"
-      class="transition-transform"
+      class="transition-transform fill-textPrimaryColorF"
       :class="`${props.rotate ? 'rotate-90' : 'rotate-0'}`"
     >
       <g>

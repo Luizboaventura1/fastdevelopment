@@ -22,15 +22,15 @@
         <div class="p-4 grid gap-y-1">
           <ItemAside link="/dashboard/workspace" text="Página inicial">
             <template #icon>
-              <HomeIcon size="25" />
+              <HomeIcon size="20" />
             </template>
           </ItemAside>
 
-          <DividerDefault spaceY="2" />
+          <DividerDefault />
 
           <DropdownProjets title="Seus quadros">
             <template #icon>
-              <ControlPanelIcon size="25" />
+              <ControlPanelIcon size="20" />
             </template>
             <DropdownItem
               v-for="(frame, index) in frames"
@@ -46,7 +46,7 @@
             text="Sair"
           >
             <template #icon>
-              <LogoutIcon size="25" />
+              <LogoutIcon size="20" />
             </template>
           </ItemAside>
         </div>
@@ -120,12 +120,13 @@ const logout = async () => {
 
 // control the dashboard
 
-let dashboardWidth = ref("280");
+const totalWidthDashboard = "260"
+let dashboardWidth = ref(totalWidthDashboard);
 
 const dashboardToggle = () => {
-  if (dashboardWidth.value === "280") return (dashboardWidth.value = "0");
+  if (dashboardWidth.value === totalWidthDashboard) return (dashboardWidth.value = "0");
 
-  return (dashboardWidth.value = "280");
+  return (dashboardWidth.value = totalWidthDashboard);
 };
 
 // Checks whether the user is logged in or not

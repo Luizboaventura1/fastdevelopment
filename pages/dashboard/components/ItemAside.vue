@@ -4,7 +4,7 @@
       class="item-aside flex items-center cursor-pointer gap-3 p-2 rounded-lg transition-colors"
     >
       <slot name="icon" />
-      <span class="text-white font-medium text-sm whitespace-nowrap">
+      <span class="text-textPrimaryColorF font-medium text-sm whitespace-nowrap">
         {{ text }}
       </span>
     </div>

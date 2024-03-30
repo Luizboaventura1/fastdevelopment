@@ -19,7 +19,7 @@ module.exports = {
         secondaryColorF: "#202024",
         secondaryColorFHover: "#303036",
         thirdColorF: "#343439",
-        textPrimaryColorF: "#EEEEEE",
+        textPrimaryColorF: "#dedede",
         textSecondaryColorF: "#A7A6A6",
         subSecondaryColorF: "#121214",
         primaryBorderF: "#393939",

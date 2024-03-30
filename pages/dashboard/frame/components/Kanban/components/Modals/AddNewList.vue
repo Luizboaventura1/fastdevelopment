@@ -1,5 +1,5 @@
 <template>
-  <AddCardFormRoot
+  <AddCardForm
     buttonName="Adicionar nova lista"
     @inputValue="(val) => (newListInput = val)"
     :event="addNewList"
@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import AddCardFormRoot from "~/components/Common/Forms/AddCardForm/AddCardFormRoot.vue";
+import AddCardForm from "~/components/Common/Forms/AddCardForm";
 import { useWorkspace } from "@/stores/workspace.js"
 
 const currentPageId = useCookie("currentPageId")
