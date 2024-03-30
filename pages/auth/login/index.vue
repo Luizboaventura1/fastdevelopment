@@ -11,7 +11,7 @@
         class="absolute w-full left-0 top-0 z-10 mx-auto px-4 md:px-14 flex justify-center items-center h-full"
       >
         <form class="w-full max-w-[400px] rounded-md py-6 px-7">
-          <h1 class="text-slate-50 text-2xl font-bold py-4 mb-4">Entrar</h1>
+          <h1 class="text-textPrimaryColorF text-2xl font-bold py-4 mb-4">Entrar</h1>
           <GoogleButton :event="loginWithGoogle">Login com Google</GoogleButton>
         </form>
       </div>
