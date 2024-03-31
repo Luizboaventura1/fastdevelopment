@@ -36,6 +36,8 @@
       <textarea
         v-model="inputValue"
         @input="$emit('inputValue', inputValue)"
+        @input:resize="triggerResize()"
+        @keydown.enter.prevent
         placeholder="Descrição..."
         class="resize-none bg-secondaryColorF placeholder-zinc-400 w-full text-white text-sm px-3 py-2 outline-none ring-transparent focus:ring-primaryColorF ring-1 ring-thirdColorF rounded-md"
       />
@@ -57,6 +59,7 @@
 <script setup>
 import { vOnClickOutside } from "@vueuse/components";
 import CloseButton from "@/components/Common/FeedBack/CloseButton.vue";
+import { useTextareaAutosize } from "@vueuse/core";
 
 let props = defineProps({
   buttonName: String,
@@ -88,4 +91,6 @@ const handleModal = {
     cardModalVisibility.value = "flex-1";
   },
 };
+
+const { textarea, input, triggerResize } = useTextareaAutosize();
 </script>

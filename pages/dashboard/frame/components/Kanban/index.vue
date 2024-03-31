@@ -11,7 +11,7 @@
         :key="listId"
       >
         <KanbanList>
-          <KanbanListTitle>
+          <KanbanListTitle> 
             <input
               class="bg-secondaryColorF w-full text-white px-3 py-1 outline-none ring-2 ring-transparent focus:ring-primaryColorF rounded-md"
               type="text"
@@ -40,8 +40,8 @@
               <KanbanCard
                 v-for="(card, indexCard) in list.cards"
                 :key="card"
+                :card="card"
                 @click.stop="() => editCard(listId, indexCard)"
-                :cardDescription="card.title"
               />
             </VueDraggableNext>
           </div>
@@ -102,7 +102,7 @@ onMounted(async () => {
     .then((data) => {
       userId.value = data.id;
       // Receives the frames if the array is empty
-      if (frames.length === 0) {
+      if (!frames.length) {
         frames.push(...data.frames);
         // Adds modal state to lists and cards
         addModalStateToCardsAndLists();
