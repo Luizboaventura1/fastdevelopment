@@ -19,7 +19,11 @@
   </header>
 
   <Loading :visibility="loading" />
-  <ToastError :state="stateToastError" :message="toastMessage" />
+  <Toast :toast="toast">
+    <template #icon>
+      <Alert size="24" />
+    </template>
+  </Toast>
 </template>
 
 <script setup>
@@ -27,9 +31,11 @@ import { signInWithPopup, getAuth, GoogleAuthProvider } from "firebase/auth";
 import GoogleButton from "../components/GoogleButton.vue";
 import { useRouter } from "#vue-router";
 import Loading from "~/components/Common/Loadings/Loading.vue";
-import ToastError from "@/components/Common/Toast/Error";
+import Toast from "@/components/Common/Notifications/Toast"
+import Alert from "~/components/Common/Icons/Alert.vue";
 
 const auth = getAuth();
+const toast = useToast();
 
 const router = useRouter();
 let loading = ref(false);
@@ -57,23 +63,16 @@ const loginWithGoogle = async () => {
     }
   } catch (error) {
     loading.value = false;
-    openToast("Verifique sua conexão!");
+    toast.add({
+      title: 'Verifique sua conexão!',
+      timeout: 2500
+    })
   }
 };
 
 useHead({
   title: "Login",
 });
-
-let stateToastError = ref(false);
-let toastMessage = ref("");
-
-const openToast = (message) => {
-  stateToastError.value = true;
-  toastMessage.value = message;
-
-  setTimeout(() => (stateToastError.value = false), 3000);
-};
 </script>
 
 <style scoped lang="scss">
