@@ -1,7 +1,7 @@
 <template>
   <div @click="event" class="cursor-pointer transition-colors hover:bg-zinc-700 rounded-full">
     <svg
-      class="fill-white w-[38px] h-[38px] p-2"
+      class="fill-white w-[33px] h-[33px] p-2"
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
       xmlns:xlink="http://www.w3.org/1999/xlink"
