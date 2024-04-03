@@ -10,14 +10,14 @@
       <OptionsModal class="mr-2" :stateModal="stateSettings">
         <template #nav>
           <TitleOptionsModal> Editar quadro </TitleOptionsModal>
-          <CloseButton :event="toggleSettings" size="16" />
+          <CloseButton :event="toggleSettings" size="15" />
         </template>
         <template #buttons>
           <ActionOptionsModal :event="toggleEditFrameName">
             Mudar nome do quadro
           </ActionOptionsModal>
           <ActionOptionsModal
-            @click="controlWarningMessage.open('Apagar Quadro?')"
+            @click="warningModalController .openModal('Apagar Quadro?')"
           >
             Excluir quadro
           </ActionOptionsModal>
@@ -43,7 +43,7 @@
           </div>
         </div>
         <div class="flex gap-4 mt-3 self-start">
-          <PrimaryButton @click="saveChanges" small> Salvar </PrimaryButton>
+          <PrimaryButton @click="saveNameFrame" small> Salvar </PrimaryButton>
           <SecondaryButton @click="toggleEditFrameName" small>
             Cancelar
           </SecondaryButton>
@@ -52,10 +52,10 @@
     </Transition>
   </div>
   <WarningMessage
-    :state="stateWarningMessage"
-    :message="warningMessage"
-    :confirm="controlWarningMessage.confirmWarningMessage"
-    :cancel="controlWarningMessage.close"
+    :state="isWarningModalOpen"
+    :message="warningModalMessage"
+    :confirm="warningModalController .handleConfirm"
+    :cancel="warningModalController .closeModal"
   />
 </template>
 
@@ -73,7 +73,6 @@ import { useRouter } from "#vue-router";
 import { useWorkspace } from "~/stores/workspace";
 
 const router = useRouter();
-let currentPageId = useCookie("currentPageId");
 
 let props = defineProps({
   frameID: String,
@@ -84,10 +83,8 @@ const toggleSettings = () => (stateSettings.value = !stateSettings.value);
 
 const openFrame = () => {
   router.push(`/dashboard/frame/${props.frameID}`);
-  currentPageId.value = props.frameID;
 };
 
-// Get the current frame
 let frame = useWorkspace().frames[props.frameID];
 let frameName = ref(frame?.title || "");
 
@@ -100,7 +97,7 @@ watch(
   { deep: true }
 );
 
-const saveChanges = () => {
+const saveNameFrame = () => {
   if (validateFrame(frameName.value)) {
     useWorkspace().frames[props.frameID].title = frameName.value;
     useWorkspace().updateWorkspace();
@@ -122,32 +119,29 @@ const deleteFrame = () => {
 let errorMessageFrame = ref("");
 
 watch(frameName, () => {
-  // remove an error message
-  if (frameName.length != 0) {
-    errorMessageFrame.value = "";
+  if (frameName.length) {
+    errorMessageFrame.value = ""; // remove the error message
   }
 });
 
-// Warning message
+let isWarningModalOpen = ref(false);
+let warningModalMessage = ref("");
 
-let stateWarningMessage = ref(false);
-let warningMessage = ref("");
+let warningModalController  = {
+  openModal: (msg) => {
+    isWarningModalOpen.value = true;
+    warningModalMessage.value = msg;
 
-let controlWarningMessage = {
-  open: (msg) => {
-    stateWarningMessage.value = true;
-    warningMessage.value = msg;
-
-    stateSettings.value = false
+    stateSettings.value = false;
   },
-  close: () => (stateWarningMessage.value = false),
-  confirmWarningMessage: () => {
+  closeModal: () => (isWarningModalOpen.value = false),
+  handleConfirm: () => {
     deleteFrame();
-    stateWarningMessage.value = false;
+    isWarningModalOpen.value = false;
   },
 };
 
-// Add a click event listener to the main element (e.g. body)
+
 onMounted(() => {
   document.body.addEventListener("click", handleClickOutside);
 });
@@ -157,11 +151,10 @@ onUnmounted(() => {
 });
 
 const handleClickOutside = (event) => {
-  // Check if the click occurred outside frame
   const frameElement = document.querySelector(".frame-root");
 
   if (frameElement && !frameElement.contains(event.target)) {
-    // Close frame
+    // Close frame settings
     stateSettings.value = false;
   }
 };
@@ -170,7 +163,6 @@ let stateEditFrameName = ref(false);
 
 const toggleEditFrameName = () => {
   stateEditFrameName.value = !stateEditFrameName.value;
-
   stateSettings.value = false;
 };
 </script>
