@@ -102,7 +102,7 @@ const saveNameFrame = () => {
     useWorkspace().frames[props.frameID].title = frameName.value;
     useWorkspace().updateWorkspace();
 
-    toggleSettings();
+    toggleEditFrameName()
   } else {
     errorMessageFrame.value = "Nome do quadro obrigatório!";
   }

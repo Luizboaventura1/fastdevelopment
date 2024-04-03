@@ -1,7 +1,7 @@
 <template>
   <button
     @click.stop="event"
-    class="w-full text-sm text-start text-slate-50 px-3 py-2 cursor-pointer transition-colors"
+    class="w-full text-sm text-start text-textPrimaryColorF px-3 py-2 cursor-pointer transition-colors"
   >
     <slot />
   </button>

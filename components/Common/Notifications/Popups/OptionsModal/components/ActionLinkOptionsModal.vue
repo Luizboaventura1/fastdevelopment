@@ -1,7 +1,7 @@
 <template>
   <nuxt-link :to="link">
     <button
-      class="link text-sm w-full text-start text-slate-50 px-3 py-2 cursor-pointer transition-colors"
+      class="link text-sm w-full text-start text-textPrimaryColorF px-3 py-2 cursor-pointer transition-colors"
     >
       <slot />
     </button>

@@ -39,7 +39,6 @@ const props = defineProps({
   card: Object,
 });
 
-// Control textarea height if title value changes
 const { textarea, input, triggerResize } = useTextareaAutosize();
 
 watch(
@@ -54,7 +53,6 @@ let stateCardInformation = ref(false);
 
 watch(frames.value, () => hasCardDescription(), { deep: true });
 
-// Show the icon if it has a description
 const hasCardDescription = () => {
   if (props.card) {
     const descriptionCharacters = props.card.description.length;

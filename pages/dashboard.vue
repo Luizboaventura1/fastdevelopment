@@ -118,8 +118,6 @@ const logout = async () => {
   });
 };
 
-// control the dashboard
-
 const totalWidthDashboard = "260"
 let dashboardWidth = ref(totalWidthDashboard);
 
@@ -128,8 +126,6 @@ const dashboardToggle = () => {
 
   return (dashboardWidth.value = totalWidthDashboard);
 };
-
-// Checks whether the user is logged in or not
 
 onMounted(() => {
   const logged = useCookie("token");
@@ -159,10 +155,8 @@ const cancelWarningMessage = () => (stateWarningMessage.value = false);
 
 const confirmWarningMessage = () => {
   logout();
-  stateWarningMessage.value = false;
+  cancelWarningMessage();
 };
-
-// SEO
 
 useHead({
   title: "Dashboard",
