@@ -7,12 +7,28 @@
 
     <div class="settings absolute right-4 top-4 z-10">
       <FrameSettingsBtn size="20" @button="toggleSettings" />
+      <OptionsModal class="mr-2" :stateModal="stateSettings">
+        <template #nav>
+          <TitleOptionsModal> Editar quadro </TitleOptionsModal>
+          <CloseButton :event="toggleSettings" size="16" />
+        </template>
+        <template #buttons>
+          <ActionOptionsModal :event="toggleEditFrameName">
+            Mudar nome do quadro
+          </ActionOptionsModal>
+          <ActionOptionsModal
+            @click="controlWarningMessage.open('Apagar Quadro?')"
+          >
+            Excluir quadro
+          </ActionOptionsModal>
+        </template>
+      </OptionsModal>
     </div>
 
     <Transition>
       <div
         @click.stop
-        v-if="stateSettings"
+        v-if="stateEditFrameName"
         class="absolute grid grid-rows-[auto,1fr,auto] w-full h-full bg-secondaryColorF right-0 top-0 p-3"
       >
         <div>
@@ -28,15 +44,9 @@
         </div>
         <div class="flex gap-4 mt-3 self-start">
           <PrimaryButton @click="saveChanges" small> Salvar </PrimaryButton>
-          <SecondaryButton @click="toggleSettings" small>
+          <SecondaryButton @click="toggleEditFrameName" small>
             Cancelar
           </SecondaryButton>
-        </div>
-        <div class="self-end flex justify-end">
-          <DeleteButton
-            @button="controlWarningMessage.open('Apagar Quadro?')"
-            size="18"
-          />
         </div>
       </div>
     </Transition>
@@ -53,11 +63,14 @@
 import FrameSettingsBtn from "../Buttons/FrameSettingsBtn.vue";
 import SecondaryButton from "~/components/Common/Buttons/SecondaryButton.vue";
 import PrimaryButton from "~/components/Common/Buttons/PrimaryButton.vue";
-import { useWorkspace } from "~/stores/workspace";
 import WarningMessage from "~/components/Common/FeedBack/WarningMessage.vue";
 import ErrorMessage from "~/components/Common/ErrorComponents/ErrorMessage.vue";
-import DeleteButton from "~/components/Common/Buttons/DeleteButton.vue";
+import OptionsModal from "@/components/Common/Notifications/Popups/OptionsModal";
+import TitleOptionsModal from "~/components/Common/Notifications/Popups/OptionsModal/components/TitleOptionsModal.vue";
+import ActionOptionsModal from "~/components/Common/Notifications/Popups/OptionsModal/components/ActionOptionsModal.vue";
+import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
 import { useRouter } from "#vue-router";
+import { useWorkspace } from "~/stores/workspace";
 
 const router = useRouter();
 let currentPageId = useCookie("currentPageId");
@@ -89,7 +102,6 @@ watch(
 
 const saveChanges = () => {
   if (validateFrame(frameName.value)) {
-
     useWorkspace().frames[props.frameID].title = frameName.value;
     useWorkspace().updateWorkspace();
 
@@ -125,6 +137,8 @@ let controlWarningMessage = {
   open: (msg) => {
     stateWarningMessage.value = true;
     warningMessage.value = msg;
+
+    stateSettings.value = false
   },
   close: () => (stateWarningMessage.value = false),
   confirmWarningMessage: () => {
@@ -150,6 +164,14 @@ const handleClickOutside = (event) => {
     // Close frame
     stateSettings.value = false;
   }
+};
+
+let stateEditFrameName = ref(false);
+
+const toggleEditFrameName = () => {
+  stateEditFrameName.value = !stateEditFrameName.value;
+
+  stateSettings.value = false;
 };
 </script>
 
