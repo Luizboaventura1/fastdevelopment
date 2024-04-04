@@ -81,7 +81,7 @@ export const useWorkspace = defineStore("workspace", {
 
               resolve(userId);
             } else {
-              reject(new Error("Usuário não autenticado"));
+              reject(new Error("Usuário não autenticado!"));
             }
           });
         });
@@ -93,7 +93,7 @@ export const useWorkspace = defineStore("workspace", {
             workspace: this.frames,
           });
         } else {
-          throw new Error("Array não encontrado");
+          throw new Error("Array não encontrado!");
         }
       } catch (e) {
         return e.message;
