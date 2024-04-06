@@ -2,7 +2,7 @@
   <div
     class="card text-textPrimaryColorF p-[6px] select-none text-sm cursor-pointer w-full bg-subSecondaryColorF h-full min-h-[40px] rounded-lg my-2"
   >
-    <nav v-if="props.card.labels.length" class="grid grid-cols-6 gap-1 p-1">
+    <nav v-if="props.card.labels.length" class="grid grid-cols-3 gap-1 p-1">
       <LabelCard
         v-for="label in props.card.labels"
         :key="label"

@@ -1,8 +1,10 @@
 <template>
   <div
-    class="p-1 rounded-full flex justify-center"
+    class="px-2 py-[5px] rounded flex"
     :style="`background-color:${props.color};`"
-  ></div>
+  >
+    <span class="text-xs truncate">{{ props.title }}</span>
+  </div>
 </template>
 
 <script setup lang="ts">

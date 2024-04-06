@@ -130,15 +130,15 @@ watch(labelName, () => {
     inputErrorMessage.value = ""; // to false
   }
 });
-
+// #a52435
 const ALL_COLORS = [
-  "#872a36",
-  "#2a6087",
-  "#87822a",
+  "#a52435",
+  "#2c9086",
+  "#989222",
   "#36872a",
   "#652a87",
   "#7f2a87",
-  "#2a877e",
+  "#276b9b",
   "#87592a",
 ];
 
