@@ -129,7 +129,6 @@ watchEffect(() => {
   description.value = currentPage?.description;
 });
 
-// Save the values ​​in firebase
 
 const updateCardDetails = async () => {
   if (frames[currentPageId.value]?.frame[props.indexFrame]?.cards) {
@@ -153,8 +152,6 @@ const updateCardDetails = async () => {
 
 watch(title, updateCardDetails);
 watch(description, updateCardDetails);
-
-// Warning message
 
 let stateWarningMessage = ref(false);
 let warningMessage = ref("");
