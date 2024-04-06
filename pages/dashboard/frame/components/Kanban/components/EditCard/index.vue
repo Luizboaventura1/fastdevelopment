@@ -84,7 +84,7 @@ import Editor from "@/components/Common/Editor";
 import CardDescription from "./CardDescription/index.vue";
 import TagIcon from "~/components/Common/Icons/TagIcon.vue";
 import LabelPopup from "./Label/LabelPopup/index.vue";
-import LabelsInUse from "./CardHeader/LabelsInUse.vue";
+import LabelsInUse from "./Label/LabelsInUse.vue";
 import { useTextareaAutosize } from "@vueuse/core";
 import ErrorMessage from "~/components/Common/ErrorComponents/ErrorMessage.vue";
 
