@@ -47,7 +47,7 @@ npm run build
 
 ## License 📜
 
-[CC0](./LICENSE)
+[MIT](./LICENSE)
 
 ## 🛠 Technologies
 
