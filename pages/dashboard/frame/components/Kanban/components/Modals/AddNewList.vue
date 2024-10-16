@@ -28,9 +28,12 @@ const addNewList = () => {
   if (validateCard(newListInput.value)) {
     frames[currentPageId.value].frame.push({
       title: newListInput.value,
+      stateModal: false,
       cards: [],
     });
   }
+
+  useWorkspace().updateWorkspace()
 };
 </script>
 
