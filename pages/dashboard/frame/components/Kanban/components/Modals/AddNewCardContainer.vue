@@ -8,11 +8,21 @@
 
 <script setup>
 import AddCardForm from "@/components/Common/Forms/AddCardForm/index.vue";
-import { useWorkspace } from "@/stores/workspace.js"
+import { useWorkspace } from "@/stores/workspace.js";
 
-const currentPageId = useCookie("currentPageId")
+const currentPageId = useCookie("currentPageId");
+let lists = ref(useWorkspace().frames[currentPageId.value]?.frame || []);
 
-let lists = useWorkspace().frames[currentPageId.value].frame
+onMounted(async () => {
+  if (!lists.value.length) {
+    await useWorkspace()
+      .workspace()
+      .then((data) => {
+        useWorkspace().frames = data.frames;
+        lists.value = useWorkspace().frames[currentPageId.value].frame;
+      });
+  }
+});
 
 let props = defineProps({
   indexFrame: Number,
@@ -23,14 +33,15 @@ let props = defineProps({
 let titleInput = ref("");
 
 const addNewCard = () => {
-  if (validateCard(titleInput.value)) {
-    lists[props.indexFrame].cards.push({
+  if (validateCard(titleInput.value) && lists.value.length) {
+    lists.value[props.indexFrame].cards.push({
       title: titleInput.value,
       description: "",
-      labels: []
+      stateModal: false,
+      labels: [],
     });
 
-    useWorkspace().updateWorkspace()
+    useWorkspace().updateWorkspace();
   }
 };
 </script>
