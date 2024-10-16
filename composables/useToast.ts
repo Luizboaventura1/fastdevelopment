@@ -1,5 +1,5 @@
-import type { ToastInterface } from "@/types/Toast/ToastInterface";
-import type { Notification } from "@/types/Toast/Notification";
+import type { ToastInterface } from "@/components/Common/Notifications/Toast/types/ToastInterface";
+import type { Notification } from "~/components/Common/Notifications/Toast/types/Notification";
 import { ref, type Ref } from "vue";
 
 export default function useToast(): ToastInterface {
