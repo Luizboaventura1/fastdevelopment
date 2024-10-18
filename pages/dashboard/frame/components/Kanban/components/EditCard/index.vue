@@ -87,11 +87,20 @@ import LabelPopup from "./Label/LabelPopup/index.vue";
 import LabelsInUse from "./Label/LabelsInUse.vue";
 import { useTextareaAutosize } from "@vueuse/core";
 import ErrorMessage from "~/components/Common/ErrorComponents/ErrorMessage.vue";
+import { storeToRefs } from "pinia";
 
 const currentPageId = useCookie("currentPageId");
-
-let frames = useWorkspace().frames;
+const { textarea, input, triggerResize } = useTextareaAutosize();
+let { frames } = storeToRefs(useWorkspace());
 let userId = ref("");
+let title = ref("");
+let titleErrorMessage = ref("");
+let description = ref("");
+let labels = ref([]);
+let stateEditor = ref(false);
+let stateWarningMessage = ref(false);
+let stateLabelPopup = ref(false);
+let warningMessage = ref("");
 
 // Get id in firestore
 
@@ -110,36 +119,16 @@ const props = defineProps({
   closeModalBtn: Function,
 });
 
-// function to close the card edit modal
-const emit = defineEmits(["closeModal"]);
-
-// Card title and description
-let title = ref("");
-let titleErrorMessage = ref("");
-let description = ref("");
-
-// Update values ​​if they change
-watchEffect(() => {
-  let currentPage =
-    frames[currentPageId.value]?.frame[props.indexFrame]?.cards[
-      props.indexCard
-    ];
-
-  title.value = currentPage?.title;
-  description.value = currentPage?.description;
-});
-
-
 const updateCardDetails = async () => {
-  if (frames[currentPageId.value]?.frame[props.indexFrame]?.cards) {
+  if (frames.value[currentPageId.value]?.lists[props.indexFrame]?.cards) {
     titleErrorMessage.value = ""; // Remove error message
 
     if (title.value) {
-      frames[currentPageId.value].frame[props.indexFrame].cards[
+      frames.value[currentPageId.value].lists[props.indexFrame].cards[
         props.indexCard
       ].title = title.value;
 
-      frames[currentPageId.value].frame[props.indexFrame].cards[
+      frames.value[currentPageId.value].lists[props.indexFrame].cards[
         props.indexCard
       ].description = description.value;
 
@@ -150,19 +139,13 @@ const updateCardDetails = async () => {
   }
 };
 
-watch(title, updateCardDetails);
-watch(description, updateCardDetails);
-
-let stateWarningMessage = ref(false);
-let warningMessage = ref("");
-
 const openWarningMessage = (msg) => {
   warningMessage.value = msg;
   stateWarningMessage.value = true;
 };
 
 const confirmWarningMessage = () => {
-  frames[currentPageId.value].frame[props.indexFrame].cards.splice(
+  frames.value[currentPageId.value].lists[props.indexFrame].cards.splice(
     props.indexCard,
     1
   );
@@ -170,27 +153,33 @@ const confirmWarningMessage = () => {
   emit("closeModal");
 };
 
-// Editor
-let stateEditor = ref(false);
 const closeEditor = () => (stateEditor.value = false);
 
-// Label popup
-let stateLabelPopup = ref(false);
+const emit = defineEmits(["closeModal"]);
 
-// Receive card labels
-let labels = ref(
-  frames[currentPageId.value]?.frame[props.indexFrame]?.cards[props.indexCard]
-    ?.labels || []
-);
-
-// Update card labels
 watchEffect(() => {
-  labels.value =
-    frames[currentPageId.value]?.frame[props.indexFrame]?.cards[props.indexCard]
-      ?.labels || [];
+  // Update card labels
+  if (props.indexFrame && props.indexCard) {
+    labels.value =
+      frames.value[currentPageId.value]?.lists[props.indexFrame]?.cards[
+        props.indexCard
+      ]?.labels || [];
+  }
+
+  // Get title and description
+  if (frames.value[currentPageId.value]?.lists) {
+    let card =
+      frames.value[currentPageId.value]?.lists[props.indexFrame]?.cards[
+        props.indexCard
+      ];
+
+    title.value = card?.title;
+    description.value = card?.description;
+  }
 });
 
-const { textarea, input, triggerResize } = useTextareaAutosize();
+watch(title, updateCardDetails);
+watch(description, updateCardDetails);
 </script>
 
 <style lang="scss" scoped>

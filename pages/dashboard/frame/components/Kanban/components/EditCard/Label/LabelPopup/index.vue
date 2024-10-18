@@ -89,13 +89,12 @@ import { useWorkspace } from "~/stores/workspace";
 import WarningMessage from "~/components/Common/FeedBack/WarningMessage.vue";
 import CreateNewLabel from "./CreateNewLabel/index.vue";
 
-const CURRENT_PAGE_ID = useCookie("currentPageId");
-let userId = ref("");
-const FRAME_INDEX = useState("frameIndex").value;
-const CARD_INDEX = useState("cardIndex").value;
+const currentPageId = useCookie("currentPageId");
+const frameId = useState("frameIndex").value;
+const cardId = useState("cardIndex").value;
 const emits = defineEmits(["closeModal"]);
-
-let frames = ref([]); // All frames
+let userId = ref("");
+let frames = ref([]);
 let frame = ref([]); // Current frame
 let cardLabels = ref([]);
 
@@ -106,10 +105,10 @@ onMounted(() => {
       userId.value = data.id;
     });
 
-  frame.value = useWorkspace().frames[CURRENT_PAGE_ID.value];
+  frame.value = useWorkspace().frames[currentPageId.value];
   frames.value = useWorkspace().frames;
   cardLabels.value =
-    frame.value.frame[FRAME_INDEX].cards[CARD_INDEX].labels || [];
+    frame.value.lists[frameId].cards[cardId].labels || [];
 });
 
 // Update every change made
@@ -178,8 +177,8 @@ watchEffect(() => {
 
 const markLabel = (index) => {
   cardLabels.value.push(uncheckedLabels.value[index]);
-  useWorkspace().frames[CURRENT_PAGE_ID.value].frame[FRAME_INDEX].cards[
-    CARD_INDEX
+  useWorkspace().frames[currentPageId.value].lists[frameId].cards[
+    cardId
   ].labels = cardLabels.value;
 
   useWorkspace().updateWorkspace();
@@ -187,8 +186,8 @@ const markLabel = (index) => {
 
 const unmarkLabel = (index) => {
   cardLabels.value.splice(index, 1);
-  useWorkspace().frames[CURRENT_PAGE_ID.value].frame[FRAME_INDEX].cards[
-    CARD_INDEX
+  useWorkspace().frames[currentPageId.value].lists[frameId].cards[
+    cardId
   ].labels = cardLabels.value;
   useWorkspace().updateWorkspace();
 };
@@ -202,7 +201,7 @@ const deleteLabel = (labelName, color) => {
   cardLabels.value = cardLabels.value.filter(condition);
 
   // Delete all labels
-  frame.value.frame.forEach((list) => {
+  frame.value.lists.forEach((list) => {
     list.cards.forEach((card) => {
       card.labels = card.labels.filter(
         (label) => label.title !== labelName || label.color !== color
@@ -211,8 +210,8 @@ const deleteLabel = (labelName, color) => {
   });
 
   // Update data
-  frames.value[CURRENT_PAGE_ID.value].frame = frame.value.frame;
-  frames.value[CURRENT_PAGE_ID.value].labels = frame.value.labels;
+  frames.value[currentPageId.value].lists = frame.value.lists;
+  frames.value[currentPageId.value].labels = frame.value.labels;
 
   useWorkspace().updateWorkspace();
 };

@@ -39,7 +39,7 @@ const props = defineProps({
 });
 
 const deleteList = () => {
-  useWorkspace().frames[currentPageId.value].frame.splice(props.listId, 1);
+  useWorkspace().frames[currentPageId.value].lists.splice(props.listId, 1);
   useWorkspace().updateWorkspace()
 };
 

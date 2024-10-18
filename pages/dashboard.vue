@@ -91,9 +91,11 @@ import ControlPanelIcon from "~/components/Common/Icons/ControlPanelIcon.vue";
 import { useWorkspace } from "@/stores/workspace";
 import SearchEngine from "@/components/Common/Search/SearchEngine";
 import { SpeedInsights } from "@vercel/speed-insights/nuxt";
+import { storeToRefs } from "pinia";
 
 const auth = getAuth();
 const router = useRouter();
+let { frames } = storeToRefs(useWorkspace());
 
 // starts true to check if the user is logged in
 let loading = ref(true);
@@ -113,16 +115,17 @@ const logout = async () => {
     logged.value = false;
 
     deleteAllCookies();
-    useWorkspace().frames = [] // Reset
+    frames.value = []; // Reset
     router.push("/");
   });
 };
 
-const totalWidthDashboard = "260"
+const totalWidthDashboard = "260";
 let dashboardWidth = ref(totalWidthDashboard);
 
 const dashboardToggle = () => {
-  if (dashboardWidth.value === totalWidthDashboard) return (dashboardWidth.value = "0");
+  if (dashboardWidth.value === totalWidthDashboard)
+    return (dashboardWidth.value = "0");
 
   return (dashboardWidth.value = totalWidthDashboard);
 };
@@ -170,16 +173,6 @@ useHead({
     { name: "author", content: "Luiz" },
   ],
 });
-
-let frames = ref(useWorkspace().frames || []);
-
-watch(
-  useWorkspace().frames,
-  () => {
-    frames.value = useWorkspace().frames;
-  },
-  { deep: true }
-);
 </script>
 
 <style lang="scss" scoped>

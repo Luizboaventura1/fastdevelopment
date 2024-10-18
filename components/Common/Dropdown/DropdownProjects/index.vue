@@ -13,7 +13,9 @@
       <ArrowButton size="12" :rotate="stateDropdownProjects" />
     </div>
     <ul
-      :style="`height:${stateDropdownProjects ? quantityProjects * itemHeight : 0}px;`"
+      :style="`height:${
+        stateDropdownProjects ? quantityProjects * itemHeight : 0
+      }px;`"
       class="ul-dropdownitem overflow-hidden transition-all duration-300 ps-4 grid grid-cols-1"
     >
       <slot />
@@ -22,18 +24,23 @@
 </template>
 
 <script setup>
+import { storeToRefs } from "pinia";
 import ArrowButton from "./ArrowButton.vue";
 import { useWorkspace } from "~/stores/workspace";
 
+const props = defineProps({
+  title: String,
+});
+
+let { frames } = storeToRefs(useWorkspace());
 let stateDropdownProjects = useCookie("stateDropdownProjects");
 let quantityProjects = useCookie("quantityProjects");
-const itemHeight = 36
+let totalItems = ref([]);
+const itemHeight = 36;
 
 const showProjects = () => {
   stateDropdownProjects.value = !stateDropdownProjects.value;
 };
-
-let totalItems = ref([]);
 
 onMounted(() => {
   totalItems.value = [...document.querySelectorAll(".ul-dropdownitem li")];
@@ -44,17 +51,11 @@ watch(stateDropdownProjects, () => {
   quantityProjects.value = totalItems.value.length;
 });
 
-const props = defineProps({
-  title: String,
-});
-
-const frames = useWorkspace().frames;
-
 watch(
-  frames,
+  frames.value,
   () => {
-    if (frames.length !== quantityProjects.value) {
-      quantityProjects.value = frames.length;
+    if (frames.value.length !== quantityProjects.value) {
+      quantityProjects.value = frames.value.length;
     }
   },
   { deep: true }

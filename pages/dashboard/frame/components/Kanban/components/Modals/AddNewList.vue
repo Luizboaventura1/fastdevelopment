@@ -1,7 +1,7 @@
 <template>
   <AddCardForm
     buttonName="Adicionar nova lista"
-    @inputValue="(val) => (newListInput = val)"
+    @inputValue="(val) => (listTitle = val)"
     :event="addNewList"
     space
   />
@@ -9,11 +9,11 @@
 
 <script setup>
 import AddCardForm from "~/components/Common/Forms/AddCardForm";
-import { useWorkspace } from "@/stores/workspace.js"
+import { useWorkspace } from "@/stores/workspace.js";
+import { storeToRefs } from "pinia";
 
-const currentPageId = useCookie("currentPageId")
-
-const frames = useWorkspace().frames;
+const currentPageId = useCookie("currentPageId");
+let { frames } = storeToRefs(useWorkspace());
 
 let props = defineProps({
   indexCard: Number,
@@ -22,18 +22,18 @@ let props = defineProps({
 
 // Add new List
 
-let newListInput = ref("");
+let listTitle = ref("");
 
 const addNewList = () => {
-  if (validateCard(newListInput.value)) {
-    frames[currentPageId.value].frame.push({
-      title: newListInput.value,
+  if (validateCard(listTitle.value) && frames.value[currentPageId.value]?.lists) {
+    frames.value[currentPageId.value].lists.push({
+      title: listTitle.value, 
       stateModal: false,
       cards: [],
-    });
-  }
+    }); 
 
-  useWorkspace().updateWorkspace()
+    useWorkspace().updateWorkspace();
+  }
 };
 </script>
 

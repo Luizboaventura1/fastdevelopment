@@ -1,17 +1,17 @@
 <template>
   <div class="flex h-full">
     <VueDraggableNext
-      :list="frames[currentPageId]?.frame || []"
+      :list="frames[currentPageId]?.lists || []"
       group="lists"
       class="kanban flex flex-row rounded-md gap-3 p-4 h-full"
       @change="useWorkspace().updateWorkspace()"
     >
       <ListWrapper
-        v-for="(list, listId) in frames[currentPageId]?.frame || []"
+        v-for="(list, listId) in frames[currentPageId]?.lists || []"
         :key="listId"
       >
         <KanbanList>
-          <KanbanListTitle> 
+          <KanbanListTitle>
             <input
               class="bg-secondaryColorF w-full text-white px-3 py-1 outline-none ring-2 ring-transparent focus:ring-primaryColorF rounded-md"
               type="text"
@@ -86,6 +86,7 @@ import ListWrapper from "./components/KanbanList/ListWrapper.vue";
 import KanbanCard from "./components/KanbanCard";
 import { useRoute } from "#vue-router";
 import { useWorkspace } from "@/stores/workspace.js";
+import { storeToRefs } from "pinia";
 
 const route = useRoute();
 const currentPageId = useCookie("currentPageId");
@@ -93,7 +94,7 @@ const currentPageId = useCookie("currentPageId");
 const idRoute = route.params.id;
 currentPageId.value = idRoute;
 
-let frames = useWorkspace().frames;
+let { frames } = storeToRefs(useWorkspace());
 let userId = ref("");
 
 onMounted(async () => {
@@ -102,36 +103,39 @@ onMounted(async () => {
     .then((data) => {
       userId.value = data.id;
       // Receives the frames if the array is empty
-      if (!frames.length) {
-        frames.push(...data.frames);
+      if (!frames.value.length) {
+        frames.value.push(...data.frames);
         // Adds modal state to lists and cards
-        addModalStateToCardsAndLists();
+        resetModalStateForLists();
       }
     });
 });
 
-const addModalStateToCardsAndLists = () => {
-  frames.forEach((frames) => {
-    frames.frame.forEach((list) => {
-      list.stateModal = false; // add status to list
-      list.cards.forEach((card) => {
-        card.stateModal = false; // add status to card
-      });
+const resetModalStateForLists = () => {
+  if (frames.value) {
+    frames.value.forEach((frame) => {
+      if (frame.lists) {
+        frame.lists.forEach((list) => {
+          list.stateModal = false;
+        });
+      }
     });
-  });
+  }
 };
 
 // Modal edit card
 
 let listAndCardId = ref({ listId: undefined, cardId: undefined });
 
-//When you click outside the modal it will close
+// When you click outside the modal it will close
 const closeModalList = () => {
-  frames[idRoute].frame.at(listAndCardId.value.listId).stateModal = false;
+  if (frames.value[idRoute]?.lists[listAndCardId.value.listId]) {
+    frames.value[idRoute].lists[listAndCardId.value.listId].stateModal = false;
+  }
 };
 
 const openModalEditList = (indexFrame) => {
-  frames[idRoute].frame.at(indexFrame).stateModal = true;
+  frames.value[idRoute].lists[indexFrame].stateModal = true;
   listAndCardId.value.listId = indexFrame;
 };
 
@@ -147,10 +151,9 @@ let controlWarningMessage = {
   },
   close: () => (stateWarningMessage.value = false),
   confirmWarningMessage: () => {
-    useWorkspace().frames[currentPageId.value].frame[listAndCardId.value.listId].cards.splice(
-      listAndCardId.value.indexCard,
-      1
-    );
+    useWorkspace().frames[currentPageId.value].lists[
+      listAndCardId.value.listId
+    ].cards.splice(listAndCardId.value.indexCard, 1);
 
     // Update changes in Firebase
     useWorkspace().updateWorkspace();
@@ -177,7 +180,6 @@ const editCard = (indexFrame, indexCard) => {
   stateModalEditCard.value = true;
 };
 
-
 let timeoutId = null; // Variable to store the current timeout ID
 
 const updateListName = (listName, listId) => {
@@ -190,13 +192,12 @@ const updateListName = (listName, listId) => {
     }
 
     timeoutId = setTimeout(() => {
-      useWorkspace().frames[currentPageId.value].frame[listId].title = listName;
+      useWorkspace().frames[currentPageId.value].lists[listId].title = listName;
       useWorkspace().updateWorkspace();
       timeoutId = null; // Reset the timeout variable
     }, debounceTime);
   }
 };
-
 </script>
 
 <style lang="scss" scoped>

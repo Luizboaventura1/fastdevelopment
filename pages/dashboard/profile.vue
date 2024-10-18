@@ -31,7 +31,9 @@
           >
         </main>
       </header>
-      <div class="w-full my-3 md:my-0 h-[1px] md:w-[1px]  md:h-12 bg-zinc-600"></div>
+      <div
+        class="w-full my-3 md:my-0 h-[1px] md:w-[1px] md:h-12 bg-zinc-600"
+      ></div>
       <header class="w-3/12 flex justify-center items-center">
         <main class="text-center">
           <h1 class="text-textPrimaryColorF font-bold text-4xl">
@@ -135,7 +137,7 @@
 
 <script setup>
 import { useWorkspace } from "~/stores/workspace";
-import { SpeedInsights } from "@vercel/speed-insights/nuxt"
+import { SpeedInsights } from "@vercel/speed-insights/nuxt";
 
 let userInfo = useCookie("userInfo");
 let totalTasks = ref(0);
@@ -153,14 +155,17 @@ onMounted(() => {
         };
       }
 
-      totalProjects.value = data.frames.length
+      totalProjects.value = data.frames.length;
 
       data.frames.forEach((frame) => {
-        frame.frame.forEach((list) => {
-          totalTasks.value += list.cards.length
+        frame.lists.forEach((list) => {
+          totalTasks.value += list.cards.length;
         });
       });
 
+      if (!useWorkspace().frames.lenght) {
+        useWorkspace().frames = data.frames;
+      }
     });
 });
 </script>

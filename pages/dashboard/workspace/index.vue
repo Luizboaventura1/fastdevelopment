@@ -68,10 +68,11 @@ import PrimaryText from "@/components/Common/Text/PrimaryText";
 import { useWorkspace } from "@/stores/workspace";
 import { useRouter } from "#vue-router";
 import { SpeedInsights } from "@vercel/speed-insights/nuxt";
+import { storeToRefs } from "pinia";
 
 const router = useRouter();
 
-let frames = ref(useWorkspace().frames);
+let { frames } = storeToRefs(useWorkspace());
 let userName = ref(useCookie("name").value || "");
 
 onMounted(async () => {
@@ -80,7 +81,7 @@ onMounted(async () => {
     .then((data) => {
       if (!frames.value.length) {
         frames.value.push(...data.frames);
-        addModalStateToCards();
+        resetModalStateForLists();
       }
 
       if (!userName.value) {
@@ -90,15 +91,16 @@ onMounted(async () => {
     });
 });
 
-const addModalStateToCards = () => {
-  frames.value.forEach((framesArr) => {
-    framesArr.frame.forEach((frameArr) => {
-      frameArr.stateModal = false; // add status to list
-      frameArr.cards.forEach((card) => {
-        card.stateModal = false; // add status to card
-      });
+const resetModalStateForLists = () => {
+  if (frames.value) {
+    frames.value.forEach((frame) => {
+      if (frame.lists) {
+        frame.lists.forEach((list) => {
+          list.stateModal = false;
+        });
+      }
     });
-  });
+  }
 };
 
 // Modal create new Frame
@@ -116,14 +118,16 @@ const createNewFrame = () => {
   if (validateFrame(inputCreateNewFrame.value)) {
     useWorkspace().frames.unshift({
       title: inputCreateNewFrame.value,
-      frame: [],
+      lists: [],
       labels: [],
     });
+
+    useWorkspace().updateWorkspace();
 
     handleCreateNewFrame.close();
 
     // Go to the last created frame
-    const lastFrameCreatedId = 0
+    const lastFrameCreatedId = 0;
     router.push(`frame/${lastFrameCreatedId}`);
   } else {
     errorMessageFrame.value = "Nome do quadro obrigatório!";

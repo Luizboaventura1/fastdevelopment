@@ -171,9 +171,9 @@ useHead({
     {
       name: "description",
       content:
-        "Tenha um rápido desenvolvimento e ganho de produtividade com nossa ferramenta completa de desenvolvimento ágil.",
+        "Aumente a eficiência do desenvolvimento dos seus projetos com nossa ferramenta simples, prática e moderna.",
     },
-    { name: "keywords", content: "Kanban,desenvolvimento ágil,jira,trello" },
+    { name: "keywords", content: "FastDevelopment, Kanban, desenvolvimento ágil, jira, trello" },
     { name: "author", content: "Luiz" },
   ],
 });

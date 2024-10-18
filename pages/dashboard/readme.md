@@ -28,10 +28,10 @@ onMounted(async () => {
 Assigns modal status to lists and cards:
 ```js
 const addModalStateToCards = () => {
-  frames.value.forEach((framesArr) => {
-    framesArr.frame.forEach((frameArr) => {
-      frameArr.stateModal = false; // add status to list
-      frameArr.cards.forEach((card) => {
+  frames.value.forEach((frame) => {
+    frame.lists.forEach((list) => {
+      list.stateModal = false; // add status to list
+      list.cards.forEach((card) => {
         card.stateModal = false; // add status to card
       });
     });
