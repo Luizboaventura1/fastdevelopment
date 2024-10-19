@@ -5,7 +5,10 @@
         <BurguerButton :event="dashboardToggle" />
       </div>
 
-      <div class="w-full flex justify-center">
+      <div class="w-full flex justify-center items-center gap-3">
+        <NewFrameButton @click="handleCreateNewFrame.open">
+          <PrimaryText sm> Criar </PrimaryText>
+        </NewFrameButton>
         <SearchEngine :array="frames" />
       </div>
 
@@ -70,6 +73,23 @@
     :cancel="cancelWarningMessage"
     :confirm="confirmWarningMessage"
   />
+  <ModalCreateNewFrame
+    @closeModal="handleCreateNewFrame.close"
+    :stateModal="stateModalCreateNewFrame"
+  >
+    <div class="flex justify-between">
+      <PrimaryText lg> Criar novo quadro </PrimaryText>
+      <CloseButton size="15" :event="handleCreateNewFrame.close" />
+    </div>
+    <div>
+      <InputModal
+        @inputValue="(val) => (inputCreateNewFrame = val)"
+        placeholderInput="Nome do quadro"
+      />
+      <ErrorMessage :message="errorMessageFrame" />
+    </div>
+    <PrimaryButton @click="createNewFrame" medium> Criar Quadro </PrimaryButton>
+  </ModalCreateNewFrame>
   <SpeedInsights />
 </template>
 
@@ -92,6 +112,13 @@ import { useWorkspace } from "@/stores/workspace";
 import SearchEngine from "@/components/Common/Search/SearchEngine";
 import { SpeedInsights } from "@vercel/speed-insights/nuxt";
 import { storeToRefs } from "pinia";
+import NewFrameButton from "./dashboard/components/CreateNewFrame/NewFrameButton.vue";
+import PrimaryText from "@/components/Common/Text/PrimaryText"
+import ModalCreateNewFrame from "./dashboard/components/CreateNewFrame/ModalCreateNewFrame/ModalCreateNewFrame.vue";
+import InputModal from "./dashboard/components/CreateNewFrame/ModalCreateNewFrame/InputModal.vue";
+import CloseButton from "@/components/Common/FeedBack/CloseButton.vue";
+import ErrorMessage from "@/components/Common/ErrorComponents/ErrorMessage.vue";
+import PrimaryButton from "@/components/Common/Buttons/PrimaryButton.vue";
 
 const auth = getAuth();
 const router = useRouter();
@@ -172,6 +199,44 @@ useHead({
     { name: "keywords", content: "Kanban,desenvolvimento ágil,jira,trello" },
     { name: "author", content: "Luiz" },
   ],
+});
+
+// Modal create new Frame
+
+let stateModalCreateNewFrame = ref(false);
+let inputCreateNewFrame = ref("");
+let errorMessageFrame = ref("");
+
+const handleCreateNewFrame = {
+  open: () => (stateModalCreateNewFrame.value = true),
+  close: () => (stateModalCreateNewFrame.value = false),
+};
+
+const createNewFrame = () => {
+  if (validateFrame(inputCreateNewFrame.value)) {
+    useWorkspace().frames.unshift({
+      title: inputCreateNewFrame.value,
+      lists: [],
+      labels: [],
+    });
+
+    useWorkspace().updateWorkspace();
+
+    handleCreateNewFrame.close();
+
+    // Go to the last created frame
+    const lastFrameCreatedId = 0;
+    router.push(`frame/${lastFrameCreatedId}`);
+  } else {
+    errorMessageFrame.value = "Nome do quadro obrigatório!";
+  }
+};
+
+watch(inputCreateNewFrame, () => {
+  // remove an error message
+  if (inputCreateNewFrame.value.length != 0) {
+    errorMessageFrame.value = "";
+  }
 });
 </script>
 

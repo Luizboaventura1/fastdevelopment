@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-subSecondaryColorF px-2 py-5 text-center text-zinc-100 font-medium text-2xl">
+  <div class="bg-subSecondaryColorF text-center text-zinc-100 font-medium text-3xl">
     {{ greeting() }}, <slot />!
   </div>
 </template>
