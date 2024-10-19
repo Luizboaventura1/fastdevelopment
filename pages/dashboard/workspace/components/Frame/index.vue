@@ -1,5 +1,6 @@
 <template>
   <div
+    @mouseleave="closeAllModals"
     @click.stop="openFrame"
     class="frame frame-root cursor-pointer w-full h-[200px] ring-1 ring-zinc-700 hover:ring-zinc-500 transition-all duration-300 rounded-lg p-4 relative overflow-hidden"
   >
@@ -17,7 +18,7 @@
             Mudar nome do quadro
           </ActionOptionsModal>
           <ActionOptionsModal
-            @click="warningModalController .openModal('Apagar Quadro?')"
+            @click="warningModalController.openModal('Apagar Quadro?')"
           >
             Excluir quadro
           </ActionOptionsModal>
@@ -32,8 +33,9 @@
         class="absolute grid grid-rows-[auto,1fr,auto] w-full h-full bg-secondaryColorF right-0 top-0 p-3"
       >
         <div>
-          <input
-            class="bg-subSecondaryColorF w-full max-w-[70%] h-[40px] text-white px-3 py-1 outline-none ring-2 ring-primaryBorderF focus:ring-primaryColorF rounded-md"
+          <input  
+            @keyup.enter="saveNameFrame"
+            class="input-frame-name bg-subSecondaryColorF w-full max-w-[70%] h-[40px] text-white px-3 py-1 outline-none ring-2 ring-primaryBorderF focus:ring-primaryColorF rounded-md"
             type="text"
             placeholder="Nome do quadro"
             v-model="frameName"
@@ -54,8 +56,8 @@
   <WarningMessage
     :state="isWarningModalOpen"
     :message="warningModalMessage"
-    :confirm="warningModalController .handleConfirm"
-    :cancel="warningModalController .closeModal"
+    :confirm="warningModalController.handleConfirm"
+    :cancel="warningModalController.closeModal"
   />
 </template>
 
@@ -102,7 +104,7 @@ const saveNameFrame = () => {
     useWorkspace().frames[props.frameID].title = frameName.value;
     useWorkspace().updateWorkspace();
 
-    toggleEditFrameName()
+    toggleEditFrameName();
   } else {
     errorMessageFrame.value = "Nome do quadro obrigatório!";
   }
@@ -127,7 +129,7 @@ watch(frameName, () => {
 let isWarningModalOpen = ref(false);
 let warningModalMessage = ref("");
 
-let warningModalController  = {
+let warningModalController = {
   openModal: (msg) => {
     isWarningModalOpen.value = true;
     warningModalMessage.value = msg;
@@ -140,7 +142,6 @@ let warningModalController  = {
     isWarningModalOpen.value = false;
   },
 };
-
 
 onMounted(() => {
   document.body.addEventListener("click", handleClickOutside);
@@ -164,7 +165,22 @@ let stateEditFrameName = ref(false);
 const toggleEditFrameName = () => {
   stateEditFrameName.value = !stateEditFrameName.value;
   stateSettings.value = false;
+
+  if (stateEditFrameName.value) {
+    nextTick(() => {
+      const inputElement = document.querySelector('.input-frame-name');
+      if (inputElement) {
+        inputElement.focus();
+      }
+    });
+  }
 };
+
+const closeAllModals = () => {
+  stateSettings.value = false;
+  stateEditFrameName.value = false;
+};
+
 </script>
 
 <style lang="scss" scoped>
