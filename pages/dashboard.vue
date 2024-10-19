@@ -225,13 +225,12 @@ const createNewFrame = () => {
     handleCreateNewFrame.close();
 
     // Go to the last created frame
-    const lastFrameCreatedId = 0;
-    router.push(`frame/${lastFrameCreatedId}`);
+    const lastFrameCreatedId = 0; 
+    router.push(`/dashboard/frame/${lastFrameCreatedId}`);
   } else {
     errorMessageFrame.value = "Nome do quadro obrigatório!";
   }
 };
-
 watch(inputCreateNewFrame, () => {
   // remove an error message
   if (inputCreateNewFrame.value.length != 0) {
