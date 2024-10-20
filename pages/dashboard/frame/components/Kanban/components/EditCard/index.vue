@@ -160,10 +160,12 @@ const emit = defineEmits(["closeModal"]);
 watchEffect(() => {
   // Update card labels
   if (props.indexFrame && props.indexCard) {
+  if (frames.value) {
     labels.value =
       frames.value[currentPageId.value]?.lists[props.indexFrame]?.cards[
         props.indexCard
       ]?.labels || [];
+      ].labels || [];
   }
 
   // Get title and description
