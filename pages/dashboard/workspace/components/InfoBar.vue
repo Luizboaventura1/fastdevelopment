@@ -16,8 +16,8 @@
             {{ totalProjects }}
           </PrimaryText>
           <span class="text-textSecondaryColorF">{{
-            totalTasks === 1 ? "quadro" : "quadros"
-          }}</span>
+            totalProjects === 1 ? "quadro" : "quadros"
+          }}</span> 
         </div>
       </div>
     </div>
