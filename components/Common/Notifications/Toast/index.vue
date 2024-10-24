@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ToastInterface } from "@/types/Toast/ToastInterface.ts";
+import type { ToastInterface } from "./types/ToastInterface";
 import { ref, onMounted, watch } from "vue";
 
 const props = defineProps<{ toast: ToastInterface; toastStyle?: string }>();

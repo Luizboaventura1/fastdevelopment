@@ -30,6 +30,10 @@ const addNewCard = () => {
       title: cardTitle.value,
       description: "",
       stateModal: false,
+      dateFeatures: {
+        date: null,
+        complete: null
+      },
       labels: [],
     });
 

@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center">
-    <div class="flex gap-3 bg-gradient-to-tr from-zinc-800 to-zinc-900 rounded-full py-3 px-10">
+    <div class="flex gap-3 bg-gradient-to-br from-zinc-800 to-zinc-900 rounded-full py-3 px-10">
       <div class="flex items-center gap-3">
         <PrimaryText>
           {{ totalTasks }}

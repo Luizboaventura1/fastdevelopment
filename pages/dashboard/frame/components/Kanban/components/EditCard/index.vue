@@ -28,6 +28,7 @@
                 :labels="labels"
               />
             </div>
+            <ShowSelectedDate @click="stateDatePopup = true" />
             <div class="pb-3">
               <h1 class="text-zinc-400 text-sm pb-3">Descrição</h1>
             </div>
@@ -56,6 +57,10 @@
             <TagIcon size="18" />
             Etiqueta
           </EditCardButton>
+          <EditCardButton @click="stateDatePopup = true">
+            <TagIcon size="18" />
+            Data
+          </EditCardButton>
           <EditCardButton @click="openWarningMessage('Apagar o cartão?')">
             <BinIcon size="18" />
             Excluir
@@ -71,6 +76,7 @@
     :confirm="confirmWarningMessage"
   />
   <LabelPopup v-if="stateLabelPopup" @closeModal="stateLabelPopup = false" />
+  <DateSelector v-if="stateDatePopup" @closeModal="stateDatePopup = false" />
 </template>
 
 <script setup>
@@ -88,6 +94,8 @@ import LabelsInUse from "./Label/LabelsInUse.vue";
 import { useTextareaAutosize } from "@vueuse/core";
 import ErrorMessage from "~/components/Common/ErrorComponents/ErrorMessage.vue";
 import { storeToRefs } from "pinia";
+import DateSelector from "./Date/DateSelector"
+import ShowSelectedDate from "./Date/ShowSelectedDate.vue";
 
 const currentPageId = useCookie("currentPageId");
 const { textarea, input, triggerResize } = useTextareaAutosize();
@@ -101,6 +109,7 @@ let stateEditor = ref(false);
 let stateWarningMessage = ref(false);
 let stateLabelPopup = ref(false);
 let warningMessage = ref("");
+let stateDatePopup = ref(false)
 
 // Get id in firestore
 
@@ -163,7 +172,7 @@ watchEffect(() => {
     labels.value =
       frames.value[currentPageId.value]?.lists[props.indexFrame]?.cards[
         props.indexCard
-      ].labels || [];
+      ]?.labels || [];
   }
 
   // Get title and description
