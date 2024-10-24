@@ -15,8 +15,7 @@
           <SecondaryText
             class="py-6 font-normal text-500 text-sm sm:text-md md:text-base"
           >
-            Nossa ferramenta ágil simples e eficiente permite um melhor
-            gerenciamento e ganho de produtividade.
+            Ferramenta ágil para uso pessoal perfeita para quem quer aumentar a produtividade e gerenciar melhor os seus projetos.
           </SecondaryText>
           <PrimaryButton @click="handleStartButton" large>
             {{ logged ? "Ir para o dashboard" : "Começar" }}
@@ -24,8 +23,8 @@
         </div>
         <div>
           <img
-            src="../assets/Feature-Edit-card.svg"
-            class="border-2 bg-kanban-img border-zinc-800 rounded-lg"
+            src="../assets/example-kanban.webp"
+            class="border-2 bg-kanban-img border-zinc-800 rounded-md"
             alt="Kanban board"
           />
         </div>
@@ -37,8 +36,8 @@
         <MainTitle lg>Visualize todo o progresso</MainTitle>
         <div class="mt-10 flex justify-center">
           <img
-            class="border-2 w-full md:w-[80%] border-zinc-800"
-            src="../assets/Feature-Edit-card.svg"
+            class="border-2 w-full md:w-[80%] border-zinc-800 rounded-md"
+            src="../assets/example-kanban.webp"
             alt="Kanban board"
           />
         </div>
@@ -60,8 +59,8 @@
       </div>
       <div>
         <img
-          src="../assets/kanban-card.png"
-          class="border-2 w-full md:w-[80%] border-zinc-800 rounded-lg"
+          src="../assets/example-labels.webp"
+          class="border-2 w-full md:w-[100%] border-zinc-800 rounded-md"
           alt="Kanban card"
         />
       </div>

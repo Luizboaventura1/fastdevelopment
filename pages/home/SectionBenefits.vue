@@ -45,7 +45,7 @@
             <h1 class="text-slate-50 font-bold text-lg mb-3">
               + Produtividade
             </h1>
-            <p class="text-zinc-300">Aumente sua produtividade em até 40%.</p>
+            <p class="text-zinc-300">Torne o desenvolvimento dos seus projetos mais eficiente.</p>
           </div>
         </div>
       </div>
