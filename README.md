@@ -77,7 +77,8 @@ npm run build
 
 
 
-https://github.com/Luizboaventura1/fastdevelopment/assets/122652168/38c2cca1-3118-44fb-a0b3-dd93093520e0
+
+https://github.com/user-attachments/assets/e0a19cc2-5e75-4f72-b585-0e1577b594ae
 
 
 
