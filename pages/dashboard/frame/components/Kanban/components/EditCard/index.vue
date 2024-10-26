@@ -58,7 +58,7 @@
             Etiqueta
           </EditCardButton>
           <EditCardButton @click="stateDatePopup = true">
-            <TagIcon size="18" />
+            <CalendarIcon size="18" />
             Data
           </EditCardButton>
           <EditCardButton @click="openWarningMessage('Apagar o cartão?')">
@@ -96,6 +96,7 @@ import ErrorMessage from "~/components/Common/ErrorComponents/ErrorMessage.vue";
 import { storeToRefs } from "pinia";
 import DateSelector from "./Date/DateSelector"
 import ShowSelectedDate from "./Date/ShowSelectedDate.vue";
+import CalendarIcon from "~/components/Common/Icons/CalendarIcon.vue";
 
 const currentPageId = useCookie("currentPageId");
 const { textarea, input, triggerResize } = useTextareaAutosize();
