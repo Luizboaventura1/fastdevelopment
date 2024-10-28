@@ -1,6 +1,7 @@
 <template>
   <div
-    class="px-2 py-[5px] rounded flex"
+    class="py-[5px] rounded flex"
+    :class="props.title ? 'px-2' : 'px-5'"
     :style="`background-color:${props.color};`"
   >
     <span class="text-xs truncate">{{ props.title }}</span>
