@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
+  <div class="flex flex-wrap gap-2">
     <div
       @click="$emit('colorButton')"
       class="rounded h-[35px] py-2 px-3 truncate text-sm cursor-pointer ring-0 ring-white hover:ring-2 text-white"
