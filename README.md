@@ -6,6 +6,12 @@
 
 <p align="center">FastDevelopment is a tool for those who want more productivity in their projects, but with an easy-to-use platform and a clean, modern design.</p>
 
+<p align="center">
+	
+https://github.com/user-attachments/assets/e0a19cc2-5e75-4f72-b585-0e1577b594ae
+
+</p>
+
 ## Deploy 🚀
 
 Link: https://fastdevelopment.vercel.app
@@ -67,22 +73,6 @@ npm run build
 - [Motion vueuse](https://motion.vueuse.org)
 - [VueUse](https://vueuse.org)
 - [Vue draggable](https://sortablejs.github.io/Vue.Draggable/#/simple)
-
-## Interface 🎨
-
-<p align="center">
-
-
-
-
-
-
-
-https://github.com/user-attachments/assets/e0a19cc2-5e75-4f72-b585-0e1577b594ae
-
-
-
-</p>
 
 ## How to Contribute 🚀
 
