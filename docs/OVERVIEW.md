@@ -6,7 +6,6 @@
 - [Folder structure](#folder-structure)
 - [Component specific folder](#component-specific-folder)
 - [How to manipulate user data?](#how-to-manipulate-user-data)
-- [Language](#language)
 
 ## Installation
 
@@ -19,6 +18,8 @@
    ```bash
    git clone git@github.com:Luizboaventura1/fastdevelopment.git
    cd fastdevelopment
+   npm install
+   npm run dev
 
 3. **Create your firebase project**
   - put the environment variables in the `.env.template` example.
@@ -81,8 +82,9 @@ Just follow this pattern for specific components, otherwise throw everything in 
 
 ```javascript
 import { useWorkspace } from "~/stores/workspace";
+import { storeToRefs } from "pinia";
 
-let frames = useWorkspace().frames;
+let { frames } = storeToRefs(useWorkspace());
 ```
 By calling `useWorkspace().frames` you can access all user frames, this is the main way to manipulate user data.
 
@@ -98,7 +100,3 @@ onMounted(async () => {
 });
 ```
 See what data you can get by accessing the `workspace.js` file in the `stores` folder.
-
-## Language
-
-  - ### [pt-br](../pt-br/estrutura.md)
