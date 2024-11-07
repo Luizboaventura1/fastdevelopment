@@ -92,7 +92,7 @@ npm run build
 4. **Firebase configuration**
   - Create a "users" document in Firebase and then create the Google login option in Firebase Authentication
 
-[Detailed installation here](./docs//developer-guide/en-us/structure.md)
+[Detailed installation here](./docs/OVERVIEW.md)
 
 ## Status 🚦
 
