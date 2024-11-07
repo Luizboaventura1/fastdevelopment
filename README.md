@@ -44,13 +44,6 @@ Make the build
 npm run build
 ```
 
-### Features 🌟
-
-- [x] Login system
-- [x] Kanban board
-- [ ] Workspace
-- [ ] addition of members
-
 ## License 📜
 
 [MIT](./LICENSE)
