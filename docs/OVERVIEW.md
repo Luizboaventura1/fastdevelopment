@@ -1,4 +1,4 @@
-# Developer guide 📚
+# Overview 📚
 
 - [Installation](#installation)
 - [Node version](#node-version)
