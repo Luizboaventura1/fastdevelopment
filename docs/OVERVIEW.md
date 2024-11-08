@@ -47,7 +47,7 @@ Then just create a document called `users` in firestore and you will be able to 
 
 ## Node version
 
-`v18.16.0`
+`v22.11.0`
 
 ## How can I locate myself in the project?
 
