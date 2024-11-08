@@ -7,7 +7,7 @@ async function fetchRouteKey() {
     const route = await useFetch('/api/route')
     return route.data.value.ROUTE_KEY
   } catch (error) {
-    console.error('Erro ao obter a chave da rota:', error)
+    console.error('Error getting route key:', error)
     throw error
   }
 }
