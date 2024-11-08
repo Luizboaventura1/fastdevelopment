@@ -39,15 +39,13 @@ let { frames } = storeToRefs(useWorkspace());
 let userName = ref(useCookie("name").value || "");
 
 const resetModalStateForLists = () => {
-  if (frames.value) {
-    frames.value.forEach((frame) => {
-      if (frame.lists) {
-        frame.lists.forEach((list) => {
-          list.stateModal = false;
-        });
-      }
+  if (!frames.value) return;
+
+  frames.value.forEach((frame) => {
+    frame?.lists?.forEach((list) => {
+      list.stateModal = false;
     });
-  }
+  });
 };
 
 const currentDate = () => {
@@ -90,7 +88,6 @@ onMounted(async () => {
     .then((data) => {
       if (!frames.value.length) {
         frames.value.push(...data.frames);
-        resetModalStateForLists();
       }
 
       if (!userName.value) {
@@ -98,6 +95,8 @@ onMounted(async () => {
         userName.value = data.name;
       }
     });
+
+  resetModalStateForLists();
 });
 </script>
 

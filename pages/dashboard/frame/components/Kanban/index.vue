@@ -112,15 +112,13 @@ onMounted(async () => {
 });
 
 const resetModalStateForLists = () => {
-  if (frames.value) {
-    frames.value.forEach((frame) => {
-      if (frame.lists) {
-        frame.lists.forEach((list) => {
-          list.stateModal = false;
-        });
-      }
+  if (!frames.value) return;
+
+  frames.value.forEach((frame) => {
+    frame?.lists?.forEach((list) => {
+      list.stateModal = false;
     });
-  }
+  });
 };
 
 // Modal edit card
