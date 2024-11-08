@@ -1,7 +1,17 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: false },
-  css: ['~/assets/css/main.css'],
+  css: ['~/assets/css/main.css',],
+
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler',
+        }
+      }
+    }
+  },
 
   postcss: {
     plugins: {
