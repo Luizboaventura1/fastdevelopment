@@ -38,9 +38,9 @@
       <SelectColor v-if="colorSelectModal" class="absolute">
         <div class="grid grid-cols-5 gap-3">
           <SingleColor
-            v-for="color in ALL_COLORS"
+            v-for="color in allColors"
             :key="color"
-            @click="SELECTED_COLOR_BUTTON(color)"
+            @click="selectedColorButton(color)"
             class="ring-0 ring-white hover:ring-2"
             :color="color"
           />
@@ -68,70 +68,11 @@ import PrimaryButton from "~/components/Common/Buttons/PrimaryButton.vue";
 import PrimaryText from "@/components/Common/Text/PrimaryText/index.vue";
 import { useWorkspace } from "~/stores/workspace";
 
-const CURRENT_PAGE_ID = useCookie("currentPageId");
-let userId = ref("");
-let frames = ref([]); // All frames
-let frame = ref([]); // Current frame
-
-onMounted(() => {
-  useWorkspace()
-    .workspace()
-    .then((data) => {
-      userId.value = data.id;
-    });
-
-  frame.value = useWorkspace().frames[CURRENT_PAGE_ID.value];
-  frames.value = useWorkspace().frames;
-});
-
-let labelName = ref("");
-let colorSelectModal = ref(false);
-let selectedColor = ref("");
-
-const SELECTED_COLOR_BUTTON = (color) => {
-  selectedColor.value = color;
-  colorSelectModal.value = false;
-  colorErrorMessage.value = "";
-};
-
-// Add new Label
-
-let colorErrorMessage = ref("");
-
-const addLabel = () => {
-  if (selectedColor.value && labelName.value.length <= 50) {
-    if (!doesThisLabelExist()) {
-      const NEW_LABEL = {
-        color: selectedColor.value,
-        title: labelName.value,
-        checked: false,
-      };
-
-      frame.value.labels.push(NEW_LABEL);
-      useWorkspace().updateWorkspace();
-    } else {
-      colorErrorMessage.value = "Essa etiqueta já existe!";
-    }
-  } else {
-    colorErrorMessage.value = "Selecione uma cor!";
-  }
-};
-
-let inputErrorMessage = ref("");
-const INPUT_ERROR_MESSAGES = {
+const MAX_LABEL_LENGTH = 50;
+const inputErrorMessages = {
   maxlength: "Máximo de 50 caracteres!",
 };
-
-// Show error message if label exceeds 50 characters
-watch(labelName, () => {
-  if (labelName.value.length >= 50) {
-    inputErrorMessage.value = INPUT_ERROR_MESSAGES.maxlength;
-  } else {
-    inputErrorMessage.value = ""; // to false
-  }
-});
-// #a52435
-const ALL_COLORS = [
+const allColors = [
   "#a52435",
   "#2c9086",
   "#989222",
@@ -142,17 +83,65 @@ const ALL_COLORS = [
   "#87592a",
 ];
 
-const doesThisLabelExist = () => {
-  if (frame.value.labels) {
-    return !!frame.value.labels.filter((label) => {
-      return (
-        label.color === selectedColor.value
-      );
-    }).length;
-  }
+let userId = ref("");
+let allFrames = ref([]);
+let currentFrame = ref([]);
+let labelName = ref("");
+let selectedColor = ref("");
+let colorSelectModal = ref(false);
+let colorErrorMessage = ref("");
+let inputErrorMessage = ref("");
 
-  return false
+onMounted(() => {
+  useWorkspace()
+    .workspace()
+    .then((data) => {
+      userId.value = data.id;
+    });
+
+  currentFrame.value = useWorkspace().frames[useCookie("currentPageId").value];
+  allFrames.value = useWorkspace().frames;
+});
+
+const selectedColorButton = (color) => {
+  selectedColor.value = color;
+  colorSelectModal.value = false;
+  colorErrorMessage.value = "";
 };
+
+const addLabel = () => {
+  if (selectedColor.value && labelName.value.length <= MAX_LABEL_LENGTH) {
+    if (!doesThisLabelExist()) {
+      const newLabel = {
+        color: selectedColor.value,
+        title: labelName.value,
+        checked: false,
+      };
+      currentFrame.value.labels.push(newLabel);
+      useWorkspace().updateWorkspace();
+    } else {
+      colorErrorMessage.value = "Essa etiqueta já existe!";
+    }
+  } else {
+    colorErrorMessage.value = "Selecione uma cor!";
+  }
+};
+
+const doesThisLabelExist = () => {
+  if (currentFrame.value.labels) {
+    return !!currentFrame.value.labels.filter(
+      (label) => label.color === selectedColor.value
+    ).length;
+  }
+  return false;
+};
+
+watch(labelName, () => {
+  inputErrorMessage.value =
+    labelName.value.length >= MAX_LABEL_LENGTH
+      ? inputErrorMessages.maxlength
+      : "";
+});
 </script>
 
 <style lang="scss" scoped></style>

@@ -81,22 +81,97 @@
 
 <script setup>
 import PrimaryText from "@/components/Common/Text/PrimaryText";
+import SecondaryText from "@/components/Common/Text/SecondaryText";
 import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
 import SingleColor from "./SelectColor/SingleColor.vue";
-import SecondaryText from "@/components/Common/Text/SecondaryText";
 import Checkbox from "./Checkbox.vue";
-import { useWorkspace } from "~/stores/workspace";
 import WarningMessage from "~/components/Common/FeedBack/WarningMessage.vue";
 import CreateNewLabel from "./CreateNewLabel/index.vue";
+import { useWorkspace } from "~/stores/workspace";
 
 const currentPageId = useCookie("currentPageId");
 const frameId = useState("frameIndex").value;
 const cardId = useState("cardIndex").value;
 const emits = defineEmits(["closeModal"]);
+
 let userId = ref("");
 let frames = ref([]);
-let frame = ref([]); // Current frame
+let frame = ref([]);
 let cardLabels = ref([]);
+let uncheckedLabels = ref([]);
+
+const modalDeleteLabel = ref({
+  state: false,
+  label: {},
+  message: `Excluir a etiqueta a removerá de todos os cartões e não poderá ser desfeita. Tem certeza?`,
+  open(labelName, color) {
+    modalDeleteLabel.value.state = true;
+    modalDeleteLabel.value.label = { labelName, color };
+  },
+  close() {
+    modalDeleteLabel.value.state = false;
+  },
+  confirm() {
+    deleteLabel(
+      modalDeleteLabel.value.label.labelName,
+      modalDeleteLabel.value.label.color
+    );
+    modalDeleteLabel.value.state = false;
+  },
+});
+
+const showUncheckedLabels = (frameLabels, cardLabels) => {
+  return frameLabels?.filter(
+    (frameLabel) =>
+      !cardLabels.some(
+        (cardLabel) =>
+          frameLabel.title === cardLabel.title &&
+          frameLabel.color === cardLabel.color
+      )
+  ) || [];
+};
+
+const markLabel = (index) => {
+  cardLabels.value.push(uncheckedLabels.value[index]);
+  updateWorkspaceLabels();
+};
+
+const unmarkLabel = (index) => {
+  cardLabels.value.splice(index, 1);
+  updateWorkspaceLabels();
+};
+
+const deleteLabel = (labelName, color) => {
+  const condition = (label) =>
+    label.title !== labelName || label.color !== color;
+  frame.value.labels = frame.value.labels.filter(condition);
+  cardLabels.value = cardLabels.value.filter(condition);
+
+  frame.value.lists.forEach((list) =>
+    list.cards.forEach((card) => {
+      card.labels = card.labels.filter(
+        (label) => label.title !== labelName || label.color !== color
+      );
+    })
+  );
+
+  frames.value[currentPageId.value].lists = frame.value.lists;
+  frames.value[currentPageId.value].labels = frame.value.labels;
+  useWorkspace().updateWorkspace();
+};
+
+const updateWorkspaceLabels = () => {
+  useWorkspace().frames[currentPageId.value].lists[frameId].cards[
+    cardId
+  ].labels = cardLabels.value;
+  useWorkspace().updateWorkspace();
+};
+
+const allLabels = computed(() => [
+  ...uncheckedLabels.value,
+  ...cardLabels.value,
+]);
+const hasLabels = ref(allLabels.value.length);
 
 onMounted(() => {
   useWorkspace()
@@ -109,9 +184,12 @@ onMounted(() => {
   frames.value = useWorkspace().frames;
   cardLabels.value =
     frame.value.lists[frameId].cards[cardId].labels || [];
+  uncheckedLabels.value = showUncheckedLabels(
+    frame.value.labels,
+    cardLabels.value
+  );
 });
 
-// Update every change made
 watch(
   frame,
   () => {
@@ -120,110 +198,12 @@ watch(
   { deep: true }
 );
 
-const modalDeleteLabel = ref({
-  state: false,
-  label: {},
-  message: `Excluir a etiqueta a removerá de todos os cartões e não poderá ser desfeita. Tem certeza?`,
-  open: (labelName, color) => {
-    modalDeleteLabel.value.state = true;
-    modalDeleteLabel.value.label = {
-      labelName,
-      color,
-    };
-  },
-  close: () => (modalDeleteLabel.value.state = false),
-  confirm: () => {
-    let labelName = modalDeleteLabel.value.label.labelName;
-    let color = modalDeleteLabel.value.label.color;
-    deleteLabel(labelName, color);
-
-    modalDeleteLabel.value.state = false;
-  },
-});
-
-const showUncheckedLabels = (frameLabels, cardLabels) => {
-  let uncheckedLabels = [];
-
-  if (frameLabels && cardLabels) {
-    uncheckedLabels = frameLabels.filter((frameLabel) => {
-      return !cardLabels.filter(
-        (cardLabel) =>
-          frameLabel.title === cardLabel.title &&
-          frameLabel.color === cardLabel.color
-      ).length;
-    });
-  }
-
-  return uncheckedLabels;
-};
-
-let uncheckedLabels = ref([]);
-
-onMounted(() => {
-  uncheckedLabels.value = showUncheckedLabels(
-    frame.value.labels,
-    cardLabels.value
-  );
-});
-
 watchEffect(() => {
   uncheckedLabels.value = showUncheckedLabels(
     frame.value.labels,
     cardLabels.value
   );
 });
-
-// Mark Label
-
-const markLabel = (index) => {
-  cardLabels.value.push(uncheckedLabels.value[index]);
-  useWorkspace().frames[currentPageId.value].lists[frameId].cards[
-    cardId
-  ].labels = cardLabels.value;
-
-  useWorkspace().updateWorkspace();
-};
-
-const unmarkLabel = (index) => {
-  cardLabels.value.splice(index, 1);
-  useWorkspace().frames[currentPageId.value].lists[frameId].cards[
-    cardId
-  ].labels = cardLabels.value;
-  useWorkspace().updateWorkspace();
-};
-
-const deleteLabel = (labelName, color) => {
-  const condition = (label) =>
-    label.title !== labelName && label.color !== color;
-
-  // Delete the local variable
-  frame.value.labels = frame.value.labels.filter(condition);
-  cardLabels.value = cardLabels.value.filter(condition);
-
-  // Delete all labels
-  frame.value.lists.forEach((list) => {
-    list.cards.forEach((card) => {
-      card.labels = card.labels.filter(
-        (label) => label.title !== labelName || label.color !== color
-      );
-    });
-  });
-
-  // Update data
-  frames.value[currentPageId.value].lists = frame.value.lists;
-  frames.value[currentPageId.value].labels = frame.value.labels;
-
-  useWorkspace().updateWorkspace();
-};
-
-// Check if it has any labels or not
-
-const allLabels = computed(() => [
-  ...uncheckedLabels.value,
-  ...cardLabels.value,
-]);
-
-const hasLabels = ref(allLabels.value.length);
 
 watch(
   allLabels,
@@ -233,5 +213,3 @@ watch(
   { deep: true }
 );
 </script>
-
-<style lang="scss" scoped></style>

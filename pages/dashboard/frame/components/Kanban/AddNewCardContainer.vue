@@ -12,13 +12,13 @@ import { useWorkspace } from "@/stores/workspace.js";
 import { storeToRefs } from "pinia";
 
 const currentPageId = useCookie("currentPageId");
-let { frames } = storeToRefs(useWorkspace());
+const { frames } = storeToRefs(useWorkspace());
 
-let props = defineProps({
+const props = defineProps({
   indexFrame: Number,
 });
 
-let cardTitle = ref("");
+const cardTitle = ref("");
 
 const addNewCard = () => {
   if (
@@ -32,11 +32,10 @@ const addNewCard = () => {
       stateModal: false,
       dateFeatures: {
         date: null,
-        complete: null
+        complete: null,
       },
       labels: [],
     });
-
     useWorkspace().updateWorkspace();
   }
 };

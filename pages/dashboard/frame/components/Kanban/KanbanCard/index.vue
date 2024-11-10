@@ -72,36 +72,29 @@ const props = defineProps({
 });
 
 const { textarea, input, triggerResize } = useTextareaAutosize();
-let { frames } = storeToRefs(useWorkspace());
-let stateDate = ref(false);
-let stateCardInformation = ref(false);
-let isComplete = ref(props.card.dateFeatures.complete);
+const { frames } = storeToRefs(useWorkspace());
+
+const stateDate = ref(false);
+const stateCardInformation = ref(false);
+const isComplete = ref(props.card.dateFeatures.complete);
+
+const colors = {
+  checked: "color:white;border-color:#15942a;background-color:#15942a;",
+  unchecked: "color:#71717a;border-color:#71717a;background-color:none;",
+};
 
 const hasCardDescription = () => {
   if (props.card) {
     const descriptionCharacters = props.card.description.length;
-
-    // The card description typically contains additional HTML characters,
-    // which are considered as part of the description length.
     const numberOfStandardHtmlCharacters = 7;
-
-    // If the description length is greater than the default HTML characters,
-    // it means the description is not empty.
-    const isEmpty = descriptionCharacters > numberOfStandardHtmlCharacters;
-
-    stateCardInformation.value = isEmpty;
+    stateCardInformation.value = descriptionCharacters > numberOfStandardHtmlCharacters;
   }
 };
 
 const controlDateModalState = () => {
   const timestamp = props.card?.dateFeatures?.date;
   const convertedDate = convertTimestampToDate(timestamp);
-
-  if (convertedDate instanceof Date) {
-    stateDate.value = true;
-  } else {
-    stateDate.value = false;
-  }
+  stateDate.value = convertedDate instanceof Date;
 };
 
 onMounted(() => {
@@ -115,16 +108,10 @@ watch(
     triggerResize();
     controlDateModalState();
     hasCardDescription();
-
     isComplete.value = props.card?.dateFeatures.complete;
   },
   { deep: true }
 );
-
-const colors = {
-  checked: "color:white;border-color:#15942a;background-color:#15942a;",
-  unchecked: "color:#71717a;border-color:#71717a;background-color:none;",
-};
 </script>
 
 <style scoped lang="scss">

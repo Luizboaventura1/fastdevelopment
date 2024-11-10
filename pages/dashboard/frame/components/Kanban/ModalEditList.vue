@@ -38,24 +38,23 @@ const props = defineProps({
   listId: Number,
 });
 
-const deleteList = () => {
-  useWorkspace().frames[currentPageId.value].lists.splice(props.listId, 1);
-  useWorkspace().updateWorkspace()
-};
-
-// warning message when deleting the list
-
 let stateWarningMessage = ref(false);
 let warningMessage = ref("");
+
+const deleteList = () => {
+  useWorkspace().frames[currentPageId.value].lists.splice(props.listId, 1);
+  useWorkspace().updateWorkspace();
+};
 
 const openWarningMessage = (message) => {
   stateWarningMessage.value = true;
   warningMessage.value = message;
 };
 
-const cancelWarningMessage = () => (stateWarningMessage.value = false);
+const cancelWarningMessage = () => {
+  stateWarningMessage.value = false;
+};
 
-// Delete list
 const confirmWarningMessage = () => {
   deleteList();
   stateWarningMessage.value = false;

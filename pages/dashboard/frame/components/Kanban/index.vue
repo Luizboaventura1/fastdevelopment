@@ -72,40 +72,45 @@
 </template>
 
 <script setup>
-import { VueDraggableNext } from "vue-draggable-next";
 import { vOnClickOutside } from "@vueuse/components";
-import WarningMessage from "@/components/Common/FeedBack/WarningMessage.vue";
-import EditCard from "./EditCard";
+import { storeToRefs } from "pinia";
+import { useRoute } from "#vue-router";
+import { useWorkspace } from "@/stores/workspace.js";
+
 import AddNewCardContainer from "./AddNewCardContainer.vue";
 import AddNewList from "./AddNewList.vue";
-import SettingsButton from "./Buttons/SettingsButton.vue";
-import ModalEditList from "./ModalEditList.vue";
+import EditCard from "./EditCard";
+import KanbanCard from "./KanbanCard";
 import KanbanList from "./KanbanList";
 import KanbanListTitle from "./KanbanList/KanbanListTitle";
 import ListWrapper from "./KanbanList/ListWrapper.vue";
-import KanbanCard from "./KanbanCard";
-import { useRoute } from "#vue-router";
-import { useWorkspace } from "@/stores/workspace.js";
-import { storeToRefs } from "pinia";
+import ModalEditList from "./ModalEditList.vue";
+import SettingsButton from "./Buttons/SettingsButton.vue";
+import WarningMessage from "@/components/Common/FeedBack/WarningMessage.vue";
+import { VueDraggableNext } from "vue-draggable-next";
 
 const route = useRoute();
 const currentPageId = useCookie("currentPageId");
-
 const idRoute = route.params.id;
 currentPageId.value = idRoute;
 
 let { frames } = storeToRefs(useWorkspace());
 let userId = ref("");
+let listAndCardId = ref({ listId: undefined, cardId: undefined });
+let stateWarningMessage = ref(false);
+let warningMessage = ref("");
+let stateModalEditCard = ref(false);
+let frameId = ref();
+let cardId = ref();
+let timeoutId = null;
 
 onMounted(async () => {
   await useWorkspace()
     .workspace()
     .then((data) => {
       userId.value = data.id;
-      // Receives the frames if the array is empty
       if (!frames.value.length) {
         frames.value.push(...data.frames);
-        // Adds modal state to lists and cards
         resetModalStateForLists();
       }
     });
@@ -113,7 +118,6 @@ onMounted(async () => {
 
 const resetModalStateForLists = () => {
   if (!frames.value) return;
-
   frames.value.forEach((frame) => {
     frame?.lists?.forEach((list) => {
       list.stateModal = false;
@@ -121,11 +125,6 @@ const resetModalStateForLists = () => {
   });
 };
 
-// Modal edit card
-
-let listAndCardId = ref({ listId: undefined, cardId: undefined });
-
-// When you click outside the modal it will close
 const closeModalList = () => {
   if (frames.value[idRoute]?.lists[listAndCardId.value.listId]) {
     frames.value[idRoute].lists[listAndCardId.value.listId].stateModal = false;
@@ -137,12 +136,7 @@ const openModalEditList = (indexFrame) => {
   listAndCardId.value.listId = indexFrame;
 };
 
-// Warning message Card
-
-let stateWarningMessage = ref(false);
-let warningMessage = ref("");
-
-let controlWarningMessage = {
+const controlWarningMessage = {
   open: (msg) => {
     stateWarningMessage.value = true;
     warningMessage.value = msg;
@@ -152,47 +146,29 @@ let controlWarningMessage = {
     useWorkspace().frames[currentPageId.value].lists[
       listAndCardId.value.listId
     ].cards.splice(listAndCardId.value.indexCard, 1);
-
-    // Update changes in Firebase
     useWorkspace().updateWorkspace();
-
     stateWarningMessage.value = false;
   },
 };
-
-// Edit Card
-
-/* The edit card function will receive the type of the list and its index,
-the EditingCard component will receive this data to edit the selected card */
-
-let stateModalEditCard = ref(false);
-let frameId = ref();
-let cardId = ref();
 
 const editCard = (indexFrame, indexCard) => {
   frameId.value = indexFrame;
   cardId.value = indexCard;
   useState("frameIndex").value = indexFrame;
   useState("cardIndex").value = indexCard;
-
   stateModalEditCard.value = true;
 };
-
-let timeoutId = null; // Variable to store the current timeout ID
 
 const updateListName = (listName, listId) => {
   if (validateFrame(listName)) {
     const debounceTime = 2000;
-
-    // Clear the previous timeout if it exists
     if (timeoutId) {
       clearTimeout(timeoutId);
     }
-
     timeoutId = setTimeout(() => {
       useWorkspace().frames[currentPageId.value].lists[listId].title = listName;
       useWorkspace().updateWorkspace();
-      timeoutId = null; // Reset the timeout variable
+      timeoutId = null;
     }, debounceTime);
   }
 };

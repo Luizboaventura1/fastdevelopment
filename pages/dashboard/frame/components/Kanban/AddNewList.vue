@@ -13,16 +13,14 @@ import { useWorkspace } from "@/stores/workspace.js";
 import { storeToRefs } from "pinia";
 
 const currentPageId = useCookie("currentPageId");
-let { frames } = storeToRefs(useWorkspace());
+const { frames } = storeToRefs(useWorkspace());
 
-let props = defineProps({
+const props = defineProps({
   indexCard: Number,
   indexFrame: Number,
 });
 
-// Add new List
-
-let listTitle = ref("");
+const listTitle = ref("");
 
 const addNewList = () => {
   if (validateCard(listTitle.value) && frames.value[currentPageId.value]?.lists) {
@@ -30,8 +28,7 @@ const addNewList = () => {
       title: listTitle.value, 
       stateModal: false,
       cards: [],
-    }); 
-
+    });
     useWorkspace().updateWorkspace();
   }
 };
