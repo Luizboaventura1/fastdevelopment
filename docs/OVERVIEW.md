@@ -6,6 +6,7 @@
 - [Folder structure](#folder-structure)
 - [Component specific folder](#component-specific-folder)
 - [How to manipulate user data?](#how-to-manipulate-user-data)
+- [How to contribute](#how-to-contribute)
 
 ## Installation
 
@@ -100,3 +101,13 @@ onMounted(async () => {
 });
 ```
 See what data you can get by accessing the `workspace.js` file in the `stores` folder.
+
+## How to Contribute
+
+### 1. First open an issue
+
+Before submitting any changes, open an issue describing the reason for the change and the proposed solution. If the issue is approved, you may proceed to the next step below.
+
+### 2. Open a Pull Request
+
+After the issue is approved and you've made the necessary changes, open a pull request. The code will then be evaluated by me, and if everything is satisfactory, I will accept the change.
