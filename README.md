@@ -20,34 +20,6 @@ Link: https://fastdevelopment.vercel.app
 
 [click here](./docs/developer-guide)
 
-### User guide 📖
-
-[click here](./docs/user-guide/Introdution.md)
-
-## Get started with a few commands ⚙️
-
-install dependencies
-
-```bash
-npm install
-```
-
-Run project
-
-```bash
-npm run dev
-```
-
-Make the build
-
-```bash
-npm run build
-```
-
-## License 📜
-
-[MIT](./LICENSE)
-
 ## 🛠 Technologies
 
 - [Vue.js 3](https://vuejs.org)
@@ -67,28 +39,6 @@ npm run build
 - [VueUse](https://vueuse.org)
 - [Vue draggable](https://sortablejs.github.io/Vue.Draggable/#/simple)
 
-## How to Contribute 🚀
-
-1. **Fork the Repository:**
-   - Fork this repository by clicking the "Fork" button in the top right corner of this page. This will create a copy of the repository in your GitHub account.
-
-2. **Clone the Repository:**
-   - Clone the forked repository to your local development environment.
-
-   ```bash
-   git clone git@github.com:Luizboaventura1/fastdevelopment.git
-   cd fastdevelopment
-
-3. **Create your firebase project**
-  - put the environment variables in the `.env.template` example.
-  
-4. **Firebase configuration**
-  - Create a "users" document in Firebase and then create the Google login option in Firebase Authentication
+## Installation
 
 [Detailed installation here](./docs/OVERVIEW.md)
-
-## Status 🚦
-
-<h4 align="center"> 
-	🚧  FastDevelopment 🚀 In development...  🚧
-</h4>
