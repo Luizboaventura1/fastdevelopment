@@ -45,4 +45,4 @@ Link: https://fastdevelopment.vercel.app
 
 ## How to contribute 🚀
 
-[Contribute to the project](./docs/OVERVIEW.md/#hpw-to-contribute)
+[Contribute to the project](https://github.com/Luizboaventura1/fastdevelopment/blob/main/docs/OVERVIEW.md#how-to-contribute)
