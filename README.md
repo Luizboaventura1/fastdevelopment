@@ -42,3 +42,7 @@ Link: https://fastdevelopment.vercel.app
 ## Installation
 
 [Detailed installation here](./docs/OVERVIEW.md)
+
+## How to contribute 🚀
+
+[Contribute to the project](./docs/OVERVIEW.md/#hpw-to-contribute)
