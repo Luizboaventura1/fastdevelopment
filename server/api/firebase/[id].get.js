@@ -10,6 +10,12 @@ export default defineEventHandler((event) => {
   };
 
   return {
-    data: process.env.ROUTE_KEY === event.context.params?.id ? data : "error",
+    data:
+      process.env.ROUTE_KEY === event.context.params?.id
+        ? data
+        : {
+            error:
+              "Invalid request: the provided route key does not match the expected value.",
+          },
   };
 });
