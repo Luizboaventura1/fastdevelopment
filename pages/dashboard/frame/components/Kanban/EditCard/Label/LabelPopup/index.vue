@@ -121,14 +121,16 @@ const modalDeleteLabel = ref({
 });
 
 const showUncheckedLabels = (frameLabels, cardLabels) => {
-  return frameLabels?.filter(
-    (frameLabel) =>
-      !cardLabels.some(
-        (cardLabel) =>
-          frameLabel.title === cardLabel.title &&
-          frameLabel.color === cardLabel.color
-      )
-  ) || [];
+  return (
+    frameLabels?.filter(
+      (frameLabel) =>
+        !cardLabels.some(
+          (cardLabel) =>
+            frameLabel.title === cardLabel.title &&
+            frameLabel.color === cardLabel.color
+        )
+    ) || []
+  );
 };
 
 const markLabel = (index) => {
@@ -144,6 +146,7 @@ const unmarkLabel = (index) => {
 const deleteLabel = (labelName, color) => {
   const condition = (label) =>
     label.title !== labelName || label.color !== color;
+
   frame.value.labels = frame.value.labels.filter(condition);
   cardLabels.value = cardLabels.value.filter(condition);
 
@@ -157,6 +160,7 @@ const deleteLabel = (labelName, color) => {
 
   frames.value[currentPageId.value].lists = frame.value.lists;
   frames.value[currentPageId.value].labels = frame.value.labels;
+
   useWorkspace().updateWorkspace();
 };
 
@@ -164,6 +168,7 @@ const updateWorkspaceLabels = () => {
   useWorkspace().frames[currentPageId.value].lists[frameId].cards[
     cardId
   ].labels = cardLabels.value;
+
   useWorkspace().updateWorkspace();
 };
 
@@ -182,8 +187,9 @@ onMounted(() => {
 
   frame.value = useWorkspace().frames[currentPageId.value];
   frames.value = useWorkspace().frames;
-  cardLabels.value =
-    frame.value.lists[frameId].cards[cardId].labels || [];
+  
+  cardLabels.value = frame.value.lists[frameId].cards[cardId].labels || [];
+
   uncheckedLabels.value = showUncheckedLabels(
     frame.value.labels,
     cardLabels.value
