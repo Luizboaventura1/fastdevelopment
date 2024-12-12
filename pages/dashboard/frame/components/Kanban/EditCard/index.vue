@@ -112,8 +112,6 @@ let stateLabelPopup = ref(false);
 let warningMessage = ref("");
 let stateDatePopup = ref(false)
 
-// Get id in firestore
-
 onMounted(async () => {
   await useWorkspace()
     .workspace()
