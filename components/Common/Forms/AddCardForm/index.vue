@@ -39,12 +39,12 @@
         @input:resize="triggerResize()"
         @keydown.enter.prevent
         placeholder="Descrição..."
-        class="resize-none bg-secondaryColorF placeholder-zinc-400 w-full text-white text-sm px-3 py-2 outline-none ring-transparent focus:ring-primaryColorF ring-1 ring-thirdColorF rounded-md"
+        class="resize-none bg-secondaryColorF placeholder-zinc-400 w-full text-white text-sm px-3 py-2 outline-none ring-transparent focus:ring-primaryColorF rounded-md border border-primaryBorderF"
       />
       <div class="button-container flex items-center gap-2 mt-2">
         <button
           @click="props.event"
-          class="select-none text-sm px-4 py-2 w-full rounded-lg text-white bg-subSecondaryColorF ring-1 ring-thirdColorF transition-colors hover:bg-primaryColorF font-medium"
+          class="select-none text-sm px-4 py-2 w-full rounded-lg text-white bg-subSecondaryColorF transition-colors hover:bg-primaryColorF font-medium"
         >
           Adicionar
         </button>
