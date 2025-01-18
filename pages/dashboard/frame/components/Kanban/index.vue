@@ -180,13 +180,6 @@ const updateListName = (listName, listId) => {
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
-  background-color: rgb(33, 34, 36);
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: rgb(56, 58, 60);
-  border-radius: 10px;
-  border: 2px solid rgb(33, 34, 36);
+  display: none;
 }
 </style>
