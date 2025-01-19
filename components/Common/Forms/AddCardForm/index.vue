@@ -39,7 +39,7 @@
         @input:resize="triggerResize()"
         @keydown.enter.prevent
         placeholder="Descrição..."
-        class="resize-none bg-secondaryColorF placeholder-zinc-400 w-full text-white text-sm px-3 py-2 outline-none ring-transparent focus:ring-primaryColorF rounded-md border border-primaryBorderF"
+        class="resize-none bg-subSecondaryColorF placeholder-zinc-400 w-full text-white text-sm px-3 py-2 outline-none rounded-lg border border-primaryBorderF focus:border-primaryColorF"
       />
       <div class="button-container flex items-center gap-2 mt-2">
         <button

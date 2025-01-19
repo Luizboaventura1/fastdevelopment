@@ -51,8 +51,8 @@
       </ListWrapper>
     </VueDraggableNext>
 
-    <div class="add-new-frame w-[280px] h-auto pt-4">
-      <AddNewList />
+    <div class="w-[280px] h-auto pt-4">
+      <AddNewList class="bg-secondaryColorF" />
     </div>
   </div>
 
@@ -175,10 +175,6 @@ const updateListName = (listName, listId) => {
 </script>
 
 <style lang="scss" scoped>
-.add-new-frame div {
-  border: 1px solid #393939;
-}
-
 ::-webkit-scrollbar {
   display: none;
 }
