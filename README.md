@@ -1,3 +1,9 @@
+![GitHub repo size](https://img.shields.io/github/repo-size/Luizboaventura1/fastdevelopment?style=for-the-badge)
+![GitHub language count](https://img.shields.io/github/languages/count/Luizboaventura1/fastdevelopment?style=for-the-badge)
+![GitHub forks](https://img.shields.io/github/forks/Luizboaventura1/fastdevelopment?style=for-the-badge)
+![Bitbucket open issues](https://img.shields.io/bitbucket/issues/Luizboaventura1/fastdevelopment?style=for-the-badge)
+![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/Luizboaventura1/fastdevelopment?style=for-the-badge)
+
 <div align="center">
   <img src="./assets/logo-fastdevelopment.png" width="150">
 </div>
