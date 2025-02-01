@@ -35,7 +35,6 @@ Link: https://fastdevelopment.vercel.app
 
 ## Libs 📚
 
-- [Motion vueuse](https://motion.vueuse.org)
 - [VueUse](https://vueuse.org)
 - [Vue draggable](https://sortablejs.github.io/Vue.Draggable/#/simple)
 
