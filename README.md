@@ -16,10 +16,6 @@ https://github.com/user-attachments/assets/e0a19cc2-5e75-4f72-b585-0e1577b594ae
 
 Link: https://fastdevelopment.vercel.app
 
-### Developer guide 📚
-
-[click here](./docs/developer-guide)
-
 ## 🛠 Technologies
 
 - [Vue.js 3](https://vuejs.org)
