@@ -6,9 +6,9 @@
       </div>
 
       <div class="w-full flex justify-center items-center gap-3">
-        <NewFrameButton @click="handleCreateNewFrame.open">
+        <AddFrameButton @click="handleAddFrameModal.open">
           <PrimaryText sm> Criar </PrimaryText>
-        </NewFrameButton>
+        </AddFrameButton>
         <SearchEngine :array="frames" />
       </div>
 
@@ -44,10 +44,7 @@
             </DropdownItem>
           </DropdownProjets>
 
-          <ItemAside
-            @click="() => openWarningMessage('Sair da conta?')"
-            text="Sair"
-          >
+          <ItemAside @click="() => openWarningMessage('Sair da conta?')" text="Sair">
             <template #icon>
               <LogoutIcon size="20" />
             </template>
@@ -56,9 +53,7 @@
       </aside>
       <div class="flex-1 w-[calc(100% - 280px)] overflow-x-auto h-full">
         <header class="h-full">
-          <main
-            class="bg-subSecondaryColorF overflow-x-auto p-3 h-full relative"
-          >
+          <main class="bg-subSecondaryColorF overflow-x-auto p-3 h-full relative">
             <NuxtPage />
           </main>
         </header>
@@ -73,23 +68,7 @@
     :cancel="cancelWarningMessage"
     :confirm="confirmWarningMessage"
   />
-  <ModalCreateNewFrame
-    @closeModal="handleCreateNewFrame.close"
-    :stateModal="stateModalCreateNewFrame"
-  >
-    <div class="flex justify-between">
-      <PrimaryText lg> Criar novo quadro </PrimaryText>
-      <CloseButton size="15" :event="handleCreateNewFrame.close" />
-    </div>
-    <div>
-      <InputModal
-        @inputValue="(val) => (inputCreateNewFrame = val)"
-        placeholderInput="Nome do quadro"
-      />
-      <ErrorMessage :message="errorMessageFrame" />
-    </div>
-    <PrimaryButton @click="createNewFrame" medium> Criar Quadro </PrimaryButton>
-  </ModalCreateNewFrame>
+  <AddFrameModal @closeModal="handleAddFrameModal.close" :isOpen="isAddFrameModalVisible" />
   <SpeedInsights />
 </template>
 
@@ -112,24 +91,34 @@ import { useWorkspace } from "@/stores/workspace";
 import SearchEngine from "@/components/Common/Search/SearchEngine";
 import { SpeedInsights } from "@vercel/speed-insights/nuxt";
 import { storeToRefs } from "pinia";
-import NewFrameButton from "./dashboard/components/CreateNewFrame/NewFrameButton.vue";
-import PrimaryText from "@/components/Common/Text/PrimaryText"
-import ModalCreateNewFrame from "./dashboard/components/CreateNewFrame/ModalCreateNewFrame/ModalCreateNewFrame.vue";
-import InputModal from "./dashboard/components/CreateNewFrame/ModalCreateNewFrame/InputModal.vue";
-import CloseButton from "@/components/Common/FeedBack/CloseButton.vue";
-import ErrorMessage from "@/components/Common/ErrorComponents/ErrorMessage.vue";
-import PrimaryButton from "@/components/Common/Buttons/PrimaryButton.vue";
-
-const auth = getAuth();
-const router = useRouter();
-let { frames } = storeToRefs(useWorkspace());
-
-// starts true to check if the user is logged in
-let loading = ref(true);
+import AddFrameButton from "./dashboard/components/AddFrameButton.vue";
+import PrimaryText from "@/components/Common/Text/PrimaryText";
+import AddFrameModal from "./dashboard/components/AddFrameModal.vue";
 
 definePageMeta({
   middleware: "auth",
 });
+
+useHead({
+  title: "Dashboard",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Tenha um rápido desenvolvimento e ganho de produtividade com nossa ferramenta completa de desenvolvimento ágil.",
+    },
+    { name: "keywords", content: "Kanban,desenvolvimento ágil,jira,trello" },
+    { name: "author", content: "Luiz" },
+  ],
+});
+
+const auth = getAuth();
+const router = useRouter();
+const { frames } = storeToRefs(useWorkspace());
+const isAddFrameModalVisible = ref(false);
+const loading = ref(true);
+const totalWidthDashboard = "260";
+const dashboardWidth = ref(totalWidthDashboard);
 
 const logout = async () => {
   loading.value = true;
@@ -137,9 +126,8 @@ const logout = async () => {
   await signOut(auth).then(() => {
     loading.value = false;
 
-    // blocks the routes
-    const logged = useCookie("token");
-    logged.value = false;
+    const isAuthenticated = useCookie("token");
+    isAuthenticated.value = false; // blocks the routes
 
     deleteAllCookies();
     frames.value = []; // Reset
@@ -147,31 +135,25 @@ const logout = async () => {
   });
 };
 
-const totalWidthDashboard = "260";
-let dashboardWidth = ref(totalWidthDashboard);
-
 const dashboardToggle = () => {
-  if (dashboardWidth.value === totalWidthDashboard)
-    return (dashboardWidth.value = "0");
+  if (dashboardWidth.value === totalWidthDashboard) return (dashboardWidth.value = "0");
 
   return (dashboardWidth.value = totalWidthDashboard);
 };
 
 onMounted(() => {
-  const logged = useCookie("token");
+  const isAuthenticated = useCookie("token");
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      logged.value = true;
+      isAuthenticated.value = true;
       loading.value = false;
     } else {
-      logged.value = false;
+      isAuthenticated.value = false;
       router.push("/");
     }
   });
 });
-
-// confirm exit account
 
 let stateWarningMessage = ref(false);
 let warningMessage = ref("");
@@ -188,55 +170,10 @@ const confirmWarningMessage = () => {
   cancelWarningMessage();
 };
 
-useHead({
-  title: "Dashboard",
-  meta: [
-    {
-      name: "description",
-      content:
-        "Tenha um rápido desenvolvimento e ganho de produtividade com nossa ferramenta completa de desenvolvimento ágil.",
-    },
-    { name: "keywords", content: "Kanban,desenvolvimento ágil,jira,trello" },
-    { name: "author", content: "Luiz" },
-  ],
-});
-
-// Modal create new Frame
-
-let stateModalCreateNewFrame = ref(false);
-let inputCreateNewFrame = ref("");
-let errorMessageFrame = ref("");
-
-const handleCreateNewFrame = {
-  open: () => (stateModalCreateNewFrame.value = true),
-  close: () => (stateModalCreateNewFrame.value = false),
+const handleAddFrameModal = {
+  open: () => (isAddFrameModalVisible.value = true),
+  close: () => (isAddFrameModalVisible.value = false),
 };
-
-const createNewFrame = () => {
-  if (validateFrame(inputCreateNewFrame.value)) {
-    useWorkspace().frames.unshift({
-      title: inputCreateNewFrame.value,
-      lists: [],
-      labels: [],
-    });
-
-    useWorkspace().updateWorkspace();
-
-    handleCreateNewFrame.close();
-
-    // Go to the last created frame
-    const lastFrameCreatedId = 0; 
-    router.push(`/dashboard/frame/${lastFrameCreatedId}`);
-  } else {
-    errorMessageFrame.value = "Nome do quadro obrigatório!";
-  }
-};
-watch(inputCreateNewFrame, () => {
-  // remove an error message
-  if (inputCreateNewFrame.value.length != 0) {
-    errorMessageFrame.value = "";
-  }
-});
 </script>
 
 <style lang="scss" scoped>
