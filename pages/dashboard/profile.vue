@@ -41,7 +41,7 @@ let userInfo = useCookie("userInfo");
 
 onMounted(() => {
   useWorkspace()
-    .workspace()
+    .fetchWorkspaceData()
     .then((data) => {
       if (!userInfo.value) {
         useCookie("userInfo").value = {

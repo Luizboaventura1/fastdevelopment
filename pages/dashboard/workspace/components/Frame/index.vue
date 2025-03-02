@@ -102,7 +102,7 @@ watch(
 const saveNameFrame = () => {
   if (validateFrame(frameName.value)) {
     useWorkspace().frames[props.frameID].title = frameName.value;
-    useWorkspace().updateWorkspace();
+    useWorkspace().updateWorkspaceData();
 
     toggleEditFrameName();
   } else {
@@ -114,7 +114,7 @@ const deleteFrame = () => {
   let frames = useWorkspace().frames;
   frames.splice(props.frameID, 1);
 
-  useWorkspace().updateWorkspace();
+  useWorkspace().updateWorkspaceData();
   toggleSettings();
 };
 

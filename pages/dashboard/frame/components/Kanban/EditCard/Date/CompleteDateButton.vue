@@ -47,7 +47,7 @@ const completeDateButton = () => {
       cardIndex.value
     ].dateFeatures.complete = !completeDate.value;
 
-    useWorkspace().updateWorkspace();
+    useWorkspace().updateWorkspaceData();
   }
 };
 
