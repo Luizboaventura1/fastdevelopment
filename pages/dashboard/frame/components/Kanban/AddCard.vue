@@ -15,7 +15,7 @@ const currentPageId = useCookie("currentPageId");
 const { frames } = storeToRefs(useWorkspace());
 
 const props = defineProps({
-  indexFrame: Number,
+  listIndex: Number,
 });
 
 const cardTitle = ref("");
@@ -24,9 +24,9 @@ const addNewCard = () => {
   if (
     validateCard(cardTitle.value) &&
     frames.value[currentPageId.value]?.lists.length &&
-    props.indexFrame >= 0
+    props.listIndex >= 0
   ) {
-    frames.value[currentPageId.value].lists[props.indexFrame].cards.push({
+    frames.value[currentPageId.value].lists[props.listIndex].cards.push({
       title: cardTitle.value,
       description: "",
       stateModal: false,

@@ -27,7 +27,7 @@
 import WorkspaceContainer from "./components/WorkspaceContainer.vue";
 import Greeting from "./components/Greeting.vue";
 import Frame from "./components/Frame";
-import Grid from "./components/Grid/Grid.vue";
+import Grid from "./components/Grid.vue";
 import PrimaryText from "@/components/Common/Text/PrimaryText";
 import { useWorkspace } from "@/stores/workspace";
 import { SpeedInsights } from "@vercel/speed-insights/nuxt";
