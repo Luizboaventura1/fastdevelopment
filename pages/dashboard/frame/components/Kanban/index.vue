@@ -6,7 +6,7 @@
       class="kanban flex flex-row rounded-md gap-3 p-4 h-full"
       @change="useWorkspace().updateWorkspaceData()"
     >
-      <ListWrapper v-for="(list, listId) in frames[currentPageId]?.lists || []" :key="listId">
+      <KanbanListWrapper v-for="(list, listId) in frames[currentPageId]?.lists || []" :key="listId">
         <KanbanList>
           <KanbanListTitle>
             <input
@@ -18,7 +18,7 @@
             <div class="relative">
               <SettingsButton :event="() => openModalEditList(listId)" />
               <div class="absolute bottom-24 right-0">
-                <ModalEditList
+                <EditListModal
                   v-on-click-outside="closeModalList"
                   :stateModal="list.stateModal"
                   :event="closeModalList"
@@ -43,13 +43,13 @@
             </VueDraggableNext>
           </div>
 
-          <AddNewCardContainer :indexFrame="listId" />
+          <AddCard :listIndex="listId" />
         </KanbanList>
-      </ListWrapper>
+      </KanbanListWrapper>
     </VueDraggableNext>
 
     <div class="w-[280px] h-auto pt-4">
-      <AddNewList class="bg-secondaryColorF" />
+      <AddList class="bg-secondaryColorF" />
     </div>
   </div>
 
@@ -74,31 +74,31 @@ import { storeToRefs } from "pinia";
 import { useRoute } from "#vue-router";
 import { useWorkspace } from "@/stores/workspace.js";
 
-import AddNewCardContainer from "./AddNewCardContainer.vue";
-import AddNewList from "./AddNewList.vue";
+import AddCard from "./AddCard.vue";
+import AddList from "./AddList.vue";
 import EditCard from "./EditCard";
 import KanbanCard from "./KanbanCard";
 import KanbanList from "./KanbanList";
 import KanbanListTitle from "./KanbanList/KanbanListTitle";
-import ListWrapper from "./KanbanList/ListWrapper.vue";
-import ModalEditList from "./ModalEditList.vue";
+import KanbanListWrapper from "./KanbanList/KanbanListWrapper.vue";
+import EditListModal from "./EditListModal.vue";
 import SettingsButton from "./Buttons/SettingsButton.vue";
 import WarningMessage from "@/components/Common/FeedBack/WarningMessage.vue";
 import { VueDraggableNext } from "vue-draggable-next";
 
 const route = useRoute();
 const currentPageId = useCookie("currentPageId");
-const idRoute = route.params.id;
-currentPageId.value = idRoute;
+const routeId = route.params.id;
+currentPageId.value = routeId;
 
-let { frames } = storeToRefs(useWorkspace());
-let userId = ref("");
-let listAndCardId = ref({ listId: undefined, cardId: undefined });
-let stateWarningMessage = ref(false);
-let warningMessage = ref("");
-let stateModalEditCard = ref(false);
-let frameId = ref();
-let cardId = ref();
+const { frames } = storeToRefs(useWorkspace());
+const userId = ref("");
+const listAndCardId = ref({ listId: undefined, cardId: undefined });
+const stateWarningMessage = ref(false);
+const warningMessage = ref("");
+const stateModalEditCard = ref(false);
+const frameId = ref();
+const cardId = ref();
 let timeoutId = null;
 
 onMounted(async () => {
@@ -123,13 +123,13 @@ const resetModalStateForLists = () => {
 };
 
 const closeModalList = () => {
-  if (frames.value[idRoute]?.lists[listAndCardId.value.listId]) {
-    frames.value[idRoute].lists[listAndCardId.value.listId].stateModal = false;
+  if (frames.value[routeId]?.lists[listAndCardId.value.listId]) {
+    frames.value[routeId].lists[listAndCardId.value.listId].stateModal = false;
   }
 };
 
 const openModalEditList = (indexFrame) => {
-  frames.value[idRoute].lists[indexFrame].stateModal = true;
+  frames.value[routeId].lists[indexFrame].stateModal = true;
   listAndCardId.value.listId = indexFrame;
 };
 

@@ -17,12 +17,12 @@
         <Account size="30" />
       </div>
     </nav>
-    <div class="w-full h-full flex">
-      <aside
-        class="bg-secondaryColorF overflow-hidden overflow-y-auto"
+    <aside class="w-full h-full flex">
+      <section
+        class="bg-secondaryColorF overflow-hidden overflow-y-auto p-4 grid grid-rows-[1fr,auto] gap-y-4"
         :style="`width:${dashboardWidth}px;`"
       >
-        <div class="p-4 grid gap-y-1">
+        <header>
           <ItemAside link="/dashboard/workspace" text="Página inicial">
             <template #icon>
               <HomeIcon size="20" />
@@ -43,14 +43,15 @@
               {{ frame.title }}
             </DropdownItem>
           </DropdownProjets>
-
-          <ItemAside @click="() => openWarningMessage('Sair da conta?')" text="Sair">
+        </header>
+        <footer>
+          <ItemAside @click="logout" text="Sair da conta">
             <template #icon>
               <LogoutIcon size="20" />
             </template>
           </ItemAside>
-        </div>
-      </aside>
+        </footer>
+      </section>
       <div class="flex-1 w-[calc(100% - 280px)] overflow-x-auto h-full">
         <header class="h-full">
           <main class="bg-subSecondaryColorF overflow-x-auto p-3 h-full relative">
@@ -58,16 +59,10 @@
           </main>
         </header>
       </div>
-    </div>
+    </aside>
   </div>
 
   <Loading :visibility="loading" />
-  <WarningMessage
-    :state="stateWarningMessage"
-    :message="warningMessage"
-    :cancel="cancelWarningMessage"
-    :confirm="confirmWarningMessage"
-  />
   <AddFrameModal @closeModal="handleAddFrameModal.close" :isOpen="isAddFrameModalVisible" />
   <SpeedInsights />
 </template>
@@ -78,7 +73,6 @@ import { signOut, getAuth, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "#vue-router";
 import BurguerButton from "./dashboard/components/BurguerButton.vue";
 import Loading from "~/components/Common/Loadings/Loading.vue";
-import WarningMessage from "@/components/Common/FeedBack/WarningMessage.vue";
 import DividerDefault from "~/components/Common/Dividers/DividerDefault.vue";
 import Account from "@/components/Common/Notifications/Popups/Account";
 import NotificationModal from "~/components/Common/Notifications/Popups/NotificationModal";
@@ -154,21 +148,6 @@ onMounted(() => {
     }
   });
 });
-
-let stateWarningMessage = ref(false);
-let warningMessage = ref("");
-
-const openWarningMessage = (message) => {
-  stateWarningMessage.value = true;
-  warningMessage.value = message;
-};
-
-const cancelWarningMessage = () => (stateWarningMessage.value = false);
-
-const confirmWarningMessage = () => {
-  logout();
-  cancelWarningMessage();
-};
 
 const handleAddFrameModal = {
   open: () => (isAddFrameModalVisible.value = true),
