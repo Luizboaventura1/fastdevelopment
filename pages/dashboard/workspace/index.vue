@@ -83,8 +83,7 @@ const currentDate = () => {
 };
 
 onMounted(async () => {
-  await useWorkspace()
-    .workspace()
+  await useWorkspace().fetchWorkspaceData()
     .then((data) => {
       if (!frames.value.length) {
         frames.value.push(...data.frames);

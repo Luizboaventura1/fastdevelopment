@@ -10,94 +10,84 @@ import {
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import { defineStore } from "pinia";
 
-export const useWorkspace = defineStore("workspace", {
-  state: () => {
-    return {
-      frames: [],
-    };
-  },
-  actions: {
-    workspace() {
+export const useWorkspace = defineStore("workspace", () => {
+  const frames = ref([]);
+
+  const getAuthenticatedUserEmail = () => {
+    return new Promise((resolve, reject) => {
       const auth = getAuth();
-      const db = getFirestore();
-
-      let userEmail = "";
-
-      return new Promise((resolve, reject) => {
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
-          try {
-            if (user) {
-              userEmail = user.email;
-              const q = query(
-                collection(db, "users"),
-                where("email", "==", userEmail)
-              );
-
-              const querySnapshot = await getDocs(q);
-
-              let result = null;
-
-              querySnapshot.forEach((doc) => {
-                result = {
-                  id: doc.id,
-                  photoUrl: user.photoURL,
-                  name: doc.data().name,
-                  email: doc.data().email,
-                  frames: doc.data().workspace,
-                };
-              });
-
-              resolve(result);
-            }
-          } catch (error) {
-            reject(error);
-          } finally {
-            unsubscribe();
-          }
-        });
-      });
-    },
-    async updateWorkspace() {
-      const auth = getAuth();
-      const db = getFirestore();
-
-      try {
-        const userId = await new Promise((resolve, reject) => {
-          const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            unsubscribe();
-            if (user) {
-              const q = query(
-                collection(db, "users"),
-                where("email", "==", user.email)
-              );
-
-              const querySnapshot = await getDocs(q);
-
-              let userId = null;
-
-              querySnapshot.forEach((doc) => {
-                userId = doc.id;
-              });
-
-              resolve(userId);
-            } else {
-              reject(new Error("Usuário não autenticado!"));
-            }
-          });
-        });
-
-        const frameDocRef = doc(db, "users", userId);
-
-        if (this.frames) {
-          await updateDoc(frameDocRef, {
-            workspace: this.frames,
-          });
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
+        unsubscribe();
+        if (user) {
+          resolve(user.email);
         } else {
-          throw new Error("Array não encontrado!");
+          reject(new Error("Usuário não autenticado."));
         }
-      } catch (e) {
-        return e.message;
+      });
+    });
+  };
+
+  const getUserDataByEmail = async (email) => {
+    const db = getFirestore();
+    const usersCollection = collection(db, "users");
+    const userQuery = query(usersCollection, where("email", "==", email));
+    const querySnapshot = await getDocs(userQuery);
+
+    if (querySnapshot.empty) {
+      return null;
+    }
+
+    const userDoc = querySnapshot.docs[0];
+    const userData = userDoc.data();
+
+    return {
+      id: userDoc.id,
+      photoUrl: getAuth().currentUser?.photoURL,
+      name: userData.name,
+      email: userData.email,
+      frames: userData.workspace,
+    };
+  };
+
+  const fetchWorkspaceData = async () => {
+    try {
+      const userEmail = await getAuthenticatedUserEmail();
+      const userData = await getUserDataByEmail(userEmail);
+
+      if (userData) {
+        return userData;
       }
-    },
-  },
+      return null;
+    } catch (error) {
+      console.error("Erro ao buscar dados do workspace:", error);
+      throw error;
+    }
+  };
+
+  const updateWorkspaceData = async () => {
+    try {
+      const userEmail = await getAuthenticatedUserEmail();
+      const userData = await getUserDataByEmail(userEmail);
+
+      if (!userData) {
+        throw new Error("Dados do usuário não encontrados.");
+      }
+
+      const userDocRef = doc(getFirestore(), "users", userData.id);
+
+      if (frames.value) {
+        await updateDoc(userDocRef, { workspace: frames.value });
+      } else {
+        throw new Error("Array de frames não encontrado.");
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  return {
+    frames,
+    fetchWorkspaceData,
+    updateWorkspaceData,
+  };
 });

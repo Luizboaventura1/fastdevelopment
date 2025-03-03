@@ -4,12 +4,9 @@
       :list="frames[currentPageId]?.lists || []"
       group="lists"
       class="kanban flex flex-row rounded-md gap-3 p-4 h-full"
-      @change="useWorkspace().updateWorkspace()"
+      @change="useWorkspace().updateWorkspaceData()"
     >
-      <ListWrapper
-        v-for="(list, listId) in frames[currentPageId]?.lists || []"
-        :key="listId"
-      >
+      <ListWrapper v-for="(list, listId) in frames[currentPageId]?.lists || []" :key="listId">
         <KanbanList>
           <KanbanListTitle>
             <input
@@ -35,7 +32,7 @@
             <VueDraggableNext
               v-model="list.cards"
               group="people"
-              @change="useWorkspace().updateWorkspace()"
+              @change="useWorkspace().updateWorkspaceData()"
             >
               <KanbanCard
                 v-for="(card, indexCard) in list.cards"
@@ -106,7 +103,7 @@ let timeoutId = null;
 
 onMounted(async () => {
   await useWorkspace()
-    .workspace()
+    .fetchWorkspaceData()
     .then((data) => {
       userId.value = data.id;
       if (!frames.value.length) {
@@ -143,10 +140,11 @@ const controlWarningMessage = {
   },
   close: () => (stateWarningMessage.value = false),
   confirmWarningMessage: () => {
-    useWorkspace().frames[currentPageId.value].lists[
-      listAndCardId.value.listId
-    ].cards.splice(listAndCardId.value.indexCard, 1);
-    useWorkspace().updateWorkspace();
+    useWorkspace().frames[currentPageId.value].lists[listAndCardId.value.listId].cards.splice(
+      listAndCardId.value.indexCard,
+      1
+    );
+    useWorkspace().updateWorkspaceData();
     stateWarningMessage.value = false;
   },
 };
@@ -167,7 +165,7 @@ const updateListName = (listName, listId) => {
     }
     timeoutId = setTimeout(() => {
       useWorkspace().frames[currentPageId.value].lists[listId].title = listName;
-      useWorkspace().updateWorkspace();
+      useWorkspace().updateWorkspaceData();
       timeoutId = null;
     }, debounceTime);
   }

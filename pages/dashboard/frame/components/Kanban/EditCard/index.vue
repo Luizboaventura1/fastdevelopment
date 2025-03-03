@@ -114,7 +114,7 @@ let stateDatePopup = ref(false)
 
 onMounted(async () => {
   await useWorkspace()
-    .workspace()
+    .fetchWorkspaceData()
     .then((data) => {
       userId.value = data.id;
     });
@@ -140,7 +140,7 @@ const updateCardDetails = async () => {
         props.indexCard
       ].description = description.value;
 
-      useWorkspace().updateWorkspace();
+      useWorkspace().updateWorkspaceData();
     } else {
       titleErrorMessage.value = "Mínimo de 1 caracter!";
     }

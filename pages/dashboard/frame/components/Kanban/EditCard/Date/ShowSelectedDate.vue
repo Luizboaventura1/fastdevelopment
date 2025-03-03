@@ -81,7 +81,7 @@ const formatDate = (date: Date | null) => {
 
 onMounted(async () => {
   await useWorkspace()
-    .workspace()
+    .fetchWorkspaceData()
     .then((data) => {
       if (!frames.value.length) {
         frames.value = data.frames;

@@ -57,7 +57,7 @@ const AddNewFrame = () => {
       labels: [],
     });
 
-    useWorkspace().updateWorkspace();
+    useWorkspace().updateWorkspaceData();
     emit("closeModal");
     input.value = "";
 

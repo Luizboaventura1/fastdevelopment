@@ -29,7 +29,7 @@ const addNewList = () => {
       stateModal: false,
       cards: [],
     });
-    useWorkspace().updateWorkspace();
+    useWorkspace().updateWorkspaceData();
   }
 };
 </script>

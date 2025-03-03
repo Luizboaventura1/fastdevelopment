@@ -11,7 +11,7 @@ Piece of code where firebase data is loaded that will be used throughout the pro
 ```js
 onMounted(async () => {
   await useWorkspace()
-    .workspace()
+    .fetchWorkspaceData()
     .then((data) => {
       workspace.value = data;
       userEmail.value = data.email;

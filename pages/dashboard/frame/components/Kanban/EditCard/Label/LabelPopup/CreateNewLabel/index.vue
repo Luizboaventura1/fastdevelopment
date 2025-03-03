@@ -94,7 +94,7 @@ let inputErrorMessage = ref("");
 
 onMounted(() => {
   useWorkspace()
-    .workspace()
+    .fetchWorkspaceData()
     .then((data) => {
       userId.value = data.id;
     });
@@ -118,7 +118,7 @@ const addLabel = () => {
         checked: false,
       };
       currentFrame.value.labels.push(newLabel);
-      useWorkspace().updateWorkspace();
+      useWorkspace().updateWorkspaceData();
     } else {
       colorErrorMessage.value = "Essa etiqueta já existe!";
     }

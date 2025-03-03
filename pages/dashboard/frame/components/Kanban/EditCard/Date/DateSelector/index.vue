@@ -58,7 +58,7 @@ const selectDate = () => {
     card.dateFeatures.date = convertTimestampToDate(date.value);
     card.dateFeatures.complete = false; // reset completion status
 
-    useWorkspace().updateWorkspace();
+    useWorkspace().updateWorkspaceData();
 
     emit("closeModal");
   }
@@ -72,7 +72,7 @@ const completeDateButton = () => {
       cardIndex
     ].dateFeatures.complete = completeDate.value;
 
-    useWorkspace().updateWorkspace();
+    useWorkspace().updateWorkspaceData();
   }
 };
 
@@ -85,7 +85,7 @@ const removeDate = () => {
       complete: false,
     };
 
-    useWorkspace().updateWorkspace();
+    useWorkspace().updateWorkspaceData();
 
     emit("closeModal");
   }
@@ -93,7 +93,7 @@ const removeDate = () => {
 
 const getDataFrames = async () => {
   await useWorkspace()
-    .workspace()
+    .fetchWorkspaceData()
     .then((data) => {
       if (!frames.value.length) {
         useWorkspace().frames = data.frames
