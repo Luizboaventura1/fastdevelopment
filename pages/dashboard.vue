@@ -1,6 +1,6 @@
 <template>
-  <div class="dashboard">
-    <nav class="h-[60px] bg-secondaryColorF flex items-center gap-3 px-4">
+  <div class="h-[calc(100vh-60px)]">
+    <nav class="h-[60px] bg-secondaryColorF flex items-center gap-3 px-4 border-b border-primaryBorderF">
       <div class="w-2/12 flex items-center">
         <BurguerButton :event="dashboardToggle" />
       </div>
@@ -154,18 +154,3 @@ const handleAddFrameModal = {
   close: () => (isAddFrameModalVisible.value = false),
 };
 </script>
-
-<style lang="scss" scoped>
-nav {
-  border-bottom: 1px solid #393939;
-}
-
-aside {
-  transition: 0.5s;
-  border-right: 1px solid #393939;
-}
-
-.dashboard {
-  height: calc(100vh - 60px);
-}
-</style>
