@@ -19,10 +19,10 @@
     </nav>
     <aside class="w-full h-full flex">
       <section
-        class="bg-secondaryColorF overflow-hidden overflow-y-auto p-4 grid grid-rows-[1fr,auto] gap-y-4"
+        class="bg-secondaryColorF overflow-hidden overflow-y-auto grid grid-rows-[1fr,auto] gap-y-4 transition-all duration-300"
         :style="`width:${dashboardWidth}px;`"
       >
-        <header>
+        <header class="p-4">
           <ItemAside link="/dashboard/workspace" text="Página inicial">
             <template #icon>
               <HomeIcon size="20" />
@@ -44,7 +44,7 @@
             </DropdownItem>
           </DropdownProjets>
         </header>
-        <footer>
+        <footer class="p-4">
           <ItemAside @click="logout" text="Sair da conta">
             <template #icon>
               <LogoutIcon size="20" />
