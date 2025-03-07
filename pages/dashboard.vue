@@ -19,7 +19,7 @@
     </nav>
     <aside class="w-full h-full flex">
       <section
-        class="bg-secondaryColorF overflow-hidden overflow-y-auto grid grid-rows-[1fr,auto] gap-y-4 transition-all duration-300"
+        class="bg-secondaryColorF overflow-hidden overflow-y-auto border-r border-primaryBorderF grid grid-rows-[1fr,auto] gap-y-4 transition-all duration-300"
         :style="`width:${dashboardWidth}px;`"
       >
         <header class="p-4">
