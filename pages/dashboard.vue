@@ -14,7 +14,7 @@
 
       <div class="flex items-center justify-end gap-3 w-2/12">
         <NotificationModal />
-        <Account size="30" />
+        <AccountModal size="30" />
       </div>
     </nav>
     <aside class="w-full h-full flex">
@@ -74,7 +74,7 @@ import { useRouter } from "#vue-router";
 import BurguerButton from "./dashboard/components/BurguerButton.vue";
 import Loading from "~/components/Common/Loadings/Loading.vue";
 import DividerDefault from "~/components/Common/Dividers/DividerDefault.vue";
-import Account from "@/components/Common/Notifications/Popups/Account";
+import AccountModal from "./dashboard/components/AccountModal.vue";
 import NotificationModal from "~/components/Common/Notifications/Popups/NotificationModal";
 import ItemAside from "./dashboard/components/ItemAside.vue";
 import HomeIcon from "~/components/Common/Icons/HomeIcon.vue";

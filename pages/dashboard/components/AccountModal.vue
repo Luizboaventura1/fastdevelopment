@@ -4,31 +4,17 @@
       :style="`width: ${props.size}px;height: ${props.size}px;`"
       class="rounded-full overflow-hidden cursor-pointer"
     >
-      <img
-        @click.stop="toggleModal"
-        class="w-full"
-        :src="userPhoto"
-        alt="User"
-      />
+      <img @click.stop="toggleModal" class="w-full" :src="userPhoto" alt="User" />
     </div>
     <div class="absolute z-40 bottom-9 right-5">
-      <OptionsModal
-        class="options-modal-container"
-        @click.stop
-        :stateModal="stateModal"
-      >
+      <OptionsModal class="options-modal-container" @click.stop :stateModal="stateModal">
         <template #nav>
           <TitleOptionsModal> Sua conta </TitleOptionsModal>
           <CloseButton :event="closeOptionsModal" size="16" />
         </template>
 
         <template #buttons>
-          <ActionLinkOptionsModal link="/dashboard/profile">
-            Ver perfil
-          </ActionLinkOptionsModal>
-          <ActionOptionsModal
-            :event="() => openWarningMessage('Sair da conta?')"
-          >
+          <ActionOptionsModal :event="() => openWarningMessage('Sair da conta?')">
             Fazer logout
           </ActionOptionsModal>
         </template>
@@ -46,13 +32,7 @@
 
 <script setup>
 import { onAuthStateChanged, getAuth } from "firebase/auth";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  getFirestore,
-} from "firebase/firestore";
+import { collection, query, where, getDocs, getFirestore } from "firebase/firestore";
 import OptionsModal from "@/components/Common/Notifications/Popups/OptionsModal";
 import ActionOptionsModal from "@/components/Common/Notifications/Popups/OptionsModal/components/ActionOptionsModal.vue";
 import TitleOptionsModal from "@/components/Common/Notifications/Popups/OptionsModal/components/TitleOptionsModal.vue";
@@ -60,7 +40,6 @@ import CloseButton from "@/components/Common/FeedBack/CloseButton.vue";
 import Loading from "@/components/Common/Loadings/Loading.vue";
 import { signOut } from "firebase/auth";
 import WarningMessage from "@/components/Common/FeedBack/WarningMessage.vue";
-import ActionLinkOptionsModal from "@/components/Common/Notifications/Popups/OptionsModal/components/ActionLinkOptionsModal.vue";
 import { useWorkspace } from "~/stores/workspace";
 
 let props = defineProps({
@@ -78,19 +57,12 @@ let userPhoto = ref(undefined);
 let userEmail = ref("");
 
 onMounted(() => {
-  // get user photo
-
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       userEmail.value = user.email;
       userPhoto.value = user.photoURL;
 
-      // get name
-
-      const q = query(
-        collection(db, "users"),
-        where("email", "==", userEmail.value)
-      );
+      const q = query(collection(db, "users"), where("email", "==", userEmail.value));
 
       const querySnapshot = await getDocs(q);
 
@@ -103,7 +75,6 @@ onMounted(() => {
 
 let stateModal = ref(false);
 
-//When you click outside the modal it will close
 const closeOptionsModal = () => (stateModal.value = false);
 
 const toggleModal = () => {
@@ -126,28 +97,21 @@ onBeforeUnmount(() => {
   document.body.removeEventListener("click", handleClickOutside);
 });
 
-// Logout
-
 const logout = async () => {
   loading.value = true;
 
-  // end the session
   await signOut(auth).then(() => {
-    loading.value = false; // Disable Loading
+    loading.value = false;
 
-    // blocks the routes
     const logged = useCookie("token");
     logged.value = false;
 
     deleteAllCookies();
-    useWorkspace().frames = [] // Reset
+    useWorkspace().frames = [];
 
-    // back home
     router.push("/");
   });
 };
-
-// Warning message Card
 
 let stateWarningMessage = ref(false);
 let warningMessage = ref("");
