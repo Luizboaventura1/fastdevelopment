@@ -59,7 +59,6 @@ export const useWorkspace = defineStore("workspace", () => {
       }
       return null;
     } catch (error) {
-      console.error("Erro ao buscar dados do workspace:", error);
       throw error;
     }
   };
