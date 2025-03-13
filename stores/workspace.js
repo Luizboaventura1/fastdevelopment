@@ -77,7 +77,7 @@ export const useWorkspace = defineStore("workspace", () => {
       if (frames.value) {
         await updateDoc(userDocRef, { workspace: frames.value });
       } else {
-        throw new Error("Quadros do usuário não encontrado.");
+        throw new Error("Não foi encontrado nenhum quadro do usuário.");
       }
     } catch (error) {
       throw error;
