@@ -10,6 +10,7 @@
 import AddCardForm from "@/components/Common/Forms/AddCardForm/index.vue";
 import { useWorkspace } from "@/stores/workspace.js";
 import { storeToRefs } from "pinia";
+import { validateCard } from "@/utils/validateCard";
 
 const currentPageId = useCookie("currentPageId");
 const { frames } = storeToRefs(useWorkspace());

@@ -12,9 +12,7 @@
       <ContainerResults :state="state">
         <div v-if="stateRecentProjects">
           <div class="flex px-5">
-            <span class="text-textSecondaryColorF text-sm select-none pb-2"
-              >Recentes</span
-            >
+            <span class="text-textSecondaryColorF text-sm select-none pb-2">Recentes</span>
           </div>
           <ItemSearchResult
             v-for="(item, index) in recentProjects"
@@ -26,23 +24,15 @@
         </div>
         <div v-else-if="searchedItems.length != 0">
           <div class="flex px-5">
-            <span class="text-textSecondaryColorF text-sm select-none pb-2"
-              >Resultados</span
-            >
+            <span class="text-textSecondaryColorF text-sm select-none pb-2">Resultados</span>
           </div>
-          <ItemSearchResult
-            v-for="(item, index) in searchedItems"
-            :key="index"
-            :link="item.link"
-          >
+          <ItemSearchResult v-for="(item, index) in searchedItems" :key="index" :link="item.link">
             {{ item.title }}
           </ItemSearchResult>
         </div>
         <div v-else-if="noResults">
           <div class="flex px-5">
-            <span class="text-textSecondaryColorF text-sm select-none pb-2"
-              >Sem resultados</span
-            >
+            <span class="text-textSecondaryColorF text-sm select-none pb-2">Sem resultados</span>
           </div>
         </div>
       </ContainerResults>
@@ -53,6 +43,7 @@
 <script setup>
 import ContainerResults from "./ContainerResults.vue";
 import ItemSearchResult from "./ItemSearchResult.vue";
+import { getRecentProjects } from "@/utils/getRecentProjects";
 
 let input = ref("");
 let state = ref(false);

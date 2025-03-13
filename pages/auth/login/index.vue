@@ -33,6 +33,7 @@ import { useRouter } from "#vue-router";
 import Loading from "~/components/Common/Loadings/Loading.vue";
 import Toast from "@/components/Common/Notifications/Toast"
 import Alert from "~/components/Common/Icons/Alert.vue";
+import useToast from "@/utils/useToast"
 
 const auth = getAuth();
 const toast = useToast();

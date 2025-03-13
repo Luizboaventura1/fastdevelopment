@@ -37,6 +37,7 @@ import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
 import ErrorMessage from "~/components/Common/ErrorComponents/ErrorMessage.vue";
 import PrimaryButton from "~/components/Common/Buttons/PrimaryButton.vue";
 import { useWorkspace } from "~/stores/workspace";
+import validateFrame from "@/utils/validateFrame"
 
 const props = defineProps({
   isOpen: Boolean,
