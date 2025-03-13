@@ -12,22 +12,20 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import CompleteDateButton from "./CompleteDateButton.vue";
 import { useWorkspace } from "~/stores/workspace";
-import type Frame from "~/stores/types/frame";
 import { storeToRefs } from "pinia";
 
 const currentPageId = Number(useRoute().params.id);
-const frameIndex = useState<number>("frameIndex");
-const cardIndex = useState<number>("cardIndex");
+const frameIndex = useState("frameIndex");
+const cardIndex = useState("cardIndex");
 
-const { frames }: { frames: Ref<Frame[]> } = storeToRefs(useWorkspace());
+const { frames } = storeToRefs(useWorkspace());
 
 const formatDeliveryDate = computed(() => {
   if (
-    frames.value[currentPageId]?.lists[frameIndex.value]?.cards[cardIndex.value]
-      ?.dateFeatures?.date
+    frames.value[currentPageId]?.lists[frameIndex.value]?.cards[cardIndex.value]?.dateFeatures?.date
   ) {
     return formatDate(
       convertTimestampToDate(
@@ -37,35 +35,17 @@ const formatDeliveryDate = computed(() => {
       )
     );
   }
-
   return undefined;
 });
 
-const formatDate = (date: Date | null) => {
+const formatDate = (date) => {
   if (date) {
     const months = [
-      "janeiro",
-      "fevereiro",
-      "março",
-      "abril",
-      "maio",
-      "junho",
-      "julho",
-      "agosto",
-      "setembro",
-      "outubro",
-      "novembro",
-      "dezembro",
+      "janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"
     ];
 
     const daysOfWeek = [
-      "domingo",
-      "segunda-feira",
-      "terça-feira",
-      "quarta-feira",
-      "quinta-feira",
-      "sexta-feira",
-      "sábado",
+      "domingo", "segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sábado"
     ];
 
     const dayOfWeek = daysOfWeek[date.getDay()];
@@ -75,7 +55,6 @@ const formatDate = (date: Date | null) => {
 
     return `${currentDay} de ${currentMonth}, ${currentYear} ${dayOfWeek}`;
   }
-
   return null;
 };
 
