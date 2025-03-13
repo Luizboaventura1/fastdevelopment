@@ -28,7 +28,7 @@
   </ModalBackdrop>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import PrimaryText from "@/components/Common/Text/PrimaryText/index.vue";
 import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
 import PrimaryButton from "~/components/Common/Buttons/PrimaryButton.vue";
@@ -37,15 +37,14 @@ import ModalBackdrop from "./ModalBackdrop.vue";
 import Calendar from "../Calendar";
 import CheckBoxButton from "./CheckBoxButton.vue";
 import { useWorkspace } from "~/stores/workspace";
-import type Frame from "~/stores/types/frame";
 import { storeToRefs } from "pinia";
 
-const { frames }: { frames: Ref<Frame[]> } = storeToRefs(useWorkspace());
+const { frames } = storeToRefs(useWorkspace());
 let date = ref(new Date());
-let completeDate = ref<boolean>(false);
+let completeDate = ref(false);
 const currentPageId = Number(useRoute().params.id);
-const frameIndex = useState<number>("frameIndex").value;
-const cardIndex = useState<number>("cardIndex").value;
+const frameIndex = useState("frameIndex").value;
+const cardIndex = useState("cardIndex").value;
 
 const selectDate = () => {
   if (isValidCardReference()) {
@@ -56,10 +55,9 @@ const selectDate = () => {
     }
 
     card.dateFeatures.date = convertTimestampToDate(date.value);
-    card.dateFeatures.complete = false; // reset completion status
+    card.dateFeatures.complete = false;
 
     useWorkspace().updateWorkspaceData();
-
     emit("closeModal");
   }
 };
@@ -86,7 +84,6 @@ const removeDate = () => {
     };
 
     useWorkspace().updateWorkspaceData();
-
     emit("closeModal");
   }
 };
@@ -96,7 +93,7 @@ const getDataFrames = async () => {
     .fetchWorkspaceData()
     .then((data) => {
       if (!frames.value.length) {
-        useWorkspace().frames = data.frames
+        useWorkspace().frames = data.frames;
       }
     });
 };
@@ -106,8 +103,8 @@ const isValidCardReference = () => {
 };
 
 const currentCard = computed(() => {
-  return frames.value[currentPageId].lists[frameIndex].cards[cardIndex]
-})
+  return frames.value[currentPageId].lists[frameIndex].cards[cardIndex];
+});
 
 onBeforeMount(async () => {
   await getDataFrames();
@@ -120,7 +117,5 @@ onBeforeMount(() => {
   }
 });
 
-const emit = defineEmits<{
-  (event: "closeModal"): void;
-}>();
+const emit = defineEmits(["closeModal"]);
 </script>
