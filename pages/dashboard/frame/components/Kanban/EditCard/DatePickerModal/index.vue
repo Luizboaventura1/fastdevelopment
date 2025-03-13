@@ -34,7 +34,7 @@ import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
 import PrimaryButton from "~/components/Common/Buttons/PrimaryButton.vue";
 import ClearButton from "./ClearButton.vue";
 import ModalBackdrop from "./ModalBackdrop.vue";
-import Calendar from "../Calendar";
+import Calendar from "./Calendar";
 import CheckBoxButton from "./CheckBoxButton.vue";
 import { useWorkspace } from "~/stores/workspace";
 import { storeToRefs } from "pinia";
