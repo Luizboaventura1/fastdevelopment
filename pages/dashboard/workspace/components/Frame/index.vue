@@ -73,6 +73,7 @@ import ActionOptionsModal from "~/components/Common/Notifications/Popups/Options
 import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
 import { useRouter } from "#vue-router";
 import { useWorkspace } from "~/stores/workspace";
+import validateFrame from "@/utils/validateFrame"
 
 const router = useRouter();
 

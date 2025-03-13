@@ -34,6 +34,7 @@ import { SpeedInsights } from "@vercel/speed-insights/nuxt";
 import { storeToRefs } from "pinia";
 import InfoBar from "./components/InfoBar.vue";
 import EmptyFrameMessage from "./components/EmptyFrameMessage.vue";
+import getFirstName from "@/utils/getFirstName.js"
 
 let { frames } = storeToRefs(useWorkspace());
 let userName = ref(useCookie("name").value || "");
