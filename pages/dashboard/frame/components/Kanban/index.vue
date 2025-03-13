@@ -43,13 +43,13 @@
             </VueDraggableNext>
           </div>
 
-          <AddCard :listIndex="listId" />
+          <AddCardModal :listIndex="listId" />
         </KanbanList>
       </KanbanListWrapper>
     </VueDraggableNext>
 
     <div class="w-[280px] h-auto pt-4">
-      <AddList class="bg-secondaryColorF" />
+      <AddListModal class="bg-secondaryColorF" />
     </div>
   </div>
 
@@ -74,8 +74,8 @@ import { storeToRefs } from "pinia";
 import { useRoute } from "#vue-router";
 import { useWorkspace } from "@/stores/workspace.js";
 
-import AddCard from "./AddCard.vue";
-import AddList from "./AddList.vue";
+import AddCardModal from "./AddCardModal.vue";
+import AddListModal from "./AddListModal.vue";
 import EditCard from "./EditCard";
 import KanbanCard from "./KanbanCard";
 import KanbanList from "./KanbanList";
