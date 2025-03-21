@@ -1,8 +1,57 @@
+<script setup>
+import { vOnClickOutside } from "@vueuse/components";
+import CloseButton from "@/components/Common/FeedBack/CloseButton.vue";
+import { useTextareaAutosize } from "@vueuse/core";
+import { ref, nextTick } from "vue";
+
+const props = defineProps({
+  buttonName: String,
+  event: Function,
+  space: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const inputValue = ref("");
+const textareaElement = ref(null);
+const isButtonVisible = ref(true);
+const isCardModalVisible = ref(false);
+
+const openCardModal = async () => {
+  if (isButtonVisible.value) {
+    await handleModal.open();
+  } else {
+    handleModal.close();
+  }
+};
+
+const closeModal = () => handleModal.close();
+
+const handleModal = {
+  close: () => {
+    isCardModalVisible.value = false;
+    isButtonVisible.value = true;
+  },
+  open: async () => {
+    isButtonVisible.value = false;
+    isCardModalVisible.value = true;
+
+    await nextTick();
+    if (textareaElement.value) {
+      textareaElement.value.focus();
+    }
+  },
+};
+
+const { textarea, input, triggerResize } = useTextareaAutosize();
+</script>
+
 <template>
   <div class="container-add-new-card rounded-lg">
     <button
       @click="openCardModal"
-      :class="`${cardVisibility}`"
+      :class="{ 'flex': isButtonVisible, 'hidden': !isButtonVisible }"
       class="add-new-card items-center select-none text-zinc-300 text-sm hover:bg-zinc-800 w-full rounded-lg px-4 py-2"
     >
       <svg
@@ -30,21 +79,22 @@
     </button>
     <div
       v-on-click-outside="closeModal"
-      :class="`${cardModalVisibility} ${props.space ? 'p-3' : 'p-0'}`"
+      :class="{ 'flex-1': isCardModalVisible, 'hidden': !isCardModalVisible, 'p-3': props.space, 'p-0': !props.space }"
       class="modal-add-new-card w-full pt-3"
     >
       <textarea
+        ref="textareaElement"
         v-model="inputValue"
         @input="$emit('inputValue', inputValue)"
         @input:resize="triggerResize()"
-        @keydown.enter.prevent
+        @keydown.enter.prevent="props.event"
         placeholder="Descrição..."
-        class="resize-none bg-secondaryColorF placeholder-zinc-400 w-full text-white text-sm px-3 py-2 outline-none ring-transparent focus:ring-primaryColorF ring-1 ring-thirdColorF rounded-md"
+        class="resize-none bg-subSecondaryColorF placeholder-zinc-400 w-full text-white text-sm px-3 py-2 outline-none rounded-lg border border-primaryBorderF focus:border-primaryColorF"
       />
       <div class="button-container flex items-center gap-2 mt-2">
         <button
           @click="props.event"
-          class="select-none text-sm px-4 py-2 w-full rounded-lg text-white bg-subSecondaryColorF ring-1 ring-thirdColorF transition-colors hover:bg-primaryColorF font-medium"
+          class="select-none text-sm px-4 py-2 w-full rounded-lg text-white bg-subSecondaryColorF transition-colors hover:bg-primaryColorF font-medium"
         >
           Adicionar
         </button>
@@ -55,42 +105,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { vOnClickOutside } from "@vueuse/components";
-import CloseButton from "@/components/Common/FeedBack/CloseButton.vue";
-import { useTextareaAutosize } from "@vueuse/core";
-
-let props = defineProps({
-  buttonName: String,
-  event: Function,
-  space: [Boolean, false],
-});
-
-let inputValue = ref();
-
-// show modal to add new card
-
-let cardVisibility = ref("flex");
-let cardModalVisibility = ref("hidden");
-
-const openCardModal = () => {
-  if (cardVisibility.value === "flex") return handleModal.open();
-  else return handleModal.close();
-};
-
-const closeModal = () => handleModal.close();
-
-const handleModal = {
-  close: () => {
-    cardModalVisibility.value = "hidden";
-    cardVisibility.value = "flex";
-  },
-  open: () => {
-    cardVisibility.value = "hidden";
-    cardModalVisibility.value = "flex-1";
-  },
-};
-
-const { textarea, input, triggerResize } = useTextareaAutosize();
-</script>

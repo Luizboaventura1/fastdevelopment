@@ -1,6 +1,6 @@
 <template>
   <div
-    class="card text-textPrimaryColorF p-[6px] select-none text-sm cursor-pointer w-full bg-subSecondaryColorF h-full min-h-[40px] rounded-lg my-2"
+    class="card text-textPrimaryColorF p-[6px] select-none text-sm cursor-pointer w-full bg-subSecondaryColorF h-full min-h-[40px] rounded-lg my-2 border border-thirdColorF hover:border-primaryColorF transition-colors duration-100"
   >
     <nav v-if="props.card.labels.length" class="flex flex-wrap gap-1 p-1">
       <LabelCard
@@ -113,13 +113,3 @@ watch(
   { deep: true }
 );
 </script>
-
-<style scoped lang="scss">
-.card {
-  transition: 0.2s;
-  border: 1px solid rgb(54, 54, 54);
-  &:hover {
-    border: 1px solid rgb(90, 90, 90);
-  }
-}
-</style>

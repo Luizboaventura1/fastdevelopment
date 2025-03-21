@@ -25,15 +25,14 @@
   </button>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { useWorkspace } from "~/stores/workspace";
-import type Frame from "~/stores/types/frame";
 import { storeToRefs } from "pinia";
 
 const currentPageId = Number(useRoute().params.id);
-const frameIndex = useState<number>("frameIndex");
-const cardIndex = useState<number>("cardIndex");
-const { frames }: { frames: Ref<Frame[]> } = storeToRefs(useWorkspace());
+const frameIndex = useState("frameIndex");
+const cardIndex = useState("cardIndex");
+const { frames } = storeToRefs(useWorkspace());
 
 const completeDate = computed(() => {
   return frames.value[currentPageId]?.lists[frameIndex.value]?.cards[
@@ -47,7 +46,7 @@ const completeDateButton = () => {
       cardIndex.value
     ].dateFeatures.complete = !completeDate.value;
 
-    useWorkspace().updateWorkspace();
+    useWorkspace().updateWorkspaceData();
   }
 };
 

@@ -4,12 +4,9 @@
       :list="frames[currentPageId]?.lists || []"
       group="lists"
       class="kanban flex flex-row rounded-md gap-3 p-4 h-full"
-      @change="useWorkspace().updateWorkspace()"
+      @change="useWorkspace().updateWorkspaceData()"
     >
-      <ListWrapper
-        v-for="(list, listId) in frames[currentPageId]?.lists || []"
-        :key="listId"
-      >
+      <KanbanListWrapper v-for="(list, listId) in frames[currentPageId]?.lists || []" :key="listId">
         <KanbanList>
           <KanbanListTitle>
             <input
@@ -21,7 +18,7 @@
             <div class="relative">
               <SettingsButton :event="() => openModalEditList(listId)" />
               <div class="absolute bottom-24 right-0">
-                <ModalEditList
+                <EditListModal
                   v-on-click-outside="closeModalList"
                   :stateModal="list.stateModal"
                   :event="closeModalList"
@@ -35,7 +32,7 @@
             <VueDraggableNext
               v-model="list.cards"
               group="people"
-              @change="useWorkspace().updateWorkspace()"
+              @change="useWorkspace().updateWorkspaceData()"
             >
               <KanbanCard
                 v-for="(card, indexCard) in list.cards"
@@ -46,13 +43,13 @@
             </VueDraggableNext>
           </div>
 
-          <AddNewCardContainer :indexFrame="listId" />
+          <AddCardModal :listIndex="listId" />
         </KanbanList>
-      </ListWrapper>
+      </KanbanListWrapper>
     </VueDraggableNext>
 
-    <div class="add-new-frame w-[280px] h-auto pt-4">
-      <AddNewList />
+    <div class="w-[280px] h-auto pt-4">
+      <AddListModal class="bg-secondaryColorF" />
     </div>
   </div>
 
@@ -77,36 +74,37 @@ import { storeToRefs } from "pinia";
 import { useRoute } from "#vue-router";
 import { useWorkspace } from "@/stores/workspace.js";
 
-import AddNewCardContainer from "./AddNewCardContainer.vue";
-import AddNewList from "./AddNewList.vue";
+import AddCardModal from "./AddCardModal.vue";
+import AddListModal from "./AddListModal.vue";
 import EditCard from "./EditCard";
 import KanbanCard from "./KanbanCard";
 import KanbanList from "./KanbanList";
 import KanbanListTitle from "./KanbanList/KanbanListTitle";
-import ListWrapper from "./KanbanList/ListWrapper.vue";
-import ModalEditList from "./ModalEditList.vue";
+import KanbanListWrapper from "./KanbanList/KanbanListWrapper.vue";
+import EditListModal from "./EditListModal.vue";
 import SettingsButton from "./Buttons/SettingsButton.vue";
 import WarningMessage from "@/components/Common/FeedBack/WarningMessage.vue";
 import { VueDraggableNext } from "vue-draggable-next";
+import validateFrame from "@/utils/validateFrame"
 
 const route = useRoute();
 const currentPageId = useCookie("currentPageId");
-const idRoute = route.params.id;
-currentPageId.value = idRoute;
+const routeId = route.params.id;
+currentPageId.value = routeId;
 
-let { frames } = storeToRefs(useWorkspace());
-let userId = ref("");
-let listAndCardId = ref({ listId: undefined, cardId: undefined });
-let stateWarningMessage = ref(false);
-let warningMessage = ref("");
-let stateModalEditCard = ref(false);
-let frameId = ref();
-let cardId = ref();
+const { frames } = storeToRefs(useWorkspace());
+const userId = ref("");
+const listAndCardId = ref({ listId: undefined, cardId: undefined });
+const stateWarningMessage = ref(false);
+const warningMessage = ref("");
+const stateModalEditCard = ref(false);
+const frameId = ref();
+const cardId = ref();
 let timeoutId = null;
 
 onMounted(async () => {
   await useWorkspace()
-    .workspace()
+    .fetchWorkspaceData()
     .then((data) => {
       userId.value = data.id;
       if (!frames.value.length) {
@@ -126,13 +124,13 @@ const resetModalStateForLists = () => {
 };
 
 const closeModalList = () => {
-  if (frames.value[idRoute]?.lists[listAndCardId.value.listId]) {
-    frames.value[idRoute].lists[listAndCardId.value.listId].stateModal = false;
+  if (frames.value[routeId]?.lists[listAndCardId.value.listId]) {
+    frames.value[routeId].lists[listAndCardId.value.listId].stateModal = false;
   }
 };
 
 const openModalEditList = (indexFrame) => {
-  frames.value[idRoute].lists[indexFrame].stateModal = true;
+  frames.value[routeId].lists[indexFrame].stateModal = true;
   listAndCardId.value.listId = indexFrame;
 };
 
@@ -143,10 +141,11 @@ const controlWarningMessage = {
   },
   close: () => (stateWarningMessage.value = false),
   confirmWarningMessage: () => {
-    useWorkspace().frames[currentPageId.value].lists[
-      listAndCardId.value.listId
-    ].cards.splice(listAndCardId.value.indexCard, 1);
-    useWorkspace().updateWorkspace();
+    useWorkspace().frames[currentPageId.value].lists[listAndCardId.value.listId].cards.splice(
+      listAndCardId.value.indexCard,
+      1
+    );
+    useWorkspace().updateWorkspaceData();
     stateWarningMessage.value = false;
   },
 };
@@ -167,7 +166,7 @@ const updateListName = (listName, listId) => {
     }
     timeoutId = setTimeout(() => {
       useWorkspace().frames[currentPageId.value].lists[listId].title = listName;
-      useWorkspace().updateWorkspace();
+      useWorkspace().updateWorkspaceData();
       timeoutId = null;
     }, debounceTime);
   }
@@ -175,18 +174,7 @@ const updateListName = (listName, listId) => {
 </script>
 
 <style lang="scss" scoped>
-.add-new-frame div {
-  border: 1px solid #393939;
-}
-
 ::-webkit-scrollbar {
-  width: 8px;
-  background-color: rgb(33, 34, 36);
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: rgb(56, 58, 60);
-  border-radius: 10px;
-  border: 2px solid rgb(33, 34, 36);
+  display: none;
 }
 </style>

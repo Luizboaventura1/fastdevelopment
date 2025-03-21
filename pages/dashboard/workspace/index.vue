@@ -27,13 +27,14 @@
 import WorkspaceContainer from "./components/WorkspaceContainer.vue";
 import Greeting from "./components/Greeting.vue";
 import Frame from "./components/Frame";
-import Grid from "./components/Grid/Grid.vue";
+import Grid from "./components/Grid.vue";
 import PrimaryText from "@/components/Common/Text/PrimaryText";
 import { useWorkspace } from "@/stores/workspace";
 import { SpeedInsights } from "@vercel/speed-insights/nuxt";
 import { storeToRefs } from "pinia";
 import InfoBar from "./components/InfoBar.vue";
 import EmptyFrameMessage from "./components/EmptyFrameMessage.vue";
+import getFirstName from "@/utils/getFirstName.js"
 
 let { frames } = storeToRefs(useWorkspace());
 let userName = ref(useCookie("name").value || "");
@@ -83,8 +84,7 @@ const currentDate = () => {
 };
 
 onMounted(async () => {
-  await useWorkspace()
-    .workspace()
+  await useWorkspace().fetchWorkspaceData()
     .then((data) => {
       if (!frames.value.length) {
         frames.value.push(...data.frames);

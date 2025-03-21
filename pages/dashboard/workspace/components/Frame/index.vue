@@ -73,6 +73,7 @@ import ActionOptionsModal from "~/components/Common/Notifications/Popups/Options
 import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
 import { useRouter } from "#vue-router";
 import { useWorkspace } from "~/stores/workspace";
+import validateFrame from "@/utils/validateFrame"
 
 const router = useRouter();
 
@@ -102,7 +103,7 @@ watch(
 const saveNameFrame = () => {
   if (validateFrame(frameName.value)) {
     useWorkspace().frames[props.frameID].title = frameName.value;
-    useWorkspace().updateWorkspace();
+    useWorkspace().updateWorkspaceData();
 
     toggleEditFrameName();
   } else {
@@ -114,7 +115,7 @@ const deleteFrame = () => {
   let frames = useWorkspace().frames;
   frames.splice(props.frameID, 1);
 
-  useWorkspace().updateWorkspace();
+  useWorkspace().updateWorkspaceData();
   toggleSettings();
 };
 

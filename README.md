@@ -1,3 +1,9 @@
+![GitHub repo size](https://img.shields.io/github/repo-size/Luizboaventura1/fastdevelopment?style=for-the-badge)
+![GitHub language count](https://img.shields.io/github/languages/count/Luizboaventura1/fastdevelopment?style=for-the-badge)
+![GitHub forks](https://img.shields.io/github/forks/Luizboaventura1/fastdevelopment?style=for-the-badge)
+![Bitbucket open issues](https://img.shields.io/bitbucket/issues/Luizboaventura1/fastdevelopment?style=for-the-badge)
+![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/Luizboaventura1/fastdevelopment?style=for-the-badge)
+
 <div align="center">
   <img src="./assets/logo-fastdevelopment.png" width="150">
 </div>
@@ -16,10 +22,6 @@ https://github.com/user-attachments/assets/e0a19cc2-5e75-4f72-b585-0e1577b594ae
 
 Link: https://fastdevelopment.vercel.app
 
-### Developer guide 📚
-
-[click here](./docs/developer-guide)
-
 ## 🛠 Technologies
 
 - [Vue.js 3](https://vuejs.org)
@@ -35,7 +37,6 @@ Link: https://fastdevelopment.vercel.app
 
 ## Libs 📚
 
-- [Motion vueuse](https://motion.vueuse.org)
 - [VueUse](https://vueuse.org)
 - [Vue draggable](https://sortablejs.github.io/Vue.Draggable/#/simple)
 

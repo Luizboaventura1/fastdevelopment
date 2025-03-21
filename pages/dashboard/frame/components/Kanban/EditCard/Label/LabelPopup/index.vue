@@ -161,7 +161,7 @@ const deleteLabel = (labelName, color) => {
   frames.value[currentPageId.value].lists = frame.value.lists;
   frames.value[currentPageId.value].labels = frame.value.labels;
 
-  useWorkspace().updateWorkspace();
+  useWorkspace().updateWorkspaceData();
 };
 
 const updateWorkspaceLabels = () => {
@@ -169,7 +169,7 @@ const updateWorkspaceLabels = () => {
     cardId
   ].labels = cardLabels.value;
 
-  useWorkspace().updateWorkspace();
+  useWorkspace().updateWorkspaceData();
 };
 
 const allLabels = computed(() => [
@@ -180,7 +180,7 @@ const hasLabels = ref(allLabels.value.length);
 
 onMounted(() => {
   useWorkspace()
-    .workspace()
+    .fetchWorkspaceData()
     .then((data) => {
       userId.value = data.id;
     });
@@ -199,7 +199,7 @@ onMounted(() => {
 watch(
   frame,
   () => {
-    useWorkspace().updateWorkspace();
+    useWorkspace().updateWorkspaceData();
   },
   { deep: true }
 );

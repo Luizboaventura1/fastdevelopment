@@ -11,6 +11,7 @@
 import AddCardForm from "~/components/Common/Forms/AddCardForm";
 import { useWorkspace } from "@/stores/workspace.js";
 import { storeToRefs } from "pinia";
+import { validateCard } from "@/utils/validateCard";
 
 const currentPageId = useCookie("currentPageId");
 const { frames } = storeToRefs(useWorkspace());
@@ -25,11 +26,11 @@ const listTitle = ref("");
 const addNewList = () => {
   if (validateCard(listTitle.value) && frames.value[currentPageId.value]?.lists) {
     frames.value[currentPageId.value].lists.push({
-      title: listTitle.value, 
+      title: listTitle.value,
       stateModal: false,
       cards: [],
     });
-    useWorkspace().updateWorkspace();
+    useWorkspace().updateWorkspaceData();
   }
 };
 </script>

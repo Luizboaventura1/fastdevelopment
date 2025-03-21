@@ -43,7 +43,7 @@ let warningMessage = ref("");
 
 const deleteList = () => {
   useWorkspace().frames[currentPageId.value].lists.splice(props.listId, 1);
-  useWorkspace().updateWorkspace();
+  useWorkspace().updateWorkspaceData();
 };
 
 const openWarningMessage = (message) => {

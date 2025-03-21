@@ -93,7 +93,7 @@ See another example taking other types of data:
 ```javascript
 onMounted(async () => {
   await useWorkspace()
-    .workspace()
+    .fetchWorkspaceData()
     .then((data) => {
       userEmail.value = data.email;
       userId.value = data.id;

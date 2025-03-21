@@ -76,7 +76,7 @@
     :confirm="confirmWarningMessage"
   />
   <LabelPopup v-if="stateLabelPopup" @closeModal="stateLabelPopup = false" />
-  <DateSelector v-if="stateDatePopup" @closeModal="stateDatePopup = false" />
+  <DatePickerModal v-if="stateDatePopup" @closeModal="stateDatePopup = false" />
 </template>
 
 <script setup>
@@ -87,15 +87,15 @@ import EditCardButton from "./EditCardButton.vue";
 import BinIcon from "@/components/Common/Icons/BinIcon.vue";
 import WarningMessage from "~/components/Common/FeedBack/WarningMessage.vue";
 import Editor from "@/components/Common/Editor";
-import CardDescription from "./CardDescription/index.vue";
+import CardDescription from "./CardDescription";
 import TagIcon from "~/components/Common/Icons/TagIcon.vue";
-import LabelPopup from "./Label/LabelPopup/index.vue";
+import LabelPopup from "./Label/LabelPopup";
 import LabelsInUse from "./Label/LabelsInUse.vue";
 import { useTextareaAutosize } from "@vueuse/core";
 import ErrorMessage from "~/components/Common/ErrorComponents/ErrorMessage.vue";
 import { storeToRefs } from "pinia";
-import DateSelector from "./Date/DateSelector"
-import ShowSelectedDate from "./Date/ShowSelectedDate.vue";
+import DatePickerModal from "./DatePickerModal"
+import ShowSelectedDate from "./ShowSelectedDate";
 import CalendarIcon from "~/components/Common/Icons/CalendarIcon.vue";
 
 const currentPageId = useCookie("currentPageId");
@@ -114,7 +114,7 @@ let stateDatePopup = ref(false)
 
 onMounted(async () => {
   await useWorkspace()
-    .workspace()
+    .fetchWorkspaceData()
     .then((data) => {
       userId.value = data.id;
     });
@@ -140,7 +140,7 @@ const updateCardDetails = async () => {
         props.indexCard
       ].description = description.value;
 
-      useWorkspace().updateWorkspace();
+      useWorkspace().updateWorkspaceData();
     } else {
       titleErrorMessage.value = "Mínimo de 1 caracter!";
     }
