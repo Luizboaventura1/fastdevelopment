@@ -75,7 +75,7 @@ import BurguerButton from "../components/features/dashboard/BurguerButton.vue";
 import Loading from "~/components/common/Loadings/Loading.vue";
 import DividerDefault from "~/components/common/Dividers/DividerDefault.vue";
 import AccountModal from "../components/features/dashboard/AccountModal.vue";
-import NotificationModal from "~/components/common/Notifications/Popups/NotificationModal";
+import NotificationModal from "~/components/common/Notifications/Popups/NotificationModal/index.vue";
 import ItemAside from "../components/features/dashboard/ItemAside.vue";
 import HomeIcon from "~/components/common/Icons/HomeIcon.vue";
 import DropdownProjets from "@/components/common/Dropdown/DropdownProjects";
