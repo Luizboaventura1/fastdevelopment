@@ -6,6 +6,6 @@
 </template>
 
 <script setup>
-import Kanban from './components/Kanban/index.vue'
+import Kanban from '@/components/features/frame/Kanban/index.vue'
 import { SpeedInsights } from "@vercel/speed-insights/nuxt"
 </script>

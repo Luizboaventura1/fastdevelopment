@@ -100,7 +100,7 @@
 </template>
 
 <script setup>
-import SecondaryButton from "~/components/Common/Buttons/SecondaryButton.vue";
+import SecondaryButton from "@/components/common/Buttons/SecondaryButton.vue";
 import { SpeedInsights } from "@vercel/speed-insights/nuxt";
 
 useHead({

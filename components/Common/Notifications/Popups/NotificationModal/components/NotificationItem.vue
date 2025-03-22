@@ -20,8 +20,8 @@
 </template>
 
 <script setup>
-import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
-import LogoFastDevelopment from "~/components/Common/Icons/LogoFastDevelopment.vue";
+import CloseButton from "~/components/common/FeedBack/CloseButton.vue";
+import LogoFastDevelopment from "~/components/common/Icons/LogoFastDevelopment.vue";
 
 let props = defineProps({
   title: String,
