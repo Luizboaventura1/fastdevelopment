@@ -34,12 +34,12 @@
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import { collection, query, where, getDocs, getFirestore } from "firebase/firestore";
 import OptionsModal from "@/components/Common/Notifications/Popups/OptionsModal";
-import ActionOptionsModal from "@/components/Common/Notifications/Popups/OptionsModal/components/ActionOptionsModal.vue";
-import TitleOptionsModal from "@/components/Common/Notifications/Popups/OptionsModal/components/TitleOptionsModal.vue";
-import CloseButton from "@/components/Common/FeedBack/CloseButton.vue";
-import Loading from "@/components/Common/Loadings/Loading.vue";
+import ActionOptionsModal from "~/components/Common/Notifications/Popups/OptionsModal/components/ActionOptionsModal.vue";
+import TitleOptionsModal from "~/components/Common/Notifications/Popups/OptionsModal/components/TitleOptionsModal.vue";
+import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
+import Loading from "~/components/Common/Loadings/Loading.vue";
 import { signOut } from "firebase/auth";
-import WarningMessage from "@/components/Common/FeedBack/WarningMessage.vue";
+import WarningMessage from "~/components/Common/FeedBack/WarningMessage.vue";
 import { useWorkspace } from "~/stores/workspace";
 
 let props = defineProps({

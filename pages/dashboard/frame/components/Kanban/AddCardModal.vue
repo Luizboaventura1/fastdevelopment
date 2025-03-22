@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import AddCardForm from "@/components/Common/Forms/AddCardForm/index.vue";
+import AddCardForm from "~/components/Common/Forms/AddCardForm/index.vue";
 import { useWorkspace } from "@/stores/workspace.js";
 import { storeToRefs } from "pinia";
 import { validateCard } from "@/utils/validateCard";

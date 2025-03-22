@@ -24,11 +24,11 @@
 
 <script setup>
 import { useWorkspace } from "@/stores/workspace.js";
-import WarningMessage from "@/components/Common/FeedBack/WarningMessage.vue";
+import WarningMessage from "~/components/Common/FeedBack/WarningMessage.vue";
 import OptionsModal from "@/components/Common/Notifications/Popups/OptionsModal";
-import ActionOptionsModal from "@/components/Common/Notifications/Popups/OptionsModal/components/ActionOptionsModal.vue";
-import TitleOptionsModal from "@/components/Common/Notifications/Popups/OptionsModal/components/TitleOptionsModal.vue";
-import CloseButton from "@/components/Common/FeedBack/CloseButton.vue";
+import ActionOptionsModal from "~/components/Common/Notifications/Popups/OptionsModal/components/ActionOptionsModal.vue";
+import TitleOptionsModal from "~/components/Common/Notifications/Popups/OptionsModal/components/TitleOptionsModal.vue";
+import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
 
 const currentPageId = useCookie("currentPageId");
 

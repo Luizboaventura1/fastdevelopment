@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import PrimaryText from "@/components/Common/Text/PrimaryText/index.vue";
+import PrimaryText from "~/components/Common/Text/PrimaryText/index.vue";
 import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
 import PrimaryButton from "~/components/Common/Buttons/PrimaryButton.vue";
 import ClearButton from "./ClearButton.vue";

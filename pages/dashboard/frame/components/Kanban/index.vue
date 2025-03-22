@@ -83,7 +83,7 @@ import KanbanListTitle from "./KanbanList/KanbanListTitle";
 import KanbanListWrapper from "./KanbanList/KanbanListWrapper.vue";
 import EditListModal from "./EditListModal.vue";
 import SettingsButton from "./Buttons/SettingsButton.vue";
-import WarningMessage from "@/components/Common/FeedBack/WarningMessage.vue";
+import WarningMessage from "~/components/Common/FeedBack/WarningMessage.vue";
 import { VueDraggableNext } from "vue-draggable-next";
 import validateFrame from "@/utils/validateFrame"
 

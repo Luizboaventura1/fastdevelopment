@@ -63,7 +63,7 @@
 import { useTextareaAutosize } from "@vueuse/core";
 import { useWorkspace } from "~/stores/workspace";
 import LabelCard from "./LabelCard.vue";
-import DescriptionIcon from "@/components/Common/Icons/DescriptionIcon.vue";
+import DescriptionIcon from "~/components/Common/Icons/DescriptionIcon.vue";
 import CalendarIcon from "~/components/Common/Icons/CalendarIcon.vue";
 import { storeToRefs } from "pinia";
 

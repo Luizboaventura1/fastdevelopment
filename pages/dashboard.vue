@@ -68,7 +68,7 @@
 </template>
 
 <script setup>
-import LogoutIcon from "@/components/Common/Icons/LogoutIcon.vue";
+import LogoutIcon from "~/components/Common/Icons/LogoutIcon.vue";
 import { signOut, getAuth, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "#vue-router";
 import BurguerButton from "./dashboard/components/BurguerButton.vue";
@@ -79,7 +79,7 @@ import NotificationModal from "~/components/Common/Notifications/Popups/Notifica
 import ItemAside from "./dashboard/components/ItemAside.vue";
 import HomeIcon from "~/components/Common/Icons/HomeIcon.vue";
 import DropdownProjets from "@/components/Common/Dropdown/DropdownProjects";
-import DropdownItem from "@/components/Common/Dropdown/DropdownProjects/DropdownItem.vue";
+import DropdownItem from "~/components/Common/Dropdown/DropdownProjects/DropdownItem.vue";
 import ControlPanelIcon from "~/components/Common/Icons/ControlPanelIcon.vue";
 import { useWorkspace } from "@/stores/workspace";
 import SearchEngine from "@/components/Common/Search/SearchEngine";

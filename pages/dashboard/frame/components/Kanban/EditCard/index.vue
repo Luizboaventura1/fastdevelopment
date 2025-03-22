@@ -81,10 +81,10 @@
 
 <script setup>
 import { vOnClickOutside } from "@vueuse/components";
-import CloseButton from "@/components/Common/FeedBack/CloseButton.vue";
+import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
 import { useWorkspace } from "~/stores/workspace";
 import EditCardButton from "./EditCardButton.vue";
-import BinIcon from "@/components/Common/Icons/BinIcon.vue";
+import BinIcon from "~/components/Common/Icons/BinIcon.vue";
 import WarningMessage from "~/components/Common/FeedBack/WarningMessage.vue";
 import Editor from "@/components/Common/Editor";
 import CardDescription from "./CardDescription";
