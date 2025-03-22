@@ -74,16 +74,16 @@ import { storeToRefs } from "pinia";
 import { useRoute } from "#vue-router";
 import { useWorkspace } from "@/stores/workspace.js";
 
-import AddCardModal from "./AddCardModal.vue";
-import AddListModal from "./AddListModal.vue";
+import AddCardModal from "@/components/features/frame/Kanban/AddCardModal.vue";
+import AddListModal from "@/components/features/frame/Kanban/AddListModal.vue";
 import EditCard from "./EditCard";
 import KanbanCard from "./KanbanCard";
 import KanbanList from "./KanbanList";
 import KanbanListTitle from "./KanbanList/KanbanListTitle";
 import KanbanListWrapper from "./KanbanList/KanbanListWrapper.vue";
-import EditListModal from "./EditListModal.vue";
-import SettingsButton from "./Buttons/SettingsButton.vue";
-import WarningMessage from "~/components/Common/FeedBack/WarningMessage.vue";
+import EditListModal from "@/components/features/frame/Kanban/EditListModal.vue";
+import SettingsButton from "@/components/features/frame/Kanban/Buttons/SettingsButton.vue";
+import WarningMessage from "@/components/common/FeedBack/WarningMessage.vue";
 import { VueDraggableNext } from "vue-draggable-next";
 import validateFrame from "@/utils/validateFrame"
 

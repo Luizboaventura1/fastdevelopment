@@ -12,5 +12,5 @@
 </template>
 
 <script setup>
-import SecondaryText from "@/components/Common/Text/SecondaryText"
+import SecondaryText from "@/components/common/Text/SecondaryText"
 </script>
