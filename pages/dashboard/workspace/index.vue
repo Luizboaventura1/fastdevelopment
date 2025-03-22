@@ -24,16 +24,16 @@
 </template>
 
 <script setup>
-import WorkspaceContainer from "./components/WorkspaceContainer.vue";
-import Greeting from "./components/Greeting.vue";
-import Frame from "./components/Frame";
-import Grid from "./components/Grid.vue";
-import PrimaryText from "@/components/Common/Text/PrimaryText";
 import { useWorkspace } from "@/stores/workspace";
 import { SpeedInsights } from "@vercel/speed-insights/nuxt";
 import { storeToRefs } from "pinia";
-import InfoBar from "./components/InfoBar.vue";
-import EmptyFrameMessage from "./components/EmptyFrameMessage.vue";
+import WorkspaceContainer from "@/components/features/workspace/WorkspaceContainer.vue";
+import Greeting from "@/components/features/workspace/Greeting.vue";
+import Frame from "@/components/features/workspace/Frame";
+import Grid from "@/components/features/workspace/Grid.vue";
+import PrimaryText from "@/components/common/Text/PrimaryText";
+import InfoBar from "@/components/features/workspace/InfoBar.vue";
+import EmptyFrameMessage from "@/components/features/workspace/EmptyFrameMessage.vue";
 import getFirstName from "@/utils/getFirstName.js"
 
 let { frames } = storeToRefs(useWorkspace());

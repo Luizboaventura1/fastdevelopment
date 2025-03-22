@@ -68,26 +68,26 @@
 </template>
 
 <script setup>
-import LogoutIcon from "@/components/Common/Icons/LogoutIcon.vue";
+import LogoutIcon from "@/components/common/Icons/LogoutIcon.vue";
 import { signOut, getAuth, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "#vue-router";
-import BurguerButton from "./dashboard/components/BurguerButton.vue";
-import Loading from "~/components/Common/Loadings/Loading.vue";
-import DividerDefault from "~/components/Common/Dividers/DividerDefault.vue";
-import AccountModal from "./dashboard/components/AccountModal.vue";
-import NotificationModal from "~/components/Common/Notifications/Popups/NotificationModal";
-import ItemAside from "./dashboard/components/ItemAside.vue";
-import HomeIcon from "~/components/Common/Icons/HomeIcon.vue";
-import DropdownProjets from "@/components/Common/Dropdown/DropdownProjects";
-import DropdownItem from "@/components/Common/Dropdown/DropdownProjects/DropdownItem.vue";
-import ControlPanelIcon from "~/components/Common/Icons/ControlPanelIcon.vue";
+import BurguerButton from "../components/features/dashboard/BurguerButton.vue";
+import Loading from "~/components/common/Loadings/Loading.vue";
+import DividerDefault from "~/components/common/Dividers/DividerDefault.vue";
+import AccountModal from "../components/features/dashboard/AccountModal.vue";
+import NotificationModal from "~/components/common/Notifications/Popups/NotificationModal";
+import ItemAside from "../components/features/dashboard/ItemAside.vue";
+import HomeIcon from "~/components/common/Icons/HomeIcon.vue";
+import DropdownProjets from "@/components/common/Dropdown/DropdownProjects";
+import DropdownItem from "@/components/common/Dropdown/DropdownProjects/DropdownItem.vue";
+import ControlPanelIcon from "~/components/common/Icons/ControlPanelIcon.vue";
 import { useWorkspace } from "@/stores/workspace";
-import SearchEngine from "@/components/Common/Search/SearchEngine";
+import SearchEngine from "@/components/common/Search/SearchEngine";
 import { SpeedInsights } from "@vercel/speed-insights/nuxt";
 import { storeToRefs } from "pinia";
-import AddFrameButton from "./dashboard/components/AddFrameButton.vue";
-import PrimaryText from "@/components/Common/Text/PrimaryText";
-import AddFrameModal from "./dashboard/components/AddFrameModal.vue";
+import AddFrameButton from "../components/features/dashboard/AddFrameButton.vue";
+import PrimaryText from "@/components/common/Text/PrimaryText";
+import AddFrameModal from "../components/features/dashboard/AddFrameModal.vue";
 
 definePageMeta({
   middleware: "auth",

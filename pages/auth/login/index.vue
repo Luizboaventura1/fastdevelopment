@@ -19,7 +19,7 @@
   </header>
 
   <Loading :visibility="loading" />
-  <Toast :toast="toast">
+  <Toast :toast="[{}]">
     <template #icon>
       <Alert size="24" />
     </template>
@@ -28,11 +28,11 @@
 
 <script setup>
 import { signInWithPopup, getAuth, GoogleAuthProvider } from "firebase/auth";
-import GoogleButton from "../components/GoogleButton.vue";
+import GoogleButton from "@/components/features/auth/GoogleButton.vue";
 import { useRouter } from "#vue-router";
-import Loading from "~/components/Common/Loadings/Loading.vue";
-import Toast from "@/components/Common/Notifications/Toast"
-import Alert from "~/components/Common/Icons/Alert.vue";
+import Loading from "~/components/common/Loadings/Loading.vue";
+import Toast from "@/components/common/Notifications/Toast"
+import Alert from "~/components/common/Icons/Alert.vue";
 import useToast from "@/utils/useToast"
 
 const auth = getAuth();
@@ -51,7 +51,6 @@ const loginWithGoogle = async () => {
     if (result.user) {
       const { uid, email, displayName } = result.user;
 
-      // create token
       const logged = useCookie("token");
       logged.value = true;
 
@@ -59,15 +58,15 @@ const loginWithGoogle = async () => {
         await addUserInFirestore(displayName, email, uid);
       }
 
-      // go to dashboard
       router.push("/dashboard/workspace");
     }
   } catch (error) {
-    loading.value = false;
     toast.add({
       title: 'Verifique sua conexão!',
       timeout: 2500
     })
+  } finally {
+    loading.value = false;
   }
 };
 
