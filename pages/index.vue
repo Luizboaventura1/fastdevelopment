@@ -126,8 +126,8 @@ import Section from "@/components/features/home/Section.vue";
 import BuyMeACoffe from "@/components/common/Buttons/BuyMeACoffe.vue";
 import Header from "@/components/features/home/Header.vue";
 import Main from "@/components/features/home/Main.vue";
-import MainTitle from "@/components/common/Text/MainTitle";
-import SecondaryText from "@/components/common/Text/SecondaryText";
+import MainTitle from "@/components/common/Text/MainTitle/index.vue";
+import SecondaryText from "@/components/common/Text/SecondaryText/index.vue";
 import PrimaryButton from "@/components/common/Buttons/PrimaryButton.vue";
 
 let router = useRouter();
