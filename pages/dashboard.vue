@@ -85,7 +85,7 @@ import DropdownItem from "@/components/common/Dropdown/DropdownProjects/Dropdown
 import ControlPanelIcon from "~/components/common/Icons/ControlPanelIcon.vue";
 import SearchEngine from "@/components/common/Search/SearchEngine/index.vue";
 import AddFrameButton from "../components/features/dashboard/AddFrameButton.vue";
-import PrimaryText from "@/components/common/Text/PrimaryText";
+import PrimaryText from "@/components/common/Text/PrimaryText/index.vue";
 import AddFrameModal from "../components/features/dashboard/AddFrameModal.vue";
 import LogoutIcon from "@/components/common/Icons/LogoutIcon.vue";
 
