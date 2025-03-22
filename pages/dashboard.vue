@@ -78,7 +78,7 @@ import AccountModal from "../components/features/dashboard/AccountModal.vue";
 import NotificationModal from "~/components/common/Notifications/Popups/NotificationModal/index.vue";
 import ItemAside from "../components/features/dashboard/ItemAside.vue";
 import HomeIcon from "~/components/common/Icons/HomeIcon.vue";
-import DropdownProjets from "@/components/common/Dropdown/DropdownProjects";
+import DropdownProjets from "@/components/common/Dropdown/DropdownProjects/index.vue";
 import DropdownItem from "@/components/common/Dropdown/DropdownProjects/DropdownItem.vue";
 import ControlPanelIcon from "~/components/common/Icons/ControlPanelIcon.vue";
 import { useWorkspace } from "@/stores/workspace";
