@@ -123,7 +123,7 @@ import { getAuth } from "firebase/auth";
 import { SpeedInsights } from "@vercel/speed-insights/nuxt";
 import SectionBenefits from "@/components/features/home/SectionBenefits.vue";
 import Section from "@/components/features/home/Section.vue";
-import BuyMeACoffe from "@/components/common/Buttons/BuyMeACoffe.vue";
+import BuyMeACoffe from "~/components/common/Buttons/BuyMeACoffe.vue";
 import Header from "@/components/features/home/Header.vue";
 import Main from "@/components/features/home/Main.vue";
 import MainTitle from "@/components/common/Text/MainTitle/index.vue";
