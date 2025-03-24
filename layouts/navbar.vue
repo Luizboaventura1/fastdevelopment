@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import LoginButton from '@/pages/home/LoginButton.vue';
+import LoginButton from '~/components/Features/home/LoginButton.vue';
 import LogoFastDevelopment from '../components/Common/Icons/LogoFastDevelopment.vue'
 import { useRouter } from '#vue-router';
 
