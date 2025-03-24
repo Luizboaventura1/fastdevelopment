@@ -28,7 +28,7 @@
 
 <script setup>
 import { signInWithPopup, getAuth, GoogleAuthProvider } from "firebase/auth";
-import GoogleButton from "../components/GoogleButton.vue";
+import GoogleButton from "@/components/Features/auth/GoogleButton.vue";
 import { useRouter } from "#vue-router";
 import Loading from "~/components/Common/Loadings/Loading.vue";
 import Toast from "@/components/Common/Notifications/Toast"
