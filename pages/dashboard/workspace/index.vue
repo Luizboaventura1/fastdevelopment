@@ -10,11 +10,7 @@
       <InfoBar />
     </WorkspaceContainer>
     <Grid v-if="frames.length" col="2">
-      <Frame
-        v-for="(frame, index) in frames"
-        :key="index"
-        :frameID="String(index)"
-      >
+      <Frame v-for="(frame, index) in frames" :key="index" :frameID="String(index)">
         <PrimaryText lg class="truncate"> {{ frame.title }} </PrimaryText>
       </Frame>
     </Grid>
@@ -24,17 +20,17 @@
 </template>
 
 <script setup>
-import WorkspaceContainer from "./components/WorkspaceContainer.vue";
-import Greeting from "./components/Greeting.vue";
-import Frame from "./components/Frame";
-import Grid from "./components/Grid.vue";
-import PrimaryText from "@/components/Common/Text/PrimaryText";
 import { useWorkspace } from "@/stores/workspace";
 import { SpeedInsights } from "@vercel/speed-insights/nuxt";
 import { storeToRefs } from "pinia";
-import InfoBar from "./components/InfoBar.vue";
-import EmptyFrameMessage from "./components/EmptyFrameMessage.vue";
-import getFirstName from "@/utils/getFirstName.js"
+import WorkspaceContainer from "@/components/features/workspace/WorkspaceContainer.vue";
+import Greeting from "@/components/features/workspace/Greeting.vue";
+import Frame from "@/components/features/workspace/Frame/index.vue";
+import Grid from "@/components/features/workspace/Grid.vue";
+import PrimaryText from "~/components/common/Text/PrimaryText/index.vue";
+import InfoBar from "@/components/features/workspace/InfoBar.vue";
+import EmptyFrameMessage from "@/components/features/workspace/EmptyFrameMessage.vue";
+import getFirstName from "@/utils/getFirstName.js";
 
 let { frames } = storeToRefs(useWorkspace());
 let userName = ref(useCookie("name").value || "");
@@ -84,7 +80,8 @@ const currentDate = () => {
 };
 
 onMounted(async () => {
-  await useWorkspace().fetchWorkspaceData()
+  await useWorkspace()
+    .fetchWorkspaceData()
     .then((data) => {
       if (!frames.value.length) {
         frames.value.push(...data.frames);

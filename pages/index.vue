@@ -118,17 +118,17 @@
 </template>
 
 <script setup>
-import BuyMeACoffe from "@/components/Common/Buttons/BuyMeACoffe.vue";
-import Header from "./home/Header.vue";
-import Main from "./home/Main.vue";
 import { onAuthStateChanged } from "firebase/auth";
 import { getAuth } from "firebase/auth";
-import MainTitle from "@/components/Common/Text/MainTitle";
-import SecondaryText from "@/components/Common/Text/SecondaryText";
-import PrimaryButton from "@/components/Common/Buttons/PrimaryButton.vue";
 import { SpeedInsights } from "@vercel/speed-insights/nuxt";
-import SectionBenefits from "./home/SectionBenefits.vue";
-import Section from "./home/Section.vue";
+import SectionBenefits from "@/components/features/home/SectionBenefits.vue";
+import Section from "@/components/features/home/Section.vue";
+import BuyMeACoffe from "~/components/common/Buttons/BuyMeACoffe.vue";
+import Header from "@/components/features/home/Header.vue";
+import Main from "@/components/features/home/Main.vue";
+import MainTitle from "~/components/common/Text/MainTitle/index.vue";
+import SecondaryText from "~/components/common/Text/SecondaryText/index.vue";
+import PrimaryButton from "~/components/common/Buttons/PrimaryButton.vue";
 
 let router = useRouter();
 const auth = getAuth();
