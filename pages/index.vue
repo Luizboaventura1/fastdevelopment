@@ -119,16 +119,16 @@
 
 <script setup>
 import BuyMeACoffe from "@/components/Common/Buttons/BuyMeACoffe.vue";
-import Header from "./home/Header.vue";
-import Main from "./home/Main.vue";
+import Header from "../components/Features/home/Header.vue";
+import Main from "../components/Features/home/Main.vue";
 import { onAuthStateChanged } from "firebase/auth";
 import { getAuth } from "firebase/auth";
 import MainTitle from "@/components/Common/Text/MainTitle";
 import SecondaryText from "@/components/Common/Text/SecondaryText";
 import PrimaryButton from "@/components/Common/Buttons/PrimaryButton.vue";
 import { SpeedInsights } from "@vercel/speed-insights/nuxt";
-import SectionBenefits from "./home/SectionBenefits.vue";
-import Section from "./home/Section.vue";
+import SectionBenefits from "../components/Features/home/SectionBenefits.vue";
+import Section from "../components/Features/home/Section.vue";
 
 let router = useRouter();
 const auth = getAuth();
