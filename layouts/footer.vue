@@ -54,5 +54,5 @@
 </template>
 
 <script setup>
-import LogoFastDevelopment from '../components/common/Icons/LogoFastDevelopment.vue';
+import LogoFastDevelopment from '../components/Common/Icons/LogoFastDevelopment.vue';
 </script>

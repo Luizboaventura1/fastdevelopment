@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import AddCardForm from "~/components/common/Forms/AddCardForm";
+import AddCardForm from "~/components/Common/Forms/AddCardForm";
 import { useWorkspace } from "@/stores/workspace.js";
 import { storeToRefs } from "pinia";
 import { validateCard } from "@/utils/validateCard";

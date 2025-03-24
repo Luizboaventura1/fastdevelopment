@@ -1,6 +1,6 @@
 <script setup>
 import { vOnClickOutside } from "@vueuse/components";
-import CloseButton from "@/components/common/FeedBack/CloseButton.vue";
+import CloseButton from "@/components/Common/FeedBack/CloseButton.vue";
 import { useTextareaAutosize } from "@vueuse/core";
 import { ref, nextTick } from "vue";
 

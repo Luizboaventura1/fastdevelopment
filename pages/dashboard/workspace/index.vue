@@ -27,7 +27,7 @@ import WorkspaceContainer from "@/components/features/workspace/WorkspaceContain
 import Greeting from "@/components/features/workspace/Greeting.vue";
 import Frame from "@/components/features/workspace/Frame/index.vue";
 import Grid from "@/components/features/workspace/Grid.vue";
-import PrimaryText from "~/components/common/Text/PrimaryText/index.vue";
+import PrimaryText from "~/components/Common/Text/PrimaryText/index.vue";
 import InfoBar from "@/components/features/workspace/InfoBar.vue";
 import EmptyFrameMessage from "@/components/features/workspace/EmptyFrameMessage.vue";
 import getFirstName from "@/utils/getFirstName.js";

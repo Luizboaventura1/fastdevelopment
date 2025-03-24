@@ -80,12 +80,12 @@
 </template>
 
 <script setup>
-import PrimaryText from "@/components/common/Text/PrimaryText";
-import SecondaryText from "@/components/common/Text/SecondaryText";
-import CloseButton from "~/components/common/FeedBack/CloseButton.vue";
+import PrimaryText from "@/components/Common/Text/PrimaryText";
+import SecondaryText from "@/components/Common/Text/SecondaryText";
+import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
 import SingleColor from "./SelectColor/SingleColor.vue";
 import Checkbox from "./Checkbox.vue";
-import WarningMessage from "~/components/common/FeedBack/WarningMessage.vue";
+import WarningMessage from "~/components/Common/FeedBack/WarningMessage.vue";
 import CreateNewLabel from "./CreateNewLabel/index.vue";
 import { useWorkspace } from "~/stores/workspace";
 

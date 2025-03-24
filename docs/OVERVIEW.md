@@ -56,12 +56,12 @@ Then just create a document called `users` in firestore and you will be able to 
   - Here are all the project routes
 #### `/middleware`
   - Control the routes that the user can access in this folder
-#### `/components/common`
+#### `/components/Common`
   - Global components
 
 ## Folder Structure
 
-The `components/common` folder contains all the components used throughout the application, each feature will have its own `/components` folder if that component is very specific and will not be used again.
+The `components/Common` folder contains all the components used throughout the application, each feature will have its own `/components` folder if that component is very specific and will not be used again.
 
 ### Component specific folder
 
@@ -77,7 +77,7 @@ The `components/common` folder contains all the components used throughout the a
   - **/dashboard**
     - **/components**
 
-Just follow this pattern for specific components, otherwise throw everything in the `/components/common` folder
+Just follow this pattern for specific components, otherwise throw everything in the `/components/Common` folder
 
 ## How to manipulate user data?
 

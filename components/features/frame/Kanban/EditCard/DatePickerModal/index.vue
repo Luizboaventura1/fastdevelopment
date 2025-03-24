@@ -29,9 +29,9 @@
 </template>
 
 <script setup>
-import PrimaryText from "~/components/common/Text/PrimaryText/index.vue";
-import CloseButton from "~/components/common/FeedBack/CloseButton.vue";
-import PrimaryButton from "~/components/common/Buttons/PrimaryButton.vue";
+import PrimaryText from "~/components/Common/Text/PrimaryText/index.vue";
+import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
+import PrimaryButton from "~/components/Common/Buttons/PrimaryButton.vue";
 import ClearButton from "./ClearButton.vue";
 import ModalBackdrop from "./ModalBackdrop.vue";
 import Calendar from "./Calendar";

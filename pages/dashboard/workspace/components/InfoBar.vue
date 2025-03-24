@@ -27,7 +27,7 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import { useWorkspace } from "~/stores/workspace";
-import PrimaryText from "@/components/common/Text/PrimaryText";
+import PrimaryText from "@/components/Common/Text/PrimaryText";
 
 let { frames } = storeToRefs(useWorkspace());
 

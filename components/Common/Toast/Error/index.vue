@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import Error from "@/components/common/Icons/Error.vue";
+import Error from "@/components/Common/Icons/Error.vue";
 
 let props = defineProps({
   message: String,

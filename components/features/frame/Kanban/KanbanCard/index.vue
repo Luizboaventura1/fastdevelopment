@@ -63,8 +63,8 @@
 import { useTextareaAutosize } from "@vueuse/core";
 import { useWorkspace } from "~/stores/workspace";
 import LabelCard from "./LabelCard.vue";
-import DescriptionIcon from "~/components/common/Icons/DescriptionIcon.vue";
-import CalendarIcon from "~/components/common/Icons/CalendarIcon.vue";
+import DescriptionIcon from "~/components/Common/Icons/DescriptionIcon.vue";
+import CalendarIcon from "~/components/Common/Icons/CalendarIcon.vue";
 import { storeToRefs } from "pinia";
 
 const props = defineProps({

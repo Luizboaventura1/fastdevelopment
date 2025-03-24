@@ -81,22 +81,22 @@
 
 <script setup>
 import { vOnClickOutside } from "@vueuse/components";
-import CloseButton from "~/components/common/FeedBack/CloseButton.vue";
+import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
 import { useWorkspace } from "~/stores/workspace";
 import EditCardButton from "./EditCardButton.vue";
-import BinIcon from "~/components/common/Icons/BinIcon.vue";
-import WarningMessage from "~/components/common/FeedBack/WarningMessage.vue";
-import Editor from "@/components/common/Editor";
+import BinIcon from "~/components/Common/Icons/BinIcon.vue";
+import WarningMessage from "~/components/Common/FeedBack/WarningMessage.vue";
+import Editor from "@/components/Common/Editor";
 import CardDescription from "./CardDescription";
-import TagIcon from "~/components/common/Icons/TagIcon.vue";
+import TagIcon from "~/components/Common/Icons/TagIcon.vue";
 import LabelPopup from "./Label/LabelPopup";
 import LabelsInUse from "./Label/LabelsInUse.vue";
 import { useTextareaAutosize } from "@vueuse/core";
-import ErrorMessage from "~/components/common/ErrorComponents/ErrorMessage.vue";
+import ErrorMessage from "~/components/Common/ErrorComponents/ErrorMessage.vue";
 import { storeToRefs } from "pinia";
 import DatePickerModal from "./DatePickerModal"
 import ShowSelectedDate from "./ShowSelectedDate";
-import CalendarIcon from "~/components/common/Icons/CalendarIcon.vue";
+import CalendarIcon from "~/components/Common/Icons/CalendarIcon.vue";
 
 const currentPageId = useCookie("currentPageId");
 const { textarea, input, triggerResize } = useTextareaAutosize();

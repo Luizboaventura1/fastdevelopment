@@ -19,7 +19,7 @@
 
 <script setup>
 import LoginButton from '@/components/features/home/LoginButton.vue';
-import LogoFastDevelopment from '../components/common/Icons/LogoFastDevelopment.vue'
+import LogoFastDevelopment from '../components/Common/Icons/LogoFastDevelopment.vue'
 import { useRouter } from '#vue-router';
 
 const router = useRouter()

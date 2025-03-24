@@ -57,7 +57,7 @@
 </template>
 
 <script setup>
-import PrimaryButton from "@/components/common/Buttons/PrimaryButton.vue";
+import PrimaryButton from "@/components/Common/Buttons/PrimaryButton.vue";
 import SecondaryButton from "../Buttons/SecondaryButton.vue";
 
 const props = defineProps({

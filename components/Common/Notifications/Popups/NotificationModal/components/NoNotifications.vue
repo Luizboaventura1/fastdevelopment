@@ -10,8 +10,8 @@
 </template>
 
 <script setup>
-import EmptyBoxIcon from "~/components/common/Icons/EmptyBoxIcon.vue";
-import PrimaryText from "@/components/common/Text/PrimaryText";
+import EmptyBoxIcon from "~/components/Common/Icons/EmptyBoxIcon.vue";
+import PrimaryText from "@/components/Common/Text/PrimaryText";
 
 defineProps({
   state: Boolean,

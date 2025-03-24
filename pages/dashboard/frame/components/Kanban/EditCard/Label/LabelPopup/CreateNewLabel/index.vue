@@ -61,11 +61,11 @@
 </template>
 
 <script setup>
-import ErrorMessage from "~/components/common/ErrorComponents/ErrorMessage.vue";
+import ErrorMessage from "~/components/Common/ErrorComponents/ErrorMessage.vue";
 import SelectColor from "../SelectColor/index.vue";
 import SingleColor from "../SelectColor/SingleColor.vue";
-import PrimaryButton from "~/components/common/Buttons/PrimaryButton.vue";
-import PrimaryText from "~/components/common/Text/PrimaryText/index.vue";
+import PrimaryButton from "~/components/Common/Buttons/PrimaryButton.vue";
+import PrimaryText from "~/components/Common/Text/PrimaryText/index.vue";
 import { useWorkspace } from "~/stores/workspace";
 
 const MAX_LABEL_LENGTH = 50;

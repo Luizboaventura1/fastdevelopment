@@ -123,12 +123,12 @@ import { getAuth } from "firebase/auth";
 import { SpeedInsights } from "@vercel/speed-insights/nuxt";
 import SectionBenefits from "@/components/features/home/SectionBenefits.vue";
 import Section from "@/components/features/home/Section.vue";
-import BuyMeACoffe from "~/components/common/Buttons/BuyMeACoffe.vue";
+import BuyMeACoffe from "~/components/Common/Buttons/BuyMeACoffe.vue";
 import Header from "@/components/features/home/Header.vue";
 import Main from "@/components/features/home/Main.vue";
-import MainTitle from "~/components/common/Text/MainTitle/index.vue";
-import SecondaryText from "~/components/common/Text/SecondaryText/index.vue";
-import PrimaryButton from "~/components/common/Buttons/PrimaryButton.vue";
+import MainTitle from "~/components/Common/Text/MainTitle/index.vue";
+import SecondaryText from "~/components/Common/Text/SecondaryText/index.vue";
+import PrimaryButton from "~/components/Common/Buttons/PrimaryButton.vue";
 
 let router = useRouter();
 const auth = getAuth();

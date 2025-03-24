@@ -74,20 +74,20 @@ import { SpeedInsights } from "@vercel/speed-insights/nuxt";
 import { storeToRefs } from "pinia";
 import { useWorkspace } from "@/stores/workspace";
 import BurguerButton from "../components/features/dashboard/BurguerButton.vue";
-import Loading from "~/components/common/Loadings/Loading.vue";
-import DividerDefault from "~/components/common/Dividers/DividerDefault.vue";
+import Loading from "~/components/Common/Loadings/Loading.vue";
+import DividerDefault from "~/components/Common/Dividers/DividerDefault.vue";
 import AccountModal from "../components/features/dashboard/AccountModal.vue";
-import NotificationModal from "~/components/common/Notifications/Popups/NotificationModal/index.vue";
+import NotificationModal from "~/components/Common/Notifications/Popups/NotificationModal/index.vue";
 import ItemAside from "../components/features/dashboard/ItemAside.vue";
-import HomeIcon from "~/components/common/Icons/HomeIcon.vue";
-import DropdownProjets from "~/components/common/Dropdown/DropdownProjects/index.vue";
-import DropdownItem from "~/components/common/Dropdown/DropdownProjects/DropdownItem.vue";
-import ControlPanelIcon from "~/components/common/Icons/ControlPanelIcon.vue";
-import SearchEngine from "~/components/common/Search/SearchEngine/index.vue";
+import HomeIcon from "~/components/Common/Icons/HomeIcon.vue";
+import DropdownProjets from "~/components/Common/Dropdown/DropdownProjects/index.vue";
+import DropdownItem from "~/components/Common/Dropdown/DropdownProjects/DropdownItem.vue";
+import ControlPanelIcon from "~/components/Common/Icons/ControlPanelIcon.vue";
+import SearchEngine from "~/components/Common/Search/SearchEngine/index.vue";
 import AddFrameButton from "../components/features/dashboard/AddFrameButton.vue";
-import PrimaryText from "~/components/common/Text/PrimaryText/index.vue";
+import PrimaryText from "~/components/Common/Text/PrimaryText/index.vue";
 import AddFrameModal from "../components/features/dashboard/AddFrameModal.vue";
-import LogoutIcon from "~/components/common/Icons/LogoutIcon.vue";
+import LogoutIcon from "~/components/Common/Icons/LogoutIcon.vue";
 
 definePageMeta({
   middleware: "auth",

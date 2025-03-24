@@ -55,10 +55,10 @@
 </template>
 
 <script setup>
-import PrimaryText from '@/components/common/Text/PrimaryText'
+import PrimaryText from '@/components/Common/Text/PrimaryText'
 import { vOnClickOutside } from '@vueuse/components'
-import CloseButton from '~/components/common/FeedBack/CloseButton.vue';
-import DividerDefault from '~/components/common/Dividers/DividerDefault.vue';
+import CloseButton from '~/components/Common/FeedBack/CloseButton.vue';
+import DividerDefault from '~/components/Common/Dividers/DividerDefault.vue';
 import NoNotifications from './components/NoNotifications.vue'
 import NotificationIcon from './components/NotificationIcon.vue';
 import NotificationItem from './components/NotificationItem.vue';

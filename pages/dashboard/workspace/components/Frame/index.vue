@@ -63,14 +63,14 @@
 
 <script setup>
 import FrameSettingsBtn from "../Buttons/FrameSettingsBtn.vue";
-import SecondaryButton from "~/components/common/Buttons/SecondaryButton.vue";
-import PrimaryButton from "~/components/common/Buttons/PrimaryButton.vue";
-import WarningMessage from "~/components/common/FeedBack/WarningMessage.vue";
-import ErrorMessage from "~/components/common/ErrorComponents/ErrorMessage.vue";
-import OptionsModal from "@/components/common/Notifications/Popups/OptionsModal";
-import TitleOptionsModal from "~/components/common/Notifications/Popups/OptionsModal/components/TitleOptionsModal.vue";
-import ActionOptionsModal from "~/components/common/Notifications/Popups/OptionsModal/components/ActionOptionsModal.vue";
-import CloseButton from "~/components/common/FeedBack/CloseButton.vue";
+import SecondaryButton from "~/components/Common/Buttons/SecondaryButton.vue";
+import PrimaryButton from "~/components/Common/Buttons/PrimaryButton.vue";
+import WarningMessage from "~/components/Common/FeedBack/WarningMessage.vue";
+import ErrorMessage from "~/components/Common/ErrorComponents/ErrorMessage.vue";
+import OptionsModal from "@/components/Common/Notifications/Popups/OptionsModal";
+import TitleOptionsModal from "~/components/Common/Notifications/Popups/OptionsModal/components/TitleOptionsModal.vue";
+import ActionOptionsModal from "~/components/Common/Notifications/Popups/OptionsModal/components/ActionOptionsModal.vue";
+import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
 import { useRouter } from "#vue-router";
 import { useWorkspace } from "~/stores/workspace";
 import validateFrame from "@/utils/validateFrame"

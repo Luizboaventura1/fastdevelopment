@@ -30,9 +30,9 @@
 import { signInWithPopup, getAuth, GoogleAuthProvider } from "firebase/auth";
 import GoogleButton from "@/components/features/auth/GoogleButton.vue";
 import { useRouter } from "#vue-router";
-import Loading from "~/components/common/Loadings/Loading.vue";
-import Toast from "~/components/common/Notifications/Toast/index.vue"
-import Alert from "~/components/common/Icons/Alert.vue";
+import Loading from "~/components/Common/Loadings/Loading.vue";
+import Toast from "~/components/Common/Notifications/Toast/index.vue"
+import Alert from "~/components/Common/Icons/Alert.vue";
 import useToast from "@/utils/useToast.js"
 
 const auth = getAuth();
