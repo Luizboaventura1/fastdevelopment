@@ -8,9 +8,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [22.x]
@@ -24,3 +22,7 @@ jobs:
         cache: 'npm'
     - run: npm install
     - run: npm run build
+    - name: Run Tests
+      run: npm run test
+      env:
+        CI: true
