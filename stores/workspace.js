@@ -20,9 +20,9 @@ export const useWorkspace = defineStore("workspace", () => {
         unsubscribe();
         if (user) {
           resolve(user.email);
-        } else {
-          reject(new Error("Usuário não autenticado."));
         }
+        
+        reject(new Error("Usuário não autenticado."));
       });
     });
   };
@@ -54,10 +54,7 @@ export const useWorkspace = defineStore("workspace", () => {
       const userEmail = await getAuthenticatedUserEmail();
       const userData = await getUserDataByEmail(userEmail);
 
-      if (userData) {
-        return userData;
-      }
-      return null;
+      return userData ? userData : null;
     } catch (error) {
       throw error;
     }
@@ -76,9 +73,10 @@ export const useWorkspace = defineStore("workspace", () => {
 
       if (frames.value) {
         await updateDoc(userDocRef, { workspace: frames.value });
-      } else {
-        throw new Error("Não foi encontrado nenhum quadro do usuário.");
+        return;
       }
+
+      throw new Error("Não foi encontrado nenhum quadro do usuário.");
     } catch (error) {
       throw error;
     }
