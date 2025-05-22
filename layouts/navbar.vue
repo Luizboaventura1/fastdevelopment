@@ -2,7 +2,7 @@
   <nav class="h-[70px] flex px-0 lg:px-6">
     <div class="w-4/12 flex items-center">
       <div class="logo-fastdavelopment text-violet-500 text-lg font-medium">
-        <LogoFastDevelopment size="40" />
+        <FastDevelopmentLogoIcon size="40" />
       </div>
     </div>
     <div class="w-8/12 flex items-center justify-end">
@@ -13,7 +13,7 @@
 
 <script setup>
 import LoginButton from "~/components/Features/home/LoginButton.vue";
-import LogoFastDevelopment from "../components/Common/Icons/LogoFastDevelopment.vue";
+import FastDevelopmentLogoIcon from "../components/Common/Icons/FastDevelopmentLogo.vue";
 import { useRouter } from "#vue-router";
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
 
