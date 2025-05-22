@@ -1,7 +1,8 @@
 export default function getFirstName(fullName) {
-  if (typeof fullName !== 'string' || !fullName.trim()) {
-    return '';
+  if (typeof fullName !== 'string' || fullName.trim().length === 0) {
+    throw new Error("A valid non-empty name string is required.");
   }
-  
-  return fullName.trim().split(/\s+/)[0];
+
+  const [firstName] = fullName.trim().split(/\s+/);
+  return firstName;
 }

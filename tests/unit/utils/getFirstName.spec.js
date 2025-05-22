@@ -21,30 +21,30 @@ describe("getFirstName()", () => {
   });
 
   describe("Invalid values", () => {
-    const EMPTY_STRING = "";
+    const ERROR_MESSAGE = "A valid non-empty name string is required.";
 
     it("should return empty string for undefined", () => {
-      expect(getFirstName(undefined)).toBe(EMPTY_STRING);
+      expect(() => getFirstName(undefined)).toThrow(ERROR_MESSAGE);
     });
 
     it("should return empty string for null", () => {
-      expect(getFirstName(null)).toBe(EMPTY_STRING);
+      expect(() => getFirstName(null)).toThrow(ERROR_MESSAGE);
     });
 
     it("should return empty string for numbers", () => {
-      expect(getFirstName(1234)).toBe(EMPTY_STRING);
+      expect(() => getFirstName(1234)).toThrow(ERROR_MESSAGE);
     });
 
     it("should return empty string for empty input", () => {
-      expect(getFirstName("")).toBe(EMPTY_STRING);
+      expect(() => getFirstName("")).toThrow(ERROR_MESSAGE);
     });
 
     it("should return empty string for whitespace-only", () => {
-      expect(getFirstName("   ")).toBe(EMPTY_STRING);
+      expect(() => getFirstName("   ")).toThrow(ERROR_MESSAGE);
     });
 
     it("should return empty string for object input", () => {
-      expect(getFirstName({ name: "Jon" })).toBe(EMPTY_STRING);
+      expect(() => getFirstName({ name: "Jon" })).toThrow(ERROR_MESSAGE);
     });
   });
 });

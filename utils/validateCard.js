@@ -1,6 +1,5 @@
 export const validateCard = (description) => {
-  let desc = description.replace(/\s+/g, "").trim();
-  if (desc.length === 0) return false;
+  if (typeof description !== 'string') return false;
 
-  return true;
+  return description.trim().length > 0;
 };
