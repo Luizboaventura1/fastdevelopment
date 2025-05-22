@@ -1,12 +1,14 @@
 <template>
   <div class="h-[calc(100vh-60px)]">
-    <nav class="h-[60px] bg-secondaryColorF flex items-center gap-3 px-4 border-b border-primaryBorderF">
+    <nav
+      class="h-[60px] bg-secondaryColorF flex items-center gap-3 px-4 border-b border-primaryBorderF"
+    >
       <div class="w-2/12 flex items-center">
         <BurguerButton :event="dashboardToggle" />
       </div>
 
       <div class="w-full flex justify-center items-center gap-3">
-        <AddFrameButton @click="handleAddFrameModal.open">
+        <AddFrameButton @click="handleFrameModal.open">
           <PrimaryText sm> Criar </PrimaryText>
         </AddFrameButton>
         <SearchEngine :array="frames" />
@@ -63,7 +65,7 @@
   </div>
 
   <Loading :visibility="loading" />
-  <AddFrameModal @closeModal="handleAddFrameModal.close" :isOpen="isAddFrameModalVisible" />
+  <AddFrameModal @closeModal="handleFrameModal.close" :isOpen="isAddFrameModalVisible" />
   <SpeedInsights />
 </template>
 
@@ -121,16 +123,18 @@ const logout = async () => {
     loading.value = false;
 
     const isAuthenticated = useCookie("token");
-    isAuthenticated.value = false; // blocks the routes
+    isAuthenticated.value = false;
 
     deleteAllCookies();
-    frames.value = []; // Reset
+    frames.value = [];
     router.push("/");
   });
 };
 
 const dashboardToggle = () => {
-  if (dashboardWidth.value === totalWidthDashboard) return (dashboardWidth.value = "0");
+  if (dashboardWidth.value === totalWidthDashboard) {
+    return (dashboardWidth.value = "0");
+  }
 
   return (dashboardWidth.value = totalWidthDashboard);
 };
@@ -149,7 +153,7 @@ onMounted(() => {
   });
 });
 
-const handleAddFrameModal = {
+const handleFrameModal = {
   open: () => (isAddFrameModalVisible.value = true),
   close: () => (isAddFrameModalVisible.value = false),
 };
