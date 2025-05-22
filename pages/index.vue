@@ -46,7 +46,9 @@
       <div>
         <MainTitle lg> Coloque etiquetas e dê uma descrição aos seus cartões </MainTitle>
         <SecondaryText class="my-6"> Edite de forma simples e rápida seus cartões. </SecondaryText>
-        <PrimaryButton @click="$router.push('/auth/login')" large> Testar agora </PrimaryButton>
+        <PrimaryButton @click="$router.push('/auth/login')" large>
+          {{ logged ? "Ir para o dashboard" : "Testar agora" }}
+        </PrimaryButton>
       </div>
       <div>
         <img
@@ -108,7 +110,7 @@
         large
         class="w-full md:w-auto mb-4 md:mb-0"
       >
-        Criar conta
+        {{ logged ? "Ir para o dashboard" : "Criar conta" }}
       </PrimaryButton>
       <BuyMeACoffe class="w-full md:w-auto"> Buy me a coffee </BuyMeACoffe>
     </div>
@@ -130,18 +132,22 @@ import { SpeedInsights } from "@vercel/speed-insights/nuxt";
 import SectionBenefits from "../components/Features/home/SectionBenefits.vue";
 import Section from "../components/Features/home/Section.vue";
 
-let router = useRouter();
 const auth = getAuth();
 const { gtag } = useGtag();
-const logged = ref(useCookie("token").value);
+const logged = useCookie("token");
+let router = useRouter();
 
-const GoToTheDashboard = () => {
-  if (logged.value) router.push("/dashboard/workspace");
-  else router.push("/auth/login");
+const redirectToDashboard = () => {
+  if (logged.value) {
+    router.push("/dashboard/workspace");
+    return;
+  }
+
+  router.push("/auth/login");
 };
 
 const handleStartButton = () => {
-  GoToTheDashboard();
+  redirectToDashboard();
 
   gtag("event", "click", {
     event_category: "CTA Home",
@@ -161,13 +167,15 @@ useHead({
   ],
 });
 
-onAuthStateChanged(auth, (user) => {
-  if (user) logged.value = true;
-  else logged.value = false;
-});
+onMounted(() => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      logged.value = true;
+      return;
+    }
 
-onBeforeMount(() => {
-  if (logged.value) router.push("/dashboard/workspace");
+    logged.value = false;
+  });
 });
 </script>
 
