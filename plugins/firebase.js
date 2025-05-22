@@ -7,7 +7,6 @@ async function fetchRouteKey() {
     const route = await useFetch('/api/route')
     return route.data.value.ROUTE_KEY
   } catch (error) {
-    console.error('Error getting route key:', error)
     throw error
   }
 }
@@ -17,7 +16,6 @@ async function fetchFirebaseData(routeKey) {
     const firebaseData = await useFetch(`/api/firebase/${routeKey}`)
     return firebaseData.data.value
   } catch (error) {
-    console.error(error)
     throw error
   }
 }
@@ -47,6 +45,6 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     nuxtApp.vueApp.provide('firestore', firestore)
     nuxtApp.provide('firestore', firestore)
   } catch (error) {
-    console.error(error)
+    throw error
   }
 })
