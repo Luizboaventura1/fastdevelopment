@@ -5,7 +5,7 @@
   >
     <img
       class="w-[50px] h-[50px]"
-      src="../../../assets/logo-fastdevelopment.png"
+      src="../../../assets/fastdevelopment-logo.svg"
       alt="Logo FastDevelopment"
     >
   </div>
