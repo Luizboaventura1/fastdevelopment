@@ -1,50 +1,31 @@
-import { initializeApp } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
-import { getFirestore } from 'firebase/firestore'
-
-async function fetchRouteKey() {
-  try {
-    const route = await useFetch('/api/route')
-    return route.data.value.ROUTE_KEY
-  } catch (error) {
-    throw error
-  }
-}
-
-async function fetchFirebaseData(routeKey) {
-  try {
-    const firebaseData = await useFetch(`/api/firebase/${routeKey}`)
-    return firebaseData.data.value
-  } catch (error) {
-    throw error
-  }
-}
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 export default defineNuxtPlugin(async (nuxtApp) => {
   try {
-    const routeKey = await fetchRouteKey()
-    const firebaseData = await fetchFirebaseData(routeKey)
+    const { data: firebaseAPIKeys } = await useFetch(`/api/firebase`);
 
     const firebaseConfig = {
-      apiKey: firebaseData.data.API_KEY,
-      authDomain: firebaseData.data.AUTH_DOMAIN,
-      projectId: firebaseData.data.PROJECT_ID,
-      storageBucket: firebaseData.data.STORAGE_BUCKET,
-      messagingSenderId: firebaseData.data.MESSAGING_SENDER_ID,
-      appId: firebaseData.data.APP_ID,
-      measurementId: firebaseData.data.MEASUREMENT_ID,
-    }
+      apiKey: firebaseAPIKeys.value.API_KEY,
+      authDomain: firebaseAPIKeys.value.AUTH_DOMAIN,
+      projectId: firebaseAPIKeys.value.PROJECT_ID,
+      storageBucket: firebaseAPIKeys.value.STORAGE_BUCKET,
+      messagingSenderId: firebaseAPIKeys.value.MESSAGING_SENDER_ID,
+      appId: firebaseAPIKeys.value.APP_ID,
+      measurementId: firebaseAPIKeys.value.MEASUREMENT_ID,
+    };
 
-    const app = initializeApp(firebaseConfig)
-    const auth = getAuth(app)
-    const firestore = getFirestore(app)
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const firestore = getFirestore(app);
 
-    nuxtApp.vueApp.provide('auth', auth)
-    nuxtApp.provide('auth', auth)
+    nuxtApp.vueApp.provide("auth", auth);
+    nuxtApp.provide("auth", auth);
 
-    nuxtApp.vueApp.provide('firestore', firestore)
-    nuxtApp.provide('firestore', firestore)
+    nuxtApp.vueApp.provide("firestore", firestore);
+    nuxtApp.provide("firestore", firestore);
   } catch (error) {
-    throw error
+    throw error;
   }
-})
+});
