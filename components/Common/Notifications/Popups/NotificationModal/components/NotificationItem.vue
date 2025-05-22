@@ -21,7 +21,7 @@
 
 <script setup>
 import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
-import LogoFastDevelopment from "~/components/Common/Icons/LogoFastDevelopment.vue";
+import LogoFastDevelopment from "~/components/Common/Icons/FastDevelopmentLogo.vue";
 
 let props = defineProps({
   title: String,
