@@ -2,7 +2,7 @@
   <div
     class="benefit h-full flex items-center justify-center relative border border-darkGrayBorderF w-full max-w-lg m-auto rounded-lg overflow-hidden"
   >
-    <div class="animation-bar w-[90px] h-[750px] bg-white"></div>
+    <div class="animation-bar w-[90px] h-[750px] bg-primaryColorF"></div>
 
     <div class="benefit-box overflow-hidden rounded-lg">
       <div
@@ -27,7 +27,7 @@ $sub-secondary-color: #121214;
     top: -250px;
     left: 50%;
     transform: translate(-50%);
-    box-shadow: 0 0 30px 30px rgb(255, 255, 255);
+    box-shadow: 0 0 30px 30px #8257e5;
     display: none;
   }
 
@@ -52,7 +52,7 @@ $sub-secondary-color: #121214;
 }
 
 .benefit:hover ::v-deep(.grid-background svg) {
-  fill: white;
+  fill: #8257e5;
 }
 
 @keyframes animationBar {
