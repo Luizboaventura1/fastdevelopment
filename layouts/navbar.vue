@@ -1,7 +1,7 @@
 <template>
   <nav class="h-[120px]"></nav>
   <div class="fixed w-full left-0 top-0 z-50">
-    <div class="container mx-auto px-6 pt-4 transition-all duration-500">
+    <div class="container mx-auto px-4 md:px-6 pt-4 transition-all duration-500">
       <nav
         class="p-3 flex justify-between items-center bg-subSecondaryColorF/80 backdrop-blur border border-neutral-800 rounded-lg"
       >

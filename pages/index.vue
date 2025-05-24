@@ -92,7 +92,7 @@
           <main class="w-full max-w-lg xl:max-w-xl">
             <h1 class="font-semibold text-textPrimaryColorF text-4xl">
               Visualize todo o fluxo de trabalho com os quadros
-              <span class="text-gradient">kanban</span>
+              <span class="text-gradient">Kanban</span>
             </h1>
             <h2 class="text-textPrimaryColorF font-medium text-lg my-6">
               Crie listas, cartões, etiquetas, prazos e muito mais!
