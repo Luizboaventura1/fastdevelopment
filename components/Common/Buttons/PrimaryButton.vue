@@ -31,7 +31,7 @@ const buttonWidth = computed(() => props.full);
 const buttonSize = {
   "font-medium py-2 px-5 text-sm": props.small,
   "font-medium py-2 px-6 text-md": props.medium,
-  "font-bold py-3 px-14 text-md": props.large,
+  "font-semibold py-3 px-14 text-md": props.large,
 };
 
 const defaultSize = computed(() => {
