@@ -2,103 +2,115 @@
   <div class="overflow-hidden">
     <Header>
       <NuxtLayout name="navbar" />
-      <Main>
-        <div>
-          <h1 class="font-medium border-l-2 border-primaryColorF text-white ps-3 mb-5">
-            FastDevelopment
+
+      <div class="flex justify-center my-8 md:my-12">
+        <section class="w-full max-w-4xl text-center">
+          <h1
+            class="relative z-10 font-semibold text-3xl md:text-4xl lg:text-5xl text-textPrimaryColorF mb-6"
+          >
+            Criada para <span class="text-gradient">facilitar</span> a gestão dos
+            <span class="text-gradient">seus</span> projetos pessoais
           </h1>
-          <MainTitle class="text-3xl sm:text-3xl md:text-4xl">
-            Acelere o desenvolvimento dos seus projetos!
-          </MainTitle>
-          <SecondaryText class="py-6 font-normal text-500 text-sm sm:text-md md:text-base">
-            Ferramenta ágil para uso pessoal perfeita para quem quer aumentar a produtividade e
-            gerenciar melhor os seus projetos.
-          </SecondaryText>
-          <PrimaryButton @click="handleStartButton" large>
-            {{ logged ? "Ir para o dashboard" : "Começar" }}
-          </PrimaryButton>
-        </div>
-        <div>
+          <h2
+            class="relative z-10 text-textPrimaryColorF text-md md:text-lg lg:text-xl mt-8 md:mt-12 mb-4 md:mb-6"
+          >
+            Uma ferramenta moderna, simples e eficiente para <br class="hidden md:block" />
+            gerenciar seus projetos
+          </h2>
+          <div class="inline-flex relative mt-6">
+            <img
+              v-if="!logged"
+              class="absolute hidden sm:block -right-36 md:-right-52 bottom-12 w-32 md:w-44"
+              :src="OneHundredPercentFreeIcon"
+              alt="One Hundred Percent Free Icon"
+            />
+            <PrimaryButton @click="handleCTAButton" large>
+              {{ logged ? "Ir para o dashboard" : "Crie sua conta" }}
+            </PrimaryButton>
+          </div>
+        </section>
+      </div>
+      <div class="flex justify-center">
+        <section class="mt-6 w-full max-w-7xl">
           <img
             src="../assets/example-kanban.webp"
-            class="border-2 bg-kanban-img border-zinc-800 rounded-md"
+            class="border-2 border-zinc-800 rounded-2xl"
             alt="Kanban board"
           />
-        </div>
-      </Main>
+        </section>
+      </div>
     </Header>
-    <SectionBenefits />
-    <Section class="py-14">
-      <nav class="text-center">
-        <MainTitle lg>Visualize todo o progresso</MainTitle>
-        <div class="mt-10 flex justify-center">
-          <img
-            class="border-2 w-full md:w-[80%] border-zinc-800 rounded-md"
-            src="../assets/example-kanban.webp"
-            alt="Kanban board"
-          />
-        </div>
-      </nav>
+
+    <Section>
+      <header class="text-center py-16 pp-12">
+        <MainTitle lg>
+          Porque escolher a <span class="text-gradient">FastDevelopment</span>?
+        </MainTitle>
+      </header>
+      <main class="grid gap-6 grid-cols-1 lg:grid-cols-3">
+        <AnimatedCard>
+          <template #icon>
+            <LightningIcon :size="50" />
+          </template>
+          <PrimaryText lg>Alta Produtividade</PrimaryText>
+          <SecondaryText md>
+            Utilizamos a metodologia Kanban para garantir um fluxo de trabalho ágil, eficiente e com
+            foco em resultados, aumentando significativamente a produtividade na execução das
+            tarefas.
+          </SecondaryText>
+        </AnimatedCard>
+
+        <AnimatedCard>
+          <template #icon>
+            <HomeIcon :size="50" />
+          </template>
+          <PrimaryText lg>Interface Moderna</PrimaryText>
+          <SecondaryText md>
+            Desenvolvida com foco na simplicidade, nossa interface prioriza a usabilidade e elimina
+            distrações, proporcionando uma experiência limpa e objetiva.
+          </SecondaryText>
+        </AnimatedCard>
+
+        <AnimatedCard>
+          <template #icon>
+            <KanbanIcon :size="50" />
+          </template>
+          <PrimaryText lg>Metodologia Kanban</PrimaryText>
+          <SecondaryText md>
+            Adotamos o Kanban por sua praticidade e flexibilidade. É fácil de usar e pode ser
+            integrado a projetos em andamento sem atritos.
+          </SecondaryText>
+        </AnimatedCard>
+      </main>
+    </Section>
+
+    <Section class="py-32">
+      <div
+        class="grid gap-4 grid-cols-1 xl:grid-cols-2 border border-darkGrayBorderF rounded-2xl overflow-hidden"
+      >
+        <section class="flex items-center xl:justify-center p-8">
+          <main class="w-full max-w-lg xl:max-w-xl">
+            <h1 class="font-semibold text-textPrimaryColorF text-4xl">
+              Visualize todo o fluxo de trabalho com os quadros
+              <span class="text-gradient">Kanban</span>
+            </h1>
+            <h2 class="text-textPrimaryColorF font-medium text-lg my-6">
+              Crie listas, cartões, etiquetas, prazos e muito mais!
+            </h2>
+            <PrimaryButton @click="handleCTAButton" large>{{
+              logged ? "Ir para o dashboard" : "Criar conta"
+            }}</PrimaryButton>
+          </main>
+        </section>
+
+        <section class="relative overflow-hidden">
+          <div class="absolute transition-all duration-1000 w-full h-2 -top-36 xl:top-0 xl:-left-12 xl:h-full xl:w-2 bg-subSecondaryColorF image-shadow-top xl:image-shadow-left"></div>
+          <img class="w-full" src="../assets/example-kanban.webp" alt="Kanban board" />
+        </section>
+      </div>
     </Section>
   </div>
-  <Section>
-    <div class="py-14 grid grid-cols-1 gap-5 md:grid-cols-2">
-      <div>
-        <MainTitle lg> Coloque etiquetas e dê uma descrição aos seus cartões </MainTitle>
-        <SecondaryText class="my-6"> Edite de forma simples e rápida seus cartões. </SecondaryText>
-        <PrimaryButton @click="$router.push('/auth/login')" large>
-          {{ logged ? "Ir para o dashboard" : "Testar agora" }}
-        </PrimaryButton>
-      </div>
-      <div>
-        <img
-          src="../assets/example-labels.webp"
-          class="border-2 w-full md:w-[100%] border-zinc-800 rounded-md"
-          alt="Kanban card"
-        />
-      </div>
-    </div>
-  </Section>
-  <Section>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-14">
-      <div
-        class="grid grid-rows-[auto,1fr] w-full min-h-[120px] md:h-[150px] bg-zinc-900 rounded-lg p-5 shadow"
-      >
-        <nav>
-          <h1 class="text-textPrimaryColorF font-bold">🚀 Fácil de implementar</h1>
-        </nav>
-        <div class="flex items-center">
-          <SecondaryText>
-            Implemente nossa ferramenta de forma fácil em um projeto já em andamento.
-          </SecondaryText>
-        </div>
-      </div>
-      <div
-        class="grid grid-rows-[auto,1fr] w-full min-h-[120px] md:h-[150px] bg-zinc-900 rounded-lg p-5 shadow"
-      >
-        <nav>
-          <h1 class="text-textPrimaryColorF font-bold">✔ Totalmente gratuito</h1>
-        </nav>
-        <div class="flex items-center">
-          <SecondaryText>
-            Desfrute da nossa plataforma 100% gratuita sem pagar nada!
-          </SecondaryText>
-        </div>
-      </div>
-      <div
-        class="grid grid-rows-[auto,1fr] w-full min-h-[120px] md:h-[150px] bg-zinc-900 rounded-lg p-5 shadow"
-      >
-        <nav>
-          <h1 class="text-textPrimaryColorF font-bold">
-            ⚙ Gerencie melhor as etapas do seu projeto
-          </h1>
-        </nav>
-        <div class="flex items-center">
-          <SecondaryText> Gestão eficiente e de fácil visualização do progresso. </SecondaryText>
-        </div>
-      </div>
-    </div>
-  </Section>
+
   <Section class="md:text-center">
     <MainTitle lg>Ta esperando o que? Comece a usar hoje!</MainTitle>
     <SecondaryText class="my-5">
@@ -121,21 +133,24 @@
 
 <script setup>
 import BuyMeACoffe from "@/components/Common/Buttons/BuyMeACoffe.vue";
-import Header from "../components/Features/home/Header.vue";
-import Main from "../components/Features/home/Main.vue";
-import { onAuthStateChanged } from "firebase/auth";
-import { getAuth } from "firebase/auth";
+import PrimaryButton from "@/components/Common/Buttons/PrimaryButton.vue";
 import MainTitle from "@/components/Common/Text/MainTitle";
 import SecondaryText from "@/components/Common/Text/SecondaryText";
-import PrimaryButton from "@/components/Common/Buttons/PrimaryButton.vue";
 import { SpeedInsights } from "@vercel/speed-insights/nuxt";
-import SectionBenefits from "../components/Features/home/SectionBenefits.vue";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import OneHundredPercentFreeIcon from "../assets/OneHundredPercentFreeIcon.svg";
+import Header from "../components/Features/home/Header.vue";
 import Section from "../components/Features/home/Section.vue";
+import AnimatedCard from "~/components/Features/home/AnimatedCard.vue";
+import PrimaryText from "../components/Common/Text/PrimaryText";
+import LightningIcon from "~/components/Features/home/icons/LightningIcon.vue";
+import HomeIcon from "../components/Features/home/icons/HomeIcon.vue";
+import KanbanIcon from "~/components/Features/home/icons/KanbanIcon.vue";
 
 const auth = getAuth();
 const { gtag } = useGtag();
 const logged = useCookie("token");
-let router = useRouter();
+const router = useRouter();
 
 const redirectToDashboard = () => {
   if (logged.value) {
@@ -146,7 +161,7 @@ const redirectToDashboard = () => {
   router.push("/auth/login");
 };
 
-const handleStartButton = () => {
+const handleCTAButton = () => {
   redirectToDashboard();
 
   gtag("event", "click", {
@@ -187,7 +202,18 @@ $primary-color: #8257e5;
   text-decoration-color: $primary-color;
 }
 
-.bg-kanban-img {
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+.text-gradient {
+  background-image: linear-gradient(to right, #8257e5, #513591);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.image-shadow-left {
+  box-shadow: 0px 0px 80px 240px #121214;
+}
+
+.image-shadow-top {
+  box-shadow: 0px 0px 80px 240px #121214;
 }
 </style>

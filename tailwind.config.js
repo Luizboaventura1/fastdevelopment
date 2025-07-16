@@ -11,7 +11,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        custom: ['Inter']
+        custom: ["Poppins"],
       },
       colors: {
         primaryColorF: "#8257E5",
@@ -24,12 +24,12 @@ module.exports = {
         subSecondaryColorF: "#121214",
         primaryBorderF: "#393939",
         secondaryBorderF: "#373737FE",
+        darkGrayBorderF: "#2D2D2D",
         thirdBorderF: "#4E4E4E",
         "primary-icon-color": "#686873",
-      }
+      },
     },
   },
   plugins: [],
-  darkMode: 'class',
-}
-
+  darkMode: "class",
+};
