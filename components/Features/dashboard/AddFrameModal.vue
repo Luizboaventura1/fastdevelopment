@@ -37,7 +37,7 @@ import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
 import ErrorMessage from "~/components/Common/ErrorComponents/ErrorMessage.vue";
 import PrimaryButton from "~/components/Common/Buttons/PrimaryButton.vue";
 import { useWorkspace } from "~/stores/workspace";
-import validateFrame from "@/utils/validateFrame"
+import hasFrameName from "~/utils/hasFrameName"
 
 const props = defineProps({
   isOpen: Boolean,
@@ -51,7 +51,7 @@ const inputElement = ref(null);
 const errorMessage = ref("");
 
 const AddNewFrame = () => {
-  if (validateFrame(input.value)) {
+  if (hasFrameName(input.value)) {
     useWorkspace().frames.unshift({
       title: input.value,
       lists: [],

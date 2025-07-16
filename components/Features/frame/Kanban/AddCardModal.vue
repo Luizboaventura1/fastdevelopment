@@ -10,7 +10,7 @@
 import AddCardForm from "@/components/Common/Forms/AddCardForm/index.vue";
 import { useWorkspace } from "@/stores/workspace.js";
 import { storeToRefs } from "pinia";
-import { validateCard } from "@/utils/validateCard";
+import { isValidCardDescription } from "~/utils/isValidCardDescription";
 
 const currentPageId = useCookie("currentPageId");
 const { frames } = storeToRefs(useWorkspace());
@@ -23,7 +23,7 @@ const cardTitle = ref("");
 
 const addNewCard = () => {
   if (
-    validateCard(cardTitle.value) &&
+    isValidCardDescription(cardTitle.value) &&
     frames.value[currentPageId.value]?.lists.length &&
     props.listIndex >= 0
   ) {

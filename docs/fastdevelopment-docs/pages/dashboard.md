@@ -60,5 +60,5 @@
  
  ## Usage Notes
  - Ensure the Firebase authentication and cookie management are set up correctly for this script to function as intended.
- - Proper validation logic must be implemented in the `validateFrame` function to prevent invalid frame creation.
+ - Proper validation logic must be implemented in the `hasFrameName` function to prevent invalid frame creation.
  - The dashboard functionality assumes a user-friendly interface where users can easily create and manage their development frames.

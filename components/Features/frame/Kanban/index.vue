@@ -85,7 +85,7 @@ import EditListModal from "./EditListModal.vue";
 import SettingsButton from "./Buttons/SettingsButton.vue";
 import WarningMessage from "@/components/Common/FeedBack/WarningMessage.vue";
 import { VueDraggableNext } from "vue-draggable-next";
-import validateFrame from "@/utils/validateFrame"
+import hasFrameName from "~/utils/hasFrameName"
 
 const route = useRoute();
 const currentPageId = useCookie("currentPageId");
@@ -159,7 +159,7 @@ const editCard = (indexFrame, indexCard) => {
 };
 
 const updateListName = (listName, listId) => {
-  if (validateFrame(listName)) {
+  if (hasFrameName(listName)) {
     const debounceTime = 2000;
     if (timeoutId) {
       clearTimeout(timeoutId);
