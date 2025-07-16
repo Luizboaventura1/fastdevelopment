@@ -73,7 +73,7 @@ import ActionOptionsModal from "~/components/Common/Notifications/Popups/Options
 import CloseButton from "~/components/Common/FeedBack/CloseButton.vue";
 import { useRouter } from "#vue-router";
 import { useWorkspace } from "~/stores/workspace";
-import validateFrame from "@/utils/validateFrame"
+import hasFrameName from "~/utils/hasFrameName"
 
 const router = useRouter();
 
@@ -101,7 +101,7 @@ watch(
 );
 
 const saveNameFrame = () => {
-  if (validateFrame(frameName.value)) {
+  if (hasFrameName(frameName.value)) {
     useWorkspace().frames[props.frameID].title = frameName.value;
     useWorkspace().updateWorkspaceData();
 

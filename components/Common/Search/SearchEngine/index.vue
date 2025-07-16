@@ -87,7 +87,7 @@ const removeDiacritics = (val) => {
     .replace(/[\u0300-\u036f]/g, "");
 };
 
-const props = defineProps({
+const { array: projects } = defineProps({
   array: Array,
 });
 
@@ -95,12 +95,10 @@ const handleClickOutsite = () => {
   state.value = false;
 };
 
-let arr = ref(props.array || []);
-
-let recentProjects = ref(getRecentProjects([...arr.value]));
+const recentProjects = ref(getRecentProjects([...projects], 4));
 
 watchEffect(() => {
-  recentProjects.value = getRecentProjects([...arr.value]);
+  recentProjects.value = getRecentProjects([...projects], 4);
 });
 
 let searchedItems = ref([]);
