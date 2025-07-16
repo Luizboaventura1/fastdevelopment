@@ -21,30 +21,30 @@ describe("getFirstName()", () => {
   });
 
   describe("Invalid values", () => {
-    const ERROR_MESSAGE = "A valid non-empty name string is required.";
+    const USERNAME_NOT_FOUND_MESSAGE = "Username not found";
 
-    it("should return empty string for undefined", () => {
-      expect(() => getFirstName(undefined)).toThrow(ERROR_MESSAGE);
+    it("should return an error for undefined", () => {
+      expect(getFirstName(undefined)).toBe(USERNAME_NOT_FOUND_MESSAGE);
     });
 
-    it("should return empty string for null", () => {
-      expect(() => getFirstName(null)).toThrow(ERROR_MESSAGE);
+    it("should return an error for null", () => {
+      expect(getFirstName(null)).toBe(USERNAME_NOT_FOUND_MESSAGE);
     });
 
-    it("should return empty string for numbers", () => {
-      expect(() => getFirstName(1234)).toThrow(ERROR_MESSAGE);
+    it("should return an error for numbers", () => {
+      expect(getFirstName(1234)).toBe(USERNAME_NOT_FOUND_MESSAGE);
     });
 
-    it("should return empty string for empty input", () => {
-      expect(() => getFirstName("")).toThrow(ERROR_MESSAGE);
+    it("should return an error for empty input", () => {
+      expect(getFirstName("")).toBe(USERNAME_NOT_FOUND_MESSAGE);
     });
 
-    it("should return empty string for whitespace-only", () => {
-      expect(() => getFirstName("   ")).toThrow(ERROR_MESSAGE);
+    it("should return an error for whitespace-only", () => {
+      expect(getFirstName("   ")).toBe(USERNAME_NOT_FOUND_MESSAGE);
     });
 
-    it("should return empty string for object input", () => {
-      expect(() => getFirstName({ name: "Jon" })).toThrow(ERROR_MESSAGE);
+    it("should return an error for object input", () => {
+      expect(getFirstName({ name: "Jon" })).toBe(USERNAME_NOT_FOUND_MESSAGE);
     });
   });
 });
