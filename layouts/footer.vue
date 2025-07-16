@@ -4,7 +4,7 @@
 
       <div class="logo">
         <div class="logo-fastdavelopment text-violet-500 text-lg font-medium">
-          <LogoFastDevelopment
+          <FastDevelopmentLogoIcon
             size="40"
           />
         </div>
@@ -54,5 +54,5 @@
 </template>
 
 <script setup>
-import LogoFastDevelopment from '../components/Common/Icons/LogoFastDevelopment.vue';
+import FastDevelopmentLogoIcon from '../components/Common/Icons/FastDevelopmentLogo.vue';
 </script>

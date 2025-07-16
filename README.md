@@ -6,12 +6,8 @@
 ![GitHub license](https://img.shields.io/github/license/Luizboaventura1/fastdevelopment?style=for-the-badge)
 ![GitHub last commit](https://img.shields.io/github/last-commit/Luizboaventura1/fastdevelopment?style=for-the-badge)
 
+![fastdevelopment-banner](https://github.com/user-attachments/assets/55f763da-d672-4f8d-a197-1ea0150c45cd)
 
-<div align="center">
-  <img src="./assets/logo-fastdevelopment.png" width="150">
-</div>
-
-<h1 align="center">FastDevelopment</h1>
 
 <p align="center">FastDevelopment is a tool for those who want more productivity in their projects, but with an easy-to-use platform and a clean, modern design.</p>
 

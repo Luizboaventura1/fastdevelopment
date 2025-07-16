@@ -1,7 +1,7 @@
 <template>
   <img
     :class="`w-[${size}px] h-[${size}px]`"
-    src="../../../assets/logo-fastdevelopment.png"
+    src="../../../assets/fastdevelopment-logo.svg"
     alt="Logo FastDevelopment"
   />
 </template>
