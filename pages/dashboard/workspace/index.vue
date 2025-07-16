@@ -10,11 +10,7 @@
       <InfoBar />
     </WorkspaceContainer>
     <Grid v-if="frames.length" col="2">
-      <Frame
-        v-for="(frame, index) in frames"
-        :key="index"
-        :frameID="String(index)"
-      >
+      <Frame v-for="(frame, index) in frames" :key="index" :frameID="String(index)">
         <PrimaryText lg class="truncate"> {{ frame.title }} </PrimaryText>
       </Frame>
     </Grid>
@@ -34,19 +30,21 @@ import { SpeedInsights } from "@vercel/speed-insights/nuxt";
 import { storeToRefs } from "pinia";
 import InfoBar from "../../../components/Features/workspace/InfoBar.vue";
 import EmptyFrameMessage from "../../../components/Features/workspace/EmptyFrameMessage.vue";
-import getFirstName from "@/utils/getFirstName.js"
+import getFirstName from "@/utils/getFirstName.js";
 
 let { frames } = storeToRefs(useWorkspace());
-let userName = ref(useCookie("name").value || "");
+const userName = useCookie("name") || "Username not found";
 
-const resetModalStateForLists = () => {
-  if (!frames.value) return;
+const closeAllListModals = () => {
+  if (!frames.value?.length) return;
 
-  frames.value.forEach((frame) => {
-    frame?.lists?.forEach((list) => {
-      list.stateModal = false;
-    });
-  });
+  for (const frame of frames.value) {
+    if (frame.lists?.length) {
+      for (const list of frame.lists) {
+        list.stateModal = false;
+      }
+    }
+  }
 };
 
 const currentDate = () => {
@@ -84,19 +82,19 @@ const currentDate = () => {
 };
 
 onMounted(async () => {
-  await useWorkspace().fetchWorkspaceData()
-    .then((data) => {
-      if (!frames.value.length) {
-        frames.value.push(...data.frames);
-      }
+  let workspaceData;
 
-      if (!userName.value) {
-        useCookie("name").value = data.name;
-        userName.value = data.name;
-      }
-    });
+  if (!frames.value.length) {
+    workspaceData = await useWorkspace().fetchWorkspaceData();
 
-  resetModalStateForLists();
+    frames.value.push(...workspaceData.frames);
+  }
+
+  if (!userName.value && workspaceData) {
+    userName.value = workspaceData.name;
+  }
+
+  closeAllListModals();
 });
 </script>
 

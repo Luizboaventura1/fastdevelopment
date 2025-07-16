@@ -51,7 +51,6 @@ const loginWithGoogle = async () => {
     if (result.user) {
       const { uid, email, displayName } = result.user;
 
-      // create token
       const logged = useCookie("token");
       logged.value = true;
 
@@ -59,7 +58,6 @@ const loginWithGoogle = async () => {
         await addUserInFirestore(displayName, email, uid);
       }
 
-      // go to dashboard
       router.push("/dashboard/workspace");
     }
   } catch (error) {
