@@ -103,9 +103,6 @@ const logout = async () => {
   await signOut(auth).then(() => {
     loading.value = false;
 
-    const logged = useCookie("token");
-    logged.value = false;
-
     deleteAllCookies();
     useWorkspace().frames = [];
 

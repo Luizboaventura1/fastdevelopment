@@ -1,12 +1,18 @@
+import { getAuth } from "@firebase/auth";
 import { useRoute } from "vue-router";
 
-export default defineNuxtRouteMiddleware(() => {
-  const logged = useCookie("token");
+export default defineNuxtRouteMiddleware(async () => {
   const route = useRoute();
+  const auth = getAuth();
 
-  let isLoggedIn = logged.value;
+  const user = auth.currentUser || await new Promise(resolve => {
+    const unsubscribe = auth.onAuthStateChanged(u => {
+      unsubscribe();
+      resolve(u);
+    });
+  });
 
-  if (!isLoggedIn && route.name === "dashboard") {
+  if (!user && route.name === "dashboard") {
     return navigateTo("/auth/login");
   }
 });
