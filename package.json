@@ -25,7 +25,6 @@
     "@tiptap/starter-kit": "^2.9.1",
     "@tiptap/vue-3": "^2.9.1",
     "autoprefixer": "^10.4.15",
-    "cypress": "^14.2.0",
     "nuxt": "^3.7.3",
     "nuxt-gtag": "^1.1.1",
     "postcss": "^8.4.29",
