@@ -133,10 +133,11 @@ const logout = async () => {
 
 const dashboardToggle = () => {
   if (dashboardWidth.value === totalWidthDashboard) {
-    return (dashboardWidth.value = "0");
+    dashboardWidth.value = "0";
+    return;
   }
 
-  return (dashboardWidth.value = totalWidthDashboard);
+  dashboardWidth.value = totalWidthDashboard;
 };
 
 onMounted(() => {
@@ -146,10 +147,11 @@ onMounted(() => {
     if (user) {
       isAuthenticated.value = true;
       loading.value = false;
-    } else {
-      isAuthenticated.value = false;
-      router.push("/");
+      return;
     }
+
+    isAuthenticated.value = false;
+    router.push("/");
   });
 });
 

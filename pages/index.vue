@@ -19,13 +19,13 @@
           </h2>
           <div class="inline-flex relative mt-6">
             <img
-              v-if="!logged"
+              v-if="!isAuthenticated"
               class="absolute hidden sm:block -right-36 md:-right-52 bottom-12 w-32 md:w-44"
               :src="OneHundredPercentFreeIcon"
               alt="One Hundred Percent Free Icon"
             />
             <PrimaryButton @click="handleCTAButton" large>
-              {{ logged ? "Ir para o dashboard" : "Crie sua conta" }}
+              {{ isAuthenticated ? "Ir para o dashboard" : "Crie sua conta" }}
             </PrimaryButton>
           </div>
         </section>
@@ -98,7 +98,7 @@
               Crie listas, cartões, etiquetas, prazos e muito mais!
             </h2>
             <PrimaryButton @click="handleCTAButton" large>{{
-              logged ? "Ir para o dashboard" : "Criar conta"
+              isAuthenticated ? "Ir para o dashboard" : "Criar conta"
             }}</PrimaryButton>
           </main>
         </section>
@@ -122,7 +122,7 @@
         large
         class="w-full md:w-auto mb-4 md:mb-0"
       >
-        {{ logged ? "Ir para o dashboard" : "Criar conta" }}
+        {{ isAuthenticated ? "Ir para o dashboard" : "Criar conta" }}
       </PrimaryButton>
       <BuyMeACoffe class="w-full md:w-auto"> Buy me a coffee </BuyMeACoffe>
     </div>
@@ -149,11 +149,11 @@ import KanbanIcon from "~/components/Features/home/icons/KanbanIcon.vue";
 
 const auth = getAuth();
 const { gtag } = useGtag();
-const logged = useCookie("token");
+const isAuthenticated = useCookie("token");
 const router = useRouter();
 
 const redirectToDashboard = () => {
-  if (logged.value) {
+  if (isAuthenticated.value) {
     router.push("/dashboard/workspace");
     return;
   }
@@ -185,11 +185,11 @@ useHead({
 onMounted(() => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      logged.value = true;
+      isAuthenticated.value = true;
       return;
     }
 
-    logged.value = false;
+    isAuthenticated.value = false;
   });
 });
 </script>
