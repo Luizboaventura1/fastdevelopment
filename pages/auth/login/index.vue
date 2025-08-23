@@ -51,9 +51,6 @@ const loginWithGoogle = async () => {
     if (result.user) {
       const { uid, email, displayName } = result.user;
 
-      const logged = useCookie("token");
-      logged.value = true;
-
       if (!(await checkIfTheUserExists(email))) {
         await addUserInFirestore(displayName, email, uid);
       }

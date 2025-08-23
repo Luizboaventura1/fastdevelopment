@@ -149,7 +149,7 @@ import KanbanIcon from "~/components/Features/home/icons/KanbanIcon.vue";
 
 const auth = getAuth();
 const { gtag } = useGtag();
-const isAuthenticated = useCookie("token");
+const isAuthenticated = ref(false);
 const router = useRouter();
 
 const redirectToDashboard = () => {

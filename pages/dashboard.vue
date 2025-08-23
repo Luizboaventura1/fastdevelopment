@@ -82,7 +82,7 @@ import ItemAside from "../components/Features/dashboard/ItemAside.vue";
 import HomeIcon from "~/components/Common/Icons/HomeIcon.vue";
 import DropdownProjets from "@/components/Common/Dropdown/DropdownProjects";
 import DropdownItem from "@/components/Common/Dropdown/DropdownProjects/DropdownItem.vue";
-import ControlPanelIcon from "~/components/Common/Icons/ControlPanelIcon.vue";
+import ControlPanelIcon from "@/components/Common/Icons/ControlPanelIcon.vue";
 import { useWorkspace } from "@/stores/workspace";
 import SearchEngine from "@/components/Common/Search/SearchEngine";
 import { SpeedInsights } from "@vercel/speed-insights/nuxt";
@@ -90,23 +90,6 @@ import { storeToRefs } from "pinia";
 import AddFrameButton from "../components/Features/dashboard/AddFrameButton.vue";
 import PrimaryText from "@/components/Common/Text/PrimaryText";
 import AddFrameModal from "../components/Features/dashboard/AddFrameModal.vue";
-
-definePageMeta({
-  middleware: "auth",
-});
-
-useHead({
-  title: "Dashboard",
-  meta: [
-    {
-      name: "description",
-      content:
-        "Tenha um rápido desenvolvimento e ganho de produtividade com nossa ferramenta completa de desenvolvimento ágil.",
-    },
-    { name: "keywords", content: "Kanban,desenvolvimento ágil,jira,trello" },
-    { name: "author", content: "Luiz" },
-  ],
-});
 
 const auth = getAuth();
 const router = useRouter();
@@ -121,9 +104,6 @@ const logout = async () => {
 
   await signOut(auth).then(() => {
     loading.value = false;
-
-    const isAuthenticated = useCookie("token");
-    isAuthenticated.value = false;
 
     deleteAllCookies();
     frames.value = [];
@@ -141,17 +121,13 @@ const dashboardToggle = () => {
 };
 
 onMounted(() => {
-  const isAuthenticated = useCookie("token");
-
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      isAuthenticated.value = true;
       loading.value = false;
       return;
     }
 
-    isAuthenticated.value = false;
-    router.push("/");
+    router.push("/auth/login");
   });
 });
 
@@ -159,4 +135,21 @@ const handleFrameModal = {
   open: () => (isAddFrameModalVisible.value = true),
   close: () => (isAddFrameModalVisible.value = false),
 };
+
+definePageMeta({
+  middleware: "auth",
+});
+
+useHead({
+  title: "Dashboard",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Tenha um rápido desenvolvimento e ganho de produtividade com nossa ferramenta completa de desenvolvimento ágil.",
+    },
+    { name: "keywords", content: "Kanban,desenvolvimento ágil,jira,trello" },
+    { name: "author", content: "Luiz" },
+  ],
+});
 </script>
