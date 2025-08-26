@@ -6,9 +6,9 @@ export default defineNuxtRouteMiddleware(async () => {
   const auth = getAuth();
 
   const user = auth.currentUser || await new Promise(resolve => {
-    const unsubscribe = auth.onAuthStateChanged(u => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
       unsubscribe();
-      resolve(u);
+      resolve(user);
     });
   });
 
