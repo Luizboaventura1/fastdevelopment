@@ -216,17 +216,17 @@ watchEffect(() => {
 
   h1 {
     font-size: 34px;
-    font-weight: bold;
+    font-weight: 400;
   }
 
   h2 {
     font-size: 28px;
-    font-weight: bold;
+    font-weight: 400;
   }
 
   h3 {
     font-size: 22px;
-    font-weight: bold;
+    font-weight: 400;
   }
 }
 
