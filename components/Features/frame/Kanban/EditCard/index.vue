@@ -16,7 +16,7 @@
               v-model="title"
               @input="triggerResize"
               @keydown.enter.prevent
-              class="bg-secondaryColorF resize-none hover:outline-thirdBorderF outline-2 outline-transparent focus:outline-thirdBorderF px-2 text-lg font-bold w-full text-textPrimaryColorF py-2 outline-none rounded-md"
+              class="bg-secondaryColorF resize-none hover:outline-thirdBorderF outline-2 outline-transparent focus:outline-thirdBorderF px-2 text-lg font-medium w-full text-textPrimaryColorF py-2 outline-none rounded-md"
             />
             <ErrorMessage :message="titleErrorMessage" />
           </nav>
