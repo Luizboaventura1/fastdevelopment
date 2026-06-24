@@ -30,7 +30,7 @@
     "postcss": "^8.4.29",
     "sass": "^1.80.6",
     "tailwindcss": "^3.3.3",
-    "vitest": "^3.0.9"
+    "vitest": "^3.2.6"
   },
   "dependencies": {
     "@firebase/auth": "^1.8.2",
